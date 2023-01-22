@@ -1,0 +1,50 @@
+[user]
+	name = Iraq Jaber
+	email = IraqJaber@gmail.com
+
+[core]
+    pager = delta
+	autocrlf = false
+
+[interactive]
+    diffFilter = delta
+
+[delta]
+    features = my-dark-theme zebra-dark
+    navigate = true  # use n and N to move between diff sections
+    line-numbers = true
+    show-syntax-themes = true
+
+[merge]
+	tool = vimdiff
+
+[diff]
+    colorMoved = default
+
+[alias]
+    a = add
+    br = branch
+    co = checkout
+    cob = co -b
+    cobf = cob --force
+    cof = checkout --force
+    cm = commit
+    cmm = cm -m
+    cmf = cm --fixup 
+    cmfh = cmf head
+    cmfhnv = cmfh --no-verify
+    cp = cherry-pick
+    d = diff
+    dc = d --cached
+    dt =  difftool
+    l = log
+    m = merge
+    mt = mergetool
+    no = --name-only
+    nv = --name-verify
+    ps = push
+    pl = pull
+    r = reset
+    rh = r --hard
+    rhh = rh head
+    s = status
