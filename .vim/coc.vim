@@ -170,3 +170,8 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " use TAB to cycle through autocomplete
 inoremap <silent><expr> <Tab-i>  pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<Tab>" : coc#refresh()
+"
+" Make <CR> (Enter Key) to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"

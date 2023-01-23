@@ -1,4 +1,5 @@
 syntax on
+
 " leader key 
 let mapleader = " "
 

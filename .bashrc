@@ -126,6 +126,7 @@ alias vimdiff=/opt/homebrew/bin/vimdiff
 # go
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
+export GOROOT=/opt/homebrew/Cellar/go/1.19/libexec/
 export PATH=$PATH:$GOPATH/bin
 export GOTRACEBACK=single 
 
