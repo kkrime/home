@@ -29,6 +29,7 @@
     cobf = cob --force
     cof = checkout --force
     cm = commit
+    cmane = cm --amend --no-edit
     cmm = cm -m
     cmf = cm --fixup 
     cmfh = cmf head

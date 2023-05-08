@@ -120,13 +120,13 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-alias vim=/opt/homebrew/bin/vim
-alias vimdiff=/opt/homebrew/bin/vimdiff
+alias vim=/usr/bin/vim
+alias vimdiff=/usr/bin/vimdiff
 
 # go
 export PATH=$PATH:/usr/local/go/bin
-export GOPATH=$HOME/go
-export GOROOT=/opt/homebrew/Cellar/go/1.19/libexec/
+export GOROOT=/usr/local/go/
+export GOPATH=$HOME/go/src
 export PATH=$PATH:$GOPATH/bin
 export GOTRACEBACK=single 
 
