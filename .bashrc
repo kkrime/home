@@ -128,6 +128,7 @@ export PATH=$PATH:/usr/local/go/bin
 export GOROOT=/usr/local/go/
 export GOPATH=$HOME/go/src
 export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$HOME/go/bin
 export GOTRACEBACK=single 
 
 # Brew
@@ -174,7 +175,7 @@ alias ch=choose
 alias v=vim
 
 # curl
-alias curl=/opt/homebrew/Cellar/curl/7.85.0/bin/curl
+# alias curl=/opt/homebrew/Cellar/curl/7.85.0/bin/curl
 
 # starship
 eval "$(starship init bash)"
