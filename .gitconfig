@@ -5,6 +5,7 @@
 [core]
     pager = delta
 	autocrlf = false
+	editor = vim
 
 [interactive]
     diffFilter = delta

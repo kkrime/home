@@ -137,7 +137,7 @@ export PATH=/opt/homebrew/bin:$PATH
 # rust utilities
 alias ls='exa --color=always'
 alias lt='ll -snew -r'
-# alias cat='bat'
+alias b='bat'
 
  # added by Nix installer
 if [ -e /Users/iraq/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/iraq/.nix-profile/etc/profile.d/nix.sh; fi
@@ -147,11 +147,16 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
+# sudo
+alias s='sudo'
+
 # rip grep with colour
 alias rg='rg --color=always'
-alias rgg='rg --color=always --max-depth 1'
-alias mrg='rg --color=never'
-alias mrgg='rg --color=never--max-depth 1'
+alias rgi='rg --color=always -i'
+# alias rgg='rg --color=always --max-depth 1'
+alias rgg=rg '--color=always --max-depth 1'
+alias rgm='rg --color=never'
+alias rggm='rg --color=never--max-depth 1'
 
 # quick access to ~/.bashrc
 alias .bash='vim ~/.bashrc'

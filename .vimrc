@@ -18,6 +18,7 @@ source ~/.vim/ultisnips.vim
 source ~/.vim/fzf.vim
 source ~/.vim/vim-qf-ll.vim
 source ~/.vim/vim-bookmarks.vim
+source ~/.vim/typescript.vim
 
 " highlight search results
 set hlsearch
