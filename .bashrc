@@ -125,8 +125,9 @@ alias vimdiff=/usr/bin/vimdiff
 
 # go
 export PATH=$PATH:/usr/local/go/bin
-export GOROOT=/usr/local/go/
-export GOPATH=$HOME/go/src
+# export GOROOT=/usr/local/go/
+export GOROOT=/usr/local/Cellar/go/1.21.3/libexec/
+# export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/go/bin
 export GOTRACEBACK=single 
@@ -138,6 +139,9 @@ export PATH=/opt/homebrew/bin:$PATH
 alias ls='exa --color=always'
 alias lt='ll -snew -r'
 alias b='bat'
+
+# python
+export PATH=/usr/local/bin:~/.pyenv/versions/3.8.13/bin:$PATH
 
  # added by Nix installer
 if [ -e /Users/iraq/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/iraq/.nix-profile/etc/profile.d/nix.sh; fi
@@ -159,7 +163,7 @@ alias rgm='rg --color=never'
 alias rggm='rg --color=never--max-depth 1'
 
 # quick access to ~/.bashrc
-alias .bash='vim ~/.bashrc'
+alias .bash='nvim ~/.bashrc'
 
 # replace rip with rip
 alias rm='rip'
@@ -177,10 +181,15 @@ alias g='git'
 alias ch=choose
 
 # vim
-alias v=vim
+alias v='nvim -O'
+
+# cat
+alias c='cat'
 
 # curl
 # alias curl=/opt/homebrew/Cellar/curl/7.85.0/bin/curl
 
 # starship
 eval "$(starship init bash)"
+
+source ~/.airflow

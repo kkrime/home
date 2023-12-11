@@ -65,6 +65,8 @@ lspconfig.gopls.setup {
   },
 }
 
+lspconfig.pyright.setup {on_attach = on_attach,settings = {pyright = {autoImportCompletion = true,},python = {analysis = {autoSearchPaths = true,diagnosticMode = 'openFilesOnly',useLibraryCodeForTypes = true,typeCheckingMode = 'off'}}}}
+
 -- auto format on save
 vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
