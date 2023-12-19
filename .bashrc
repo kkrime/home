@@ -120,7 +120,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-alias vim=/usr/bin/vim
+alias vim=/usr/bin/nvim
 alias vimdiff=/usr/bin/vimdiff
 
 # go
@@ -133,6 +133,9 @@ export GOTRACEBACK=single
 
 # Brew
 export PATH=/opt/homebrew/bin:$PATH
+
+# rust
+export RUSTFLAGS=-Awarnings 
 
 # rust utilities
 alias ls='exa --color=always'
@@ -184,3 +187,4 @@ alias v=vim
 
 # starship
 eval "$(starship init bash)"
+eval "$(zellij setup --generate-auto-start bash)"
