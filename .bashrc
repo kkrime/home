@@ -193,3 +193,4 @@ alias c='cat'
 eval "$(starship init bash)"
 
 source ~/.airflow
+

@@ -1,6 +1,7 @@
 local cmp = require("cmp")
+ls = require("luasnip")
 
-require("luasnip.loaders.from_vscode").lazy_load()
+-- require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
   mapping = cmp.mapping.preset.insert({
@@ -8,8 +9,22 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-o>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }),
+
+
+    -- ['<CR>'] = cmp.mapping(function(fallback)
+    --   cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert })
+
+    -- local key = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
+    -- vim.api.nvim_feedkeys(key, 'i', false)
+
+    -- if ls.jumpable(1) then
+    -- ls.jump(1)
+    -- end
+    -- end, { 'i', 's' }),
+
   }),
+
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
@@ -23,14 +38,17 @@ cmp.setup({
   }),
 })
 
-local ls = require("luasnip")
-vim.keymap.set({ "i" }, "<C-K>", function() ls.expand() end, { silent = true })
--- vim.keymap.set({ "i", "s" }, "<C-L>", function() ls.jump(1) end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<TAB>", function() ls.jump(1) end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<C-J>", function() ls.jump(-1) end, { silent = true })
-
-vim.keymap.set({ "i", "s" }, "<C-E>", function()
-  if ls.choice_active() then
-    ls.change_choice(1)
+-- break out of snippet mode
+vim.keymap.set({ "i", "s" }, "<CR>", function()
+  vim.print(cmp.visible())
+  if cmp.visible() then
+    return "<CR>"
+  elseif ls.in_snippet() then
+    -- if ls.in_snippet() then
+    vim.print("inside")
+    return "<Esc>o"
+  else
+    vim.print("outside")
+    return "<CR>"
   end
-end, { silent = true })
+end, { silent = true, buffer = true, expr = true })

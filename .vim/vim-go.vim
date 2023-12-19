@@ -11,5 +11,3 @@ nmap <leader>p <plug>(coc-diagnostic-prev-error)
 
 nnoremap <C-b> :GoBuild<CR>
 nnoremap <C-y> :GoTest<CR>
-
-
