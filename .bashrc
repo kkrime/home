@@ -182,6 +182,9 @@ alias ch=choose
 # vim
 alias v=vim
 
+# top
+alias top=ytop
+
 # curl
 # alias curl=/opt/homebrew/Cellar/curl/7.85.0/bin/curl
 
