@@ -50,3 +50,5 @@
     rh = r --hard
     rhh = rh head
     s = status
+[url "git@github.com:"]
+	insteadOf = https://github.com/

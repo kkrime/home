@@ -126,14 +126,22 @@ alias vimdiff=/usr/bin/vimdiff
 # go
 export PATH=$PATH:/usr/local/go/bin
 # export GOROOT=/usr/local/go/
-export GOROOT=/usr/local/Cellar/go/1.21.3/libexec/
+# export GOROOT=/usr/local/Cellar/go/0.21.3/libexec/
+export GOROOT=/opt/homebrew/Cellar/go/1.21.6/libexec/
 # export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/go/bin
 export GOTRACEBACK=single 
 
 # Brew
+# export PATH=/opt/homebrew/bin:$PATH
+export PATH=/usr/local/homebrew/bin:$PATH
 export PATH=/opt/homebrew/bin:$PATH
+alias ibrew='arch -x86_64 /usr/local/homebrew/bin/brew'
+# brew install starship nvim bat exa tmux fd git-delta rg rm-improved zellij
+
+# /usr/local/bin
+export PATH=$PATH:/usr/local/bin
 
 # rust utilities
 alias ls='exa --color=always'
@@ -141,6 +149,10 @@ alias lt='ll -snew -r'
 alias b='bat'
 
 # python
+# below is needed for 'arch -x86_64 pyenv install 3.8.13'
+# export LDFLAGS="-L/opt/homebrew/lib"; export CPPFLAGS="-I/opt/homebrew/include"
+# below is needed for 'make install_deps'
+# LIBRARY_PATH=$LIBRARY_PATH:/usr/local/homebrew/opt/openssl\@1.1/lib/
 export PATH=/usr/local/bin:~/.pyenv/versions/3.8.13/bin:$PATH
 
  # added by Nix installer
@@ -189,8 +201,16 @@ alias c='cat'
 # curl
 # alias curl=/opt/homebrew/Cellar/curl/7.85.0/bin/curl
 
-# starship
-eval "$(starship init bash)"
+# aws
+alias awsp="source _awsp"
+
 
 source ~/.airflow
 
+alias python="$(pyenv which python)"
+alias pip="$(pyenv which pip)"
+
+# starship
+eval "$(starship init bash)"
+# zellij
+eval "$(zellij setup --generate-auto-start bash)"
