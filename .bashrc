@@ -214,3 +214,7 @@ alias pip="$(pyenv which pip)"
 eval "$(starship init bash)"
 # zellij
 eval "$(zellij setup --generate-auto-start bash)"
+
+# install Utils
+# brew tap cjbassi/ytop
+# brew install ytop bandwhich
