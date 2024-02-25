@@ -150,7 +150,7 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-# sudo
+# sudu
 alias s='sudo'
 
 # rip grep with colour
@@ -185,8 +185,12 @@ alias v=vim
 # top
 alias top=ytop
 
-# curl
-# alias curl=/opt/homebrew/Cellar/curl/7.85.0/bin/curl
+# reload ~/.bashrc
+alias reload='. ~/.bashrc'
+
+# frifi functions
+. ~/.frifi_helpers.sh
+
 
 # starship
 eval "$(starship init bash)"
