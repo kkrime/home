@@ -58,11 +58,14 @@ local plugins = {
   "neovim/nvim-lspconfig",
   "williamboman/mason-lspconfig.nvim",
   "glepnir/lspsaga.nvim",
+
+  -- telescope
+  'desdic/telescope-rooter.nvim',
   {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.5',
     dependencies = { { 'nvim-lua/plenary.nvim' } }
-  }
+  },
 }
 
 local opts = {}
