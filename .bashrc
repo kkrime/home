@@ -180,7 +180,7 @@ alias g='git'
 alias ch=choose
 
 # vim
-alias v=vim
+alias v='vim -O'
 
 # top
 alias top=ytop
