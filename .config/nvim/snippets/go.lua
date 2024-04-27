@@ -31,7 +31,7 @@ local print_var = s("ff", {
   t("fmt.Printf(\""),
   -- rep(1),
   same(1),
-  t(" = %+v\\n\", "),
+  t(" = %v\\n\", "),
   i(1, "var"),
   t(")"),
 })

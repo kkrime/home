@@ -11,8 +11,7 @@ vim.cmd([[command! LuaSnipEdit :lua require("luasnip.loaders.from_lua").edit_sni
 local types = require("luasnip.util.types")
 ls.config.set_config({
   history = true,                             --keep around last snippet local to jump back
-  -- Below line is commented out due to; https://github.com/hrsh7th/nvim-cmp/issues/1743
-  -- update_events = "TextChanged,TextChangedI", --update changes as you type
+  update_events = "TextChanged,TextChangedI", --update changes as you type
   enable_autosnippets = true,
   -- region_check_events = "CursorMoved,CursorHold,InsertEnter",
   region_check_events = "InsertEnter",

@@ -25,8 +25,6 @@ local plugins = {
     'dracula/vim',
     lazy = false,
   },
-  'williamboman/mason-lspconfig.nvim',
-  
   'nvim-tree/nvim-tree.lua',
   'nvim-tree/nvim-web-devicons',
   'nvim-lualine/lualine.nvim',
@@ -58,14 +56,11 @@ local plugins = {
   "neovim/nvim-lspconfig",
   "williamboman/mason-lspconfig.nvim",
   "glepnir/lspsaga.nvim",
-
-  -- telescope
-  'desdic/telescope-rooter.nvim',
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.5',
+    tag = '0.1.0',
     dependencies = { { 'nvim-lua/plenary.nvim' } }
-  },
+  }
 }
 
 local opts = {}

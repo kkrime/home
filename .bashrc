@@ -124,21 +124,23 @@ alias vim=/usr/bin/vim
 alias vimdiff=/usr/bin/vimdiff
 
 # go
-export PATH=$PATH:/usr/local/go/bin
-# export GOROOT=/usr/local/go/
-# export GOROOT=/usr/local/Cellar/go/0.21.3/libexec/
-export GOROOT=/opt/homebrew/Cellar/go/1.21.6/libexec/
-# export GOPATH=$HOME/go
+# export PATH=$PATH:/usr/local/go/bin
+export GOROOT=/usr/local/go/
+export GOROOT=/opt/homebrew/Cellar/go/1.22.0/libexec/
+export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/go/bin
 export GOTRACEBACK=single 
+
+# rust
+export PATH=/Users/iraq/.cargo/bin:$PATH
 
 # Brew
 # export PATH=/opt/homebrew/bin:$PATH
 export PATH=/usr/local/homebrew/bin:$PATH
 export PATH=/opt/homebrew/bin:$PATH
 alias ibrew='arch -x86_64 /usr/local/homebrew/bin/brew'
-# brew install starship nvim bat exa tmux fd git-delta rg rm-improved zellij
+# brew install starship nvim bat exa tmux fd git-delta rg rm-improved zellij atuin
 
 # /usr/local/bin
 export PATH=$PATH:/usr/local/bin
@@ -167,7 +169,7 @@ fi
 alias s='sudo'
 
 # rip grep with colour
-alias rg='rg --color=always'
+alias rgm='rg'
 alias rgi='rg --color=always -i'
 # alias rgg='rg --color=always --max-depth 1'
 alias rgg=rg '--color=always --max-depth 1'
@@ -204,17 +206,23 @@ alias c='cat'
 # aws
 alias awsp="source _awsp"
 
-
 source ~/.airflow
 
 alias python="$(pyenv which python)"
 alias pip="$(pyenv which pip)"
 
+alias sk='cd ~/go/src/sky'
+
+
 # starship
 eval "$(starship init bash)"
 # zellij
-eval "$(zellij setup --generate-auto-start bash)"
+eval "$(zellij setup --generate-auto-start bash )"
+# autin
+source ~/.local/share/blesh/ble.sh
+eval "$(atuin init bash --disable-up-arrow)"
 
 # install Utils
 # brew tap cjbassi/ytop
 # brew install ytop bandwhich
+. "$HOME/.cargo/env"
