@@ -9,12 +9,24 @@ end
 return {
   {
     "kevinhwang91/nvim-bqf",
+    lazy = false,
+
     config = function()
       vim.keymap.set("n", "<C-\\>", "<cmd>cclose<CR>", { silent = true, noremap = true })
+
       vim.keymap.set("n", "<C-f>", function()
         ToggleQuickFix()
       end, { silent = true, noremap = true })
-      require('bqf').setup()
+
+      require('bqf').setup({
+        auto_enable = true,
+        auto_resize_height = true, -- highly recommended enable
+        preview = {
+          should_preview_cb = function(bufnr, qwinid)
+            return false
+          end
+        },
+      })
     end
   },
 }
