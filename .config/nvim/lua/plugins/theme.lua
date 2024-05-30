@@ -15,7 +15,6 @@ return {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    -- opt
     config = function(_)
       vim.opt.termguicolors = true
       require("tokyonight").setup({
@@ -26,10 +25,13 @@ return {
         sidebars = { "qf", "vista_kind", "terminal", "packer" },
         -- Change the "hint" color to the "orange" color, and make the "error" color bright red
         on_colors = function(colors)
-          colors.hint = colors.orange
-          colors.error = "#ff0000"
+          colors.hint    = colors.orange
+          colors.error   = "#ff0000"
           colors.comment = "#B38B6D"
-        end
+        end,
+        on_highlights = function(highlights, colors)
+          highlights.MatchParen = { bg = "#ff0000", fg = "#FFFFFF", bold = true }
+        end,
       })
       vim.cmd [[colorscheme tokyonight]]
     end
