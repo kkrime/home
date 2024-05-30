@@ -32,7 +32,6 @@ local print_ln = s("fl", {
   t("\")"),
 })
 table.insert(snippets, print_ln)
-
 -- log
 local log_info_var = s("lif", {
   t("log.Infof(\""),
@@ -62,5 +61,12 @@ local return_error_ = s("er,", {
   t({ ", err", "}" }),
 })
 table.insert(snippets, return_error_)
+
+local format_error = s("fe", {
+  t("fmt.Errorf(\""),
+  i(1, ""),
+  t("\")"),
+})
+table.insert(snippets, format_error)
 
 return snippets, autosnippets
