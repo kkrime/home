@@ -125,9 +125,10 @@ return {
         capabilities = capabilities,
         cmd = { "gopls" },
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
-        root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+        root_dir = util.root_pattern("go.work", "go.mod", ".git", ".gitignore"),
         settings = {
           gopls = {
+            buildFlags = { "-tags=integration some-other-tags..." },
             completeUnimported = true,
             usePlaceholders = false,
             analyses = {
@@ -137,11 +138,92 @@ return {
         },
       }
 
+      lspconfig.html.setup({
+        capabilities = capabilities,
+        init_options = {
+          configurationSection = { "html", "css", "javascript" },
+          embeddedLanguages = {
+            css = true,
+            javascript = true,
+          },
+          provideFormatter = true,
+        },
+      })
+
+      -- lspconfig.rust_analyzer.setup({
+      --   on_attach = on_attach,
+      --   settings = {
+      --     ["rust-analyzer"] = {
+      --       imports = {
+      --         granularity = {
+      --           group = "module",
+      --         },
+      --         prefix = "self",
+      --       },
+      --       cargo = {
+      --         buildScripts = {
+      --           enable = true,
+      --         },
+      --       },
+      --       procMacro = {
+      --         enable = true
+      --       },
+      --       rustfmt = {
+      --         extraArgs = { "--config", "tab_spaces=2" }
+      --       },
+      --     },
+      --   },
+      -- })
+
       -- auto format on save
       vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
       local opts = { buffer = buffer }
       vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    end
+  },
+  {
+    "mrcjkb/rustaceanvim",
+    version = '^4', -- Recommended
+    lazy = false,   -- This plugin is already lazy
+    dependencies = {
+      {
+        "lvimuser/lsp-inlayhints.nvim",
+        opts = {}
+      },
+    },
+    config = function(_)
+      vim.g.rustaceanvim = {
+        -- Plugin configuration
+        tools = {
+        },
+        -- LSP configuration
+        server = {
+          on_attach = function(client, bufnr)
+            -- you can also put keymaps in here
+            local
+            bufnr = vim.api.nvim_get_current_buf()
+            vim.keymap.set(
+              "n",
+              "<leader>a",
+              function()
+                vim.cmd.RustLsp('codeAction') -- supports rust-analyzer's grouping
+                -- or vim.lsp.buf.codeAction() if you don't want grouping.
+              end,
+              { silent = true, buffer = bufnr }
+            )
+            require("lsp-inlayhints").on_attach(client, bufnr)
+          end,
+          default_settings = {
+            -- rust-analyzer language server configuration
+            ['rust-analyzer'] = {
+              rustfmt = {
+                extraArgs = { "--config", "tab_spaces=2" }
+              },
+            },
+          },
+        },
+      }
     end
   },
   {
