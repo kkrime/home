@@ -50,3 +50,7 @@
     rh = r --hard
     rhh = rh head
     s = status
+    now = cmane --date=now
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/
