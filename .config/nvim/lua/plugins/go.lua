@@ -11,17 +11,23 @@ return {
       require("go").setup()
 
       vim.keymap.set("n", "<C-b>", function()
-        -- loop though and save .go files only
+        local project_dir = require("project_nvim.project").get_project_root()
+        -- loop though and save .go files in current project only
         for i, buf_hndl in ipairs(vim.api.nvim_list_bufs()) do
-          -- file = vim.api.nvim_buf_get_name(buf_hndl)
-          fileType = vim.fn.getbufvar(buf_hndl, "&filetype")
-          if fileType == "go" then
-            vim.api.nvim_buf_call(buf_hndl, function()
+          file = vim.api.nvim_buf_get_name(buf_hndl)
+          local file_in_project = string.len(file) > string.len(project_dir) and
+              string.sub(file, 1, string.len(project_dir)) == project_dir
+
+          if file_in_project then
+            fileType = vim.fn.getbufvar(buf_hndl, "&filetype")
+            if fileType == "go" then
+              vim.api.nvim_buf_call(buf_hndl, function()
                 vim.cmd('w')
-            end)
+              end)
+            end
           end
         end
-        vim.api.nvim_command([[:GoBuild]])
+        vim.api.nvim_command([[:GoBuild %]])
       end, { silent = true, noremap = true })
 
       vim.keymap.set("n", "<C-y>", function()
