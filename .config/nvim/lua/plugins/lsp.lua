@@ -134,6 +134,10 @@ return {
             analyses = {
               unusedparams = true,
             },
+            -- ["build.experimentalWorkspaceModule"] = true,
+            -- ["formatting.gofumpt"] = true,
+            ["staticcheck"] = true,
+            ["ui.verboseOutput"] = true,
           },
         },
       }

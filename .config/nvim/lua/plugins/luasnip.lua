@@ -103,20 +103,20 @@ return {
 
       -- TODO look into this
       -- break out of snippet mode
-      local cmp = require("cmp")
-      vim.keymap.set({ "i", "s" }, "<CR>", function()
-        vim.print(cmp.visible())
-        if cmp.visible() then
-          return "<CR>"
-        elseif ls.in_snippet() then
-          -- if ls.in_snippet() then
-          vim.print("inside")
-          return "<Esc>o"
-        else
-          vim.print("outside")
-          return "<CR>"
-        end
-      end, { silent = true, buffer = true, expr = true })
+      --ggocal cmp = require("cmp")
+      -- vim.keymap.set({ "i", "s" }, "<CR>", function()
+      --   vim.print(cmp.visible())
+      --   if cmp.visible() then
+      --     return "<CR>"
+      --   elseif ls.in_snippet() then
+      --     -- if ls.in_snippet() then
+      --     vim.print("inside")
+      --     return "<Esc>o"
+      --   else
+      --     vim.print("outside")
+      --     return "<CR>"
+      --   end
+      -- end, { silent = true, buffer = true, expr = true })
     end
   },
 }
