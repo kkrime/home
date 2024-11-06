@@ -116,12 +116,21 @@ if ! shopt -oq posix; then
   fi
 fi
 
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
+
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias vim=/usr/bin/nvim
 alias vimdiff=/usr/bin/vimdiff
+
+# misc
+export LIBRARY_PATH="/opt/homebrew/lib" 
+export CPATH="/opt/homebrew/include"
 
 # go
 export PATH=$PATH:/usr/local/go/bin
@@ -188,6 +197,31 @@ alias top=ytop
 # curl
 # alias curl=/opt/homebrew/Cellar/curl/7.85.0/bin/curl
 
+# aws
+alias awsp="source _awsp"
+
+# source ~/.airflow
+
+alias python="$(pyenv which python)"
+alias pip="$(pyenv which pip)"
+
+alias sk='cd ~/go/src/sky'
+
+
+
+# svelte
+export PNPM_HOME="/Users/iraq/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+export PATH=$PATH:/opt/homebrew/Cellar/pnpm\@8/8.15.8_1/bin
+echo here
+
+
+
+
+
 # starship
 eval "$(starship init bash)"
 eval "$(zellij setup --generate-auto-start bash)"
@@ -195,3 +229,6 @@ eval "$(zellij setup --generate-auto-start bash)"
 # install Utils
 # brew tap cjbassi/ytop
 # brew install ytop bandwhich
+# . "$HOME/.cargo/env"
+
+
