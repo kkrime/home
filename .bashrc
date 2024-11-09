@@ -221,7 +221,12 @@ export PATH=$PATH:/opt/homebrew/Cellar/pnpm\@8/8.15.8_1/bin
 
 # starship
 eval "$(starship init bash)"
-eval "$(zellij setup --generate-auto-start bash)"
+# zellij
+eval "$(zellij setup --generate-auto-start bash )"
+
+# autin
+source ~/.bash-preexec.sh
+eval "$(atuin init bash --disable-up-arrow)"
 
 # install Utils
 # brew tap cjbassi/ytop
