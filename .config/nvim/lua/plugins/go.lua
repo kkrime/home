@@ -7,6 +7,7 @@ return {
         "ray-x/guihua.lua",
       },
     },
+    lazy = true,
     config = function()
       require("go").setup()
 
