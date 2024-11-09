@@ -45,16 +45,16 @@ esac
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
+# if [ -n "$force_color_prompt" ]; then
+#     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+# 	# We have color support; assume it's compliant with Ecma-48
+# 	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+# 	# a case would tend to support setf rather than setaf.)
+# 	color_prompt=yes
+#     else
+# 	color_prompt=
+#     fi
+# fi
 
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
@@ -116,9 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
-fi
 
 
 export NVM_DIR="$HOME/.nvm"
@@ -183,7 +180,11 @@ alias cmpcpr='~/.tools/github/github_commit_push_and_create_PR.sh'
 alias cmp='~/.tools/commit_push.sh'
 
 # git 
-alias g='git'
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion 2>/dev/null 
+fi
+alias g="git"
+__git_complete g __git_main
 
 # awk
 alias ch=choose
@@ -216,10 +217,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 export PATH=$PATH:/opt/homebrew/Cellar/pnpm\@8/8.15.8_1/bin
-echo here
-
-
-
 
 
 # starship
