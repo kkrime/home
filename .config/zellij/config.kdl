@@ -10,6 +10,12 @@ keybinds {
     locked {
         bind "Ctrl g" { SwitchToMode "Normal"; }
     }
+    // shared_except "locked" {
+    shared {
+          bind "" { NewTab; } 
+          bind "" { GoToNextTab; }
+          bind "" { GoToPreviousTab; }
+      }
     resize {
         bind "Ctrl n" { SwitchToMode "Normal"; }
         bind "h" "Left" { Resize "Increase Left"; }

@@ -1,3 +1,4 @@
+-- require("notify")("My super important message")
 -- return {
 --   {
 --     -- "fatih/vim-go",

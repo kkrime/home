@@ -32,6 +32,24 @@ return {
           -- ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ['<C-n>'] = {
+            i = function()
+              if cmp.visible() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              else
+                cmp.complete()
+              end
+            end,
+          },
+          ['<C-p>'] = {
+            i = function()
+              if cmp.visible() then
+                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+              else
+                cmp.complete()
+              end
+            end,
+          },
         }),
 
         sources = cmp.config.sources({

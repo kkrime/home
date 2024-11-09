@@ -1,5 +1,6 @@
-require("core.options")
-require("core.keymaps")
-require("core.plugins")
-require("core.mouse")
-require("core.plugin_config")
+vim.cmd('filetype plugin on')
+require("options")
+require("keymaps")
+require("mouse")
+require("load-lazy")
+
