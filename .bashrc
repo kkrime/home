@@ -239,7 +239,7 @@ eval "$(starship init bash)"
 # zellij
 eval "$(zellij setup --generate-auto-start bash )"
 # autin
-source ~/.local/share/blesh/ble.sh
+source ~/.bash-preexec.sh
 eval "$(atuin init bash --disable-up-arrow)"
 
 # install Utils
