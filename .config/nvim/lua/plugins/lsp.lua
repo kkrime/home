@@ -12,6 +12,7 @@ return {
     'hrsh7th/nvim-cmp',
     config = function(_)
       local cmp = require("cmp")
+      local ls = require("luasnip")
       cmp.setup({
 
         snippet = {
@@ -35,7 +36,13 @@ return {
           ['<C-n>'] = {
             i = function()
               if cmp.visible() then
-                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+                local behavior
+                if ls.in_snippet() then
+                  behavior = cmp.SelectBehavior.Select
+                else
+                  behavior = cmp.SelectBehavior.Insert
+                end
+                cmp.select_next_item({ behavior = behavior })
               else
                 cmp.complete()
               end
@@ -43,8 +50,14 @@ return {
           },
           ['<C-p>'] = {
             i = function()
+              local behavior
+              if ls.in_snippet() then
+                behavior = cmp.SelectBehavior.Select
+              else
+                behavior = cmp.SelectBehavior.Insert
+              end
               if cmp.visible() then
-                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+                cmp.select_prev_item({ behavior = behavior })
               else
                 cmp.complete()
               end
