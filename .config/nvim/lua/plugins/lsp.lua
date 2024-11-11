@@ -70,6 +70,7 @@ return {
           { name = 'path' },
           { name = 'nvim_lua' },
           { name = 'luasnip' }, -- For luasnip users.
+          { name = 'lazydev' },
         }, {
           { name = 'buffer' },
         })
@@ -120,20 +121,35 @@ return {
       local lspconfig = require("lspconfig")
 
       lspconfig.lua_ls.setup {
+        on_attach = on_attach,
         capabilities = capabilities,
+        root_dir = util.root_pattern(".git", ".gitignore"),
         settings = {
           Lua = {
+            runtime = {
+              --   --   -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+              version = 'Lua 5.4',
+              --   --   -- Setup your lua path
+              --   path = vim.split(package.path, ';'),
+            },
             diagnostics = {
               globals = { "vim" },
             },
             workspace = {
-              library = {
-                [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-                [vim.fn.stdpath "config" .. "/lua"] = true,
-              },
+              library = vim.api.nvim_get_runtime_file('', true),
+              -- library = {
+              --   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+              --   [vim.fn.stdpath('config') .. '/lua'] = true,
+              --   [vim.fn.expand('~/.config/nvim/lua')] = true,
+              -- },
+              -- checkThirdParty = false,
+            },
+            telemetry = {
+              enable = false,
+              -- enable = true,
             },
           },
-        }
+        },
       }
 
       lspconfig.clangd.setup {
@@ -324,4 +340,43 @@ return {
       end, { silent = true })
     end
   },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        -- { path = "luvit-meta/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+  -- { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+  -- {                                        -- optional cmp completion source for require statements and module annotations
+  --   "hrsh7th/nvim-cmp",
+  --   opts = function(_, opts)
+  --     opts.sources = opts.sources or {}
+  --     table.insert(opts.sources, {
+  --       name = "lazydev",
+  --       group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+  --     })
+  --   end,
+  -- },
+  -- { -- optional blink completion source for require statements and module annotations
+  --   "saghen/blink.cmp",
+  --   opts = {
+  --     sources = {
+  --       -- add lazydev to your completion providers
+  --       completion = {
+  --         enabled_providers = { "lsp", "path", "snippets", "buffer", "lazydev" },
+  --       },
+  --       providers = {
+  --         -- dont show LuaLS require statements when lazydev has items
+  --         lsp = { fallback_for = { "lazydev" } },
+  --         lazydev = { name = "LazyDev", module = "lazydev.integrations.blink" },
+  --       },
+  --     },
+  --   },
+  -- },
+  -- { "folke/neodev.nvim",    enabled = false }, -- make sure to uninstall or disable neodev.nvim
 }
