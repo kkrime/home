@@ -9,8 +9,9 @@ return {
         'ahmedkhalf/project.nvim',
         config = function()
           require("project_nvim").setup({
-            detection_methods = { "lsp", "pattern" },
-            -- detection_methods = { "pattern", "lsp" },
+            -- line below commented out due to - https://github.com/ahmedkhalf/project.nvim/issues/169
+            -- detection_methods = { "lsp", "pattern" },
+            detection_methods = { "pattern", "lsp" },
             patterns = { ".git", ".gitignore", "README.md", "go.mod", "Makefile" },
 
             silent_chdir = false,
