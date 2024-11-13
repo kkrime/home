@@ -123,7 +123,7 @@ return {
       lspconfig.lua_ls.setup {
         on_attach = on_attach,
         capabilities = capabilities,
-        root_dir = util.root_pattern(".git", ".gitignore"),
+        root_dir = util.root_pattern("init.lua", ".git", ".gitignore"),
         settings = {
           Lua = {
             runtime = {
