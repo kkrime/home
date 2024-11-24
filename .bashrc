@@ -223,6 +223,9 @@ alias pip="$(pyenv which pip)"
 
 alias sk='cd ~/go/src/sky'
 
+# nvim dev
+alias config='cd ~/.config/nvim/lua/plugins/'
+alias plugins='cd ~/.local/share/nvim/lazy/'
 
 
 # svelte
