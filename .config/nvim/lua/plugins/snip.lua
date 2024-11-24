@@ -2,17 +2,22 @@ return {
   {
     "L3MON4D3/LuaSnip",
     config = function(_)
+      require("luasnip").config.setup({ store_selection_keys = "<A-p>" })
       local ls = require("luasnip") --{{{
 
       -- require("luasnip.loaders.from_vscode").lazy_load()
-      require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
-      require("luasnip").config.setup({ store_selection_keys = "<A-p>" })
+      require("luasnip.loaders.from_lua").load({
+        fs_event_providers = { libuv = true, autocmd = true },
+        paths =
+        "~/.config/nvim/lua/snippets/"
+      })
 
       vim.cmd([[command! LuaSnipEdit :lua require("luasnip.loaders.from_lua").edit_snippet_files()]]) --}}}
 
       -- Virtual Text{{{
       local types = require("luasnip.util.types")
       ls.config.set_config({
+
         -- history = true,                             --keep around last snippet local to jump back
         -- Below line is commented out due to; https://github.com/hrsh7th/nvim-cmp/issues/1743
         update_events = "TextChanged,TextChangedI", --update changes as you type
