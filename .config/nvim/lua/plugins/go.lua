@@ -9,15 +9,16 @@ return {
     },
     lazy = true,
     config = function()
-      require("go").setup()
+      local go = require("go")
+      go.setup()
 
-      vim.keymap.set("n", "<C-b>", function()
+      local saveAllProjectGoFiles = function()
         local project_dir = require("project_nvim.project").get_project_root()
+
         -- loop though and save .go files in current project only
-        for i, buf_hndl in ipairs(vim.api.nvim_list_bufs()) do
-          file = vim.api.nvim_buf_get_name(buf_hndl)
-          local file_in_project = string.len(file) > string.len(project_dir) and
-              string.sub(file, 1, string.len(project_dir)) == project_dir
+        for _, buf_hndl in ipairs(vim.api.nvim_list_bufs()) do
+          local file = vim.api.nvim_buf_get_name(buf_hndl)
+          local file_in_project = vim.startswith(file, project_dir)
 
           if file_in_project then
             fileType = vim.fn.getbufvar(buf_hndl, "&filetype")
@@ -28,13 +29,30 @@ return {
             end
           end
         end
+      end
+
+      -- build
+      vim.keymap.set({ 'n', 'i' }, "<C-b>", function()
+        saveAllProjectGoFiles()
         vim.api.nvim_command([[:GoBuild %]])
       end, { silent = true, noremap = true })
 
+      -- -- run
+      -- local Terminal = require('toggleterm.terminal').Terminal
+      -- local goRun    = Terminal:new({
+      --   cmd = "go run .",
+      --   hidden = true,
+      --   close_on_exit = false,
+      -- })
+      -- vim.keymap.set({ 'n', 'i' }, "<C-r>", function()
+      --   saveAllProjectFiles()
+      --   goRun:toggle()
+      -- end, { silent = true, noremap = true })
+
+      -- test
       vim.keymap.set("n", "<C-y>", function()
         vim.api.nvim_command([[:GoTest -F]])
-      end
-      , { silent = true, noremap = true })
+      end, { silent = true, noremap = true })
 
       local format_sync_grp = vim.api.nvim_create_augroup("goimports", {})
       vim.api.nvim_create_autocmd("BufWritePre", {
