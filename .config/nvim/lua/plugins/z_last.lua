@@ -46,39 +46,71 @@
 -- end, { silent = true, noremap = true })
 
 
-vim.keymap.set("n", "<C-h>", function()
-  -- Get the current buffer and parser
-  local parser = vim.treesitter.get_parser(0, "go") -- Replace "lua" with the language
-  local tree = parser:parse()[1]                    -- Get the syntax tree
+-- vim.keymap.set("n", "<C-h>", function()
+--   -- Get the current buffer and parser
+--   local parser = vim.treesitter.get_parser(0, "go") -- Replace "lua" with the language
+--   local tree = parser:parse()[1]                    -- Get the syntax tree
 
-  local query = vim.treesitter.query.parse(
-    "go", -- Language
-    [[
-      (package_identifier) @package
-      (function_declaration
-        name: (identifier) @function.name)
-    ]])
+--   local query = vim.treesitter.query.parse(
+--     "go", -- Language
+--     [[
+--       (package_identifier) @package
+--       (function_declaration
+--         name: (identifier) @function.name)
+--     ]])
 
-  local iter = query:iter_matches(tree:root(), 0, 0, -1)
-  vim.notify(vim.inspect({ iter = iter }))
-  local _, match, _ = iter()
-  -- vim.notify(vim.inspect(match))
-  -- match()
-  -- local i, node = unpack(match)
-  -- vim.notify(vim.inspect(node[1]))
-  -- local capture_name = query.captures[1]                         -- Capture group name
-  -- vim.notify(vim.inspect({ capture_name = capture_name }))
-  -- local element_name = vim.treesitter.get_node_text(match[1], 0) -- Extract matched text
-  -- vim.notify(element_name)
+--   local iter = query:iter_matches(tree:root(), 0, 0, -1)
+--   vim.notify(vim.inspect({ iter = iter }))
+--   local _, match, _ = iter()
+--   -- vim.notify(vim.inspect(match))
+--   -- match()
+--   -- local i, node = unpack(match)
+--   -- vim.notify(vim.inspect(node[1]))
+--   -- local capture_name = query.captures[1]                         -- Capture group name
+--   -- vim.notify(vim.inspect({ capture_name = capture_name }))
+--   -- local element_name = vim.treesitter.get_node_text(match[1], 0) -- Extract matched text
+--   -- vim.notify(element_name)
 
-  for _, match, _ in iter do
-    for id, node in pairs(match) do
-      vim.notify(vim.inspect({ id = id }))
-      local capture_name = query.captures[id]                    -- Capture group name
-      local element_name = vim.treesitter.get_node_text(node, 0) -- Extract matched text
-      vim.notify(element_name)
-    end
+--   for _, match, _ in iter do
+--     for id, node in pairs(match) do
+--       vim.notify(vim.inspect({ id = id }))
+--       local capture_name = query.captures[id]                    -- Capture group name
+--       local element_name = vim.treesitter.get_node_text(node, 0) -- Extract matched text
+--       vim.notify(element_name)
+--     end
+--   end
+-- end, { silent = true, noremap = true })
+
+vim.keymap.set("n", "*", function()
+  local popup = require("plenary.popup")
+
+  local Win_id
+
+  function ShowMenu(opts, cb)
+    vim.api.nvim_win_set_cursor(0, { 5, 0 })
+    local height = 20
+    local width = 30
+    local borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
+
+    Win_id = popup.create(opts, {
+      title = "MyProjects",
+      highlight = "MyProjectWindow",
+      line = math.floor(((vim.o.lines - height) / 5.0) - 1),
+      col = math.floor((vim.o.columns - width) / 2),
+      minwidth = width,
+      minheight = height,
+      borderchars = borderchars,
+      callback = cb,
+    })
+    local bufnr = vim.api.nvim_win_get_buf(Win_id)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "q", ":q<CR>", { silent = false })
   end
+
+  local opts = {}
+  local cb = function(_, sel)
+    vim.notify(vim.inspect("Wo0p!"))
+  end
+  ShowMenu(opts, cb)
 end, { silent = true, noremap = true })
 
 
