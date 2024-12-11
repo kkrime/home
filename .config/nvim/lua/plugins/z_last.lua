@@ -1,36 +1,81 @@
 vim.keymap.set("n", "*", function()
+  local inital_first_visible_line = vim.fn.line("w0")
+  local inital_last_visible_line = vim.fn.line("w$")
+  local inital_line, inital_col = unpack(vim.api.nvim_win_get_cursor(0))
+
   vim.cmd('normal! *')
-  -- local line = math.floor(((vim.o.lines) / 5.0) - 1)
-  -- vim.notify(vim.inspect({ line = line }))
 
   local win_height = vim.api.nvim_win_get_height(0) - 2
-  -- vim.notify(vim.inspect({ win_height = win_height }))
   local last_line = vim.api.nvim_buf_line_count(0)
-  -- vim.notify(vim.inspect({ last_line = last_line }))
 
   local last_page = last_line - win_height
-  vim.notify(vim.inspect({ last_page = last_page }))
 
-  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  -- vim.notify(vim.inspect({ row = row }))
+  local new_line, new_col = unpack(vim.api.nvim_win_get_cursor(0))
 
-  if row >= last_page then
+  local new_first_visible_line = vim.fn.line("w0")
+  local new_last_visible_line = vim.fn.line("w$")
+
+  if new_line >= last_line then
     return
   end
-  local position = math.floor(((vim.o.lines) / 13.0) - 1)
 
-  local new_position = row - position
+  local padding = math.ceil(((win_height) / 8.0) - 1) * 2.5
 
-  vim.api.nvim_feedkeys(new_position .. "zt", 'x', true)
+  local space_from_bottom = new_last_visible_line - new_line
+  -- vim.api.nvim_win_set_cursor(0, { inital_line, inital_col })
+  if space_from_bottom < padding then
+    local jump = padding - space_from_bottom
 
-  vim.api.nvim_win_set_cursor(0, { row, col })
+    vim.api.nvim_set_hl(0, 'MyHighlightGroup', {
+      -- fg = '#000000', -- foreground color (red in this case)
+      bg = '#ff0000', -- foreground color (red in this case)
+      -- bg = '#000000', -- background color (black in this case)
+      bold = true,    -- make text bold
+      -- underline = true -- underline the text
+    })
+
+    vim.o.cursorline = false
+    local ns_id = vim.api.nvim_create_namespace("highlight_current_line")
+
+    -- Set an extmark to highlight the current line with the custom highlight
+    local id = vim.api.nvim_buf_set_extmark(0, ns_id, inital_line - 1, 0, {
+      end_row = inital_line,
+      end_col = 0,
+      -- hl_group = "CursorLine", -- Use the custom highlight group
+      hl_group = "MyHighlightGroup", -- Use the custom highlight group
+      priority = 1000,
+      hl_eol = true
+    })
+
+    vim.api.nvim_win_set_cursor(0, { new_last_visible_line, 0 })
+    for i = 1, jump / 2 do
+      -- for i = 1, jump + space_from_bottom do
+      vim.cmd('normal! 2j') -- Move the cursor down by one line
+      -- vim.api.nvim_feedkeys("j", 'x', false)
+      vim.cmd('redraw')
+      vim.wait(15)
+    end
+
+    vim.o.cursorline = true
+    vim.api.nvim_win_set_cursor(0, { new_line, new_col })
+    vim.cmd('redraw')
+
+    vim.defer_fn(function()
+      vim.api.nvim_buf_del_extmark(0, ns_id, id)
+    end, 500)
+
+    vim.o.cursorline = true
+    -- vim.api.nvim_buf_del_extmark(0, ns_id, id)
+    return
+  end
+
+  -- vim.api.nvim_buf_del_extmark(0, ns_id, res)
+  local new_position = new_line - padding
+
+  -- vim.api.nvim_feedkeys(new_position .. "zt", 'x', true)
+
+  -- vim.api.nvim_win_set_cursor(0, { new_line, col })
 end, { silent = true, noremap = true })
 
 
-
-
-
-
-
 return {}
-
