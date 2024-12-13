@@ -1,8 +1,79 @@
 return {
   {
     "nvim-lualine/lualine.nvim",
+
     config = function()
-      local custom_gruvbox = require('lualine.themes.gruvbox')
+      local custom_gruvbox         = require('lualine.themes.gruvbox')
+      custom_gruvbox.normal.a.bg   = 'green'
+      custom_gruvbox.normal.a.fg   = 'black'
+      custom_gruvbox.insert.a.bg   = 'red'
+      custom_gruvbox.insert.a.fg   = 'black'
+      custom_gruvbox.command.a.bg  = 'yellow'
+      custom_gruvbox.command.a.fg  = 'black'
+      custom_gruvbox.visual.a.fg   = 'black'
+
+      custom_gruvbox.normal.c.bg   = custom_gruvbox.normal.a.bg
+      custom_gruvbox.normal.c.fg   = custom_gruvbox.normal.c.bg
+      custom_gruvbox.insert.c.bg   = custom_gruvbox.insert.a.bg
+      custom_gruvbox.insert.c.fg   = custom_gruvbox.insert.c.bg
+      custom_gruvbox.command.c.bg  = custom_gruvbox.command.a.bg
+      custom_gruvbox.command.c.fg  = custom_gruvbox.command.c.bg
+      custom_gruvbox.visual.c.bg   = custom_gruvbox.visual.a.bg
+      custom_gruvbox.visual.c.fg   = custom_gruvbox.visual.c.bg
+      custom_gruvbox.inactive.c.fg = '#3c3836'
+
+      custom_gruvbox.normal['y']   = { bg = custom_gruvbox.normal.a.bg, fg = 'white', gui = 'bold' }
+      custom_gruvbox.insert['y']   = { bg = custom_gruvbox.insert.a.bg, fg = 'black', gui = 'bold' }
+      custom_gruvbox.command['y']  = { bg = custom_gruvbox.command.a.bg, fg = 'black', gui = 'bold' }
+      custom_gruvbox.visual['y']   = { bg = custom_gruvbox.visual.a.bg, fg = 'black', gui = 'bold' }
+      custom_gruvbox.inactive['y'] = { bg = '#3c3836', fg = 'white', gui = 'bold' }
+
+      local lualine_b              = {
+        {
+          'filename',
+          color = function()
+            if vim.bo.modified then
+              return { bg = '#fdaa88', fg = 'black' }
+            end
+            return { fg = 'white' }
+          end,
+
+          file_status = true,    -- Displays file status (readonly status, modified status)
+          newfile_status = true, -- Display new file status (new file means no write after created)
+          path = 3,              -- 0: Just the filename
+          symbols = {
+            modified = '',
+            readonly = '[--]',
+            unnamed = '[No Name]',
+            newfile = '[New]',
+          }
+        },
+      }
+
+      local lualine_c              = {
+        {
+          function()
+            return " "
+          end,
+          padding = 1000,
+        },
+      }
+
+      local lualine_x              = {
+        {
+          'filetype',
+          color = { fg = 'white', bg = 'black', gui = 'bold' }
+        },
+      }
+
+      local lualine_z              = {
+        {
+          'location',
+          color = { fg = 'white', bg = 'black', gui = 'bold' }
+        },
+      }
+      local lualine_y              = { 'progress' }
+
       require('lualine').setup {
         options = {
           icons_enabled = true,
@@ -11,27 +82,25 @@ return {
         sections = {
           lualine_a = {
             {
-              'filename',
-              file_status = true,     -- Displays file status (readonly status, modified status)
-              newfile_status = false, -- Display new file status (new file means no write after created)
-              path = 3,               -- 0: Just the filename
-              -- 1: Relative path
-              -- 2: Absolute path
-              -- 3: Absolute path, with tilde as the home directory
-              -- 4: Filename and parent dir, with tilde as the home directory
-
-              -- shorting_target = 40, -- Shortens path to leave 40 spaces in the window
-              -- for other components. (terrible name, any suggestions?)
-              symbols = {
-                modified = '[<!!>]',   -- Text to show when the file is modified.
-                readonly = '[--]',     -- Text to show when the file is non-modifiable or readonly.
-                unnamed = '[No Name]', -- Text to show for unnamed buffers.
-                newfile = '[New]',     -- Text to show for newly created file before first write
-              }
-            }
+              'mode',
+              fmt = function(str)
+                return str:sub(1, 1)
+              end,
+            },
           },
-          lualine_c = {
-          },
+          lualine_b = lualine_b,
+          lualine_c = lualine_c,
+          lualine_x = lualine_x,
+          lualine_y = lualine_y,
+          lualine_z = lualine_z,
+        },
+        inactive_sections = {
+          -- lualine_a = {},
+          lualine_b = lualine_b,
+          lualine_c = lualine_c,
+          lualine_x = lualine_x,
+          lualine_y = lualine_y,
+          lualine_z = lualine_z,
         },
       }
     end
