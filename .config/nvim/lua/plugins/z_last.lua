@@ -80,8 +80,9 @@
 --     end
 --   end
 -- end, { silent = true, noremap = true })
+--
 
-vim.keymap.set("n", "*", function()
+vim.keymap.set("n", "<C-h>", function()
   local popup = require("plenary.popup")
 
   local Win_id
@@ -110,8 +111,9 @@ vim.keymap.set("n", "*", function()
   local cb = function(_, sel)
     vim.notify(vim.inspect("Wo0p!"))
   end
-  ShowMenu(opts, cb)
+  -- ShowMenu(opts, cb)
 end, { silent = true, noremap = true })
+
 
 
 
