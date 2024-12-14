@@ -16,12 +16,14 @@
 --           vim.notify('Nothing sent from LSP')
 --           return
 --         end
+--         vim.notify(vim.inspect({ result = result }))
+--         print(vim.inspect({ result = result }))
 
 --         for _, res in pairs(result) do
 --           local len = #res.location.uri
 --           local file = string.sub(res.location.uri, len - 6, len - 3)
---           -- if file == "main" then
---           if res.kind == 12 then
+--           if file == "main" then
+--             -- if res.kind == 12 then
 --             -- if res.location.range.start.line == 18 then
 --             vim.notify(vim.inspect({ ressssss = res }))
 --             local kind = vim.lsp.util._get_symbol_kind_name(res.kind)
@@ -82,41 +84,73 @@
 -- end, { silent = true, noremap = true })
 --
 
+-- vim.keymap.set("n", "<C-h>", function()
+--   local popup = require("plenary.popup")
+
+--   local Win_id
+
+--   function ShowMenu(opts, cb)
+--     vim.api.nvim_win_set_cursor(0, { 5, 0 })
+--     local height = 20
+--     local width = 30
+--     local borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
+
+--     Win_id = popup.create(opts, {
+--       title = "MyProjects",
+--       highlight = "MyProjectWindow",
+--       line = math.floor(((vim.o.lines - height) / 5.0) - 1),
+--       col = math.floor((vim.o.columns - width) / 2),
+--       minwidth = width,
+--       minheight = height,
+--       borderchars = borderchars,
+--       callback = cb,
+--     })
+--     local bufnr = vim.api.nvim_win_get_buf(Win_id)
+--     vim.api.nvim_buf_set_keymap(bufnr, "n", "q", ":q<CR>", { silent = false })
+--   end
+
+--   local opts = {}
+--   local cb = function(_, sel)
+--     vim.notify(vim.inspect("Wo0p!"))
+--   end
+--   -- ShowMenu(opts, cb)
+-- end, { silent = true, noremap = true })
+
+local save_path = '~/.go_build.json'
+
 vim.keymap.set("n", "<C-h>", function()
-  local popup = require("plenary.popup")
+  local bufnr = vim.api.nvim_get_current_buf()
+  local filepath = vim.uv.fs_realpath(vim.api.nvim_buf_get_name(bufnr))
+  -- vim.notify(vim.inspect({ filepath = filepath }))
 
-  local Win_id
+  local project_root = require("project_nvim.project").get_project_root()
+  -- vim.notify(vim.inspect({ project_root = project_root }))
 
-  function ShowMenu(opts, cb)
-    vim.api.nvim_win_set_cursor(0, { 5, 0 })
-    local height = 20
-    local width = 30
-    local borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
+  local ms = require('vim.lsp.protocol').Methods
+  local method = ms.workspace_symbol
+  local result = vim.lsp.buf_request_sync(0, method, { query = "main" })
+  print(vim.inspect(result))
+  for _, ress in pairs(result) do
+    for _, resss in pairs(ress) do
+      for _, res in pairs(resss) do
+        print(res.name)
+        local len = #res.location.uri
+        -- local file = string.sub(res.location.uri, len - 6, len - 3)
+        -- vim.notify(vim.inspect({ file = file }))
 
-    Win_id = popup.create(opts, {
-      title = "MyProjects",
-      highlight = "MyProjectWindow",
-      line = math.floor(((vim.o.lines - height) / 5.0) - 1),
-      col = math.floor((vim.o.columns - width) / 2),
-      minwidth = width,
-      minheight = height,
-      borderchars = borderchars,
-      callback = cb,
-    })
-    local bufnr = vim.api.nvim_win_get_buf(Win_id)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "q", ":q<CR>", { silent = false })
+
+        if res.name == "main" then
+          if res.kind == 12 then
+            -- vim.cmd('e ' .. filename)
+            vim.notify(vim.inspect({ resname = res.name }))
+          end
+        end
+      end
+    end
   end
 
-  local opts = {}
-  local cb = function(_, sel)
-    vim.notify(vim.inspect("Wo0p!"))
-  end
-  -- ShowMenu(opts, cb)
+  local json
 end, { silent = true, noremap = true })
-
-
-
-
 
 
 
