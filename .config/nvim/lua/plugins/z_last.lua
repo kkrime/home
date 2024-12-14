@@ -119,37 +119,81 @@
 local save_path = '~/.go_build.json'
 
 vim.keymap.set("n", "<C-h>", function()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local filepath = vim.uv.fs_realpath(vim.api.nvim_buf_get_name(bufnr))
-  -- vim.notify(vim.inspect({ filepath = filepath }))
-
   local project_root = require("project_nvim.project").get_project_root()
-  -- vim.notify(vim.inspect({ project_root = project_root }))
 
   local ms = require('vim.lsp.protocol').Methods
   local method = ms.workspace_symbol
   local result = vim.lsp.buf_request_sync(0, method, { query = "main" })
-  print(vim.inspect(result))
-  for _, ress in pairs(result) do
-    for _, resss in pairs(ress) do
-      for _, res in pairs(resss) do
-        print(res.name)
-        local len = #res.location.uri
-        -- local file = string.sub(res.location.uri, len - 6, len - 3)
-        -- vim.notify(vim.inspect({ file = file }))
 
+  local projects = {}
+  projects[project_root] = {}
+  if result then
+    for _, ress in pairs(result) do
+      for _, resss in pairs(ress) do
+        for _, res in pairs(resss) do
+          if res.name == "main" then
+            -- filter functions only (vlaue 12)
+            if res.kind == 12 then
+              local filename = vim.uri_to_fname(res.location.uri)
 
-        if res.name == "main" then
-          if res.kind == 12 then
-            -- vim.cmd('e ' .. filename)
-            vim.notify(vim.inspect({ resname = res.name }))
+              if not vim.startswith(filename, project_root) then
+                goto continue
+              end
+
+              -- open file
+              vim.api.nvim_command('badd ' .. filename)
+
+              local bufnr = vim.fn.bufnr(filename)
+
+              local parser = vim.treesitter.get_parser(bufnr, "go")
+              local tree = parser:parse()[1]
+
+              local query = vim.treesitter.query.parse(
+                "go", -- Language
+                [[
+                  (package_clause
+                    (package_identifier) @main.package)
+                  (function_declaration
+                    name: (identifier) @main.function
+                    parameters: (parameter_list) @function.parameters
+                    !result
+                  (#eq? @main.package "main")
+                  (#eq? @function.parameters "()")
+                  (#eq? @main.function "main"))
+                ]])
+
+              local ts_query_match = 0
+              for id, node, _, _ in query:iter_captures(tree:root(), bufnr, nil, nil) do
+                -- local name = query.captures[id] -- name of the capture in the query
+                -- local function_name = vim.treesitter.get_node_text(node, bufnr)
+                -- vim.notify(vim.inspect({ filename = filename, name = name, function_name = function_name }))
+
+                -- if name == "main.function" then
+                --   local start_line, _, _, _ = node:range()
+                --   local main_line = vim.api.nvim_buf_get_lines(bufnr, start_line, start_line + 1, false)[1]
+                --   local main_match = main_line:match("^%s*func%s+main\\(\\)%s+{$")
+                --   -- if not main_match then
+                --   if main_match then
+                --     goto continue
+                --   end
+                -- end
+                ts_query_match = ts_query_match + 1
+                -- ::continue::
+              end
+
+              if ts_query_match == 3 then
+                table.insert(projects[project_root], { 0, filename })
+              end
+            end
           end
+          ::continue::
         end
       end
     end
   end
-
-  local json
+  local json = vim.json.encode(projects)
+  -- vim.notify(vim.inspect({ json = json }j)
+  vim.notify(vim.inspect({ projects = projects }))
 end, { silent = true, noremap = true })
 
 
