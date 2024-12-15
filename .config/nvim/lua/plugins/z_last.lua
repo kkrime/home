@@ -116,7 +116,9 @@
 --   -- ShowMenu(opts, cb)
 -- end, { silent = true, noremap = true })
 
-local save_path = '~/.go_build.json'
+local projects = {}
+local save_path = vim.fn.expand("$HOME/.go_build.json")
+vim.notify(vim.inspect({ var = var }))
 
 vim.keymap.set("n", "<C-h>", function()
   local project_root = require("project_nvim.project").get_project_root()
@@ -125,8 +127,9 @@ vim.keymap.set("n", "<C-h>", function()
   local method = ms.workspace_symbol
   local result = vim.lsp.buf_request_sync(0, method, { query = "main" })
 
-  local projects = {}
-  projects[project_root] = {}
+  local projects_ = {}
+  projects_[project_root] = {}
+  local order = 1
   if result then
     for _, ress in pairs(result) do
       for _, resss in pairs(ress) do
@@ -134,20 +137,21 @@ vim.keymap.set("n", "<C-h>", function()
           if res.name == "main" then
             -- filter functions only (vlaue 12)
             if res.kind == 12 then
-              local filename = vim.uri_to_fname(res.location.uri)
+              local filelocation = vim.uri_to_fname(res.location.uri)
 
-              if not vim.startswith(filename, project_root) then
+              if not vim.startswith(filelocation, project_root) then
                 goto continue
               end
 
               -- open file
-              vim.api.nvim_command('badd ' .. filename)
+              vim.api.nvim_command('badd ' .. filelocation)
 
-              local bufnr = vim.fn.bufnr(filename)
+              local bufnr = vim.fn.bufnr(filelocation)
 
               local parser = vim.treesitter.get_parser(bufnr, "go")
               local tree = parser:parse()[1]
 
+              -- search for 'package main' and 'func main()'
               local query = vim.treesitter.query.parse(
                 "go", -- Language
                 [[
@@ -163,26 +167,14 @@ vim.keymap.set("n", "<C-h>", function()
                 ]])
 
               local ts_query_match = 0
-              for id, node, _, _ in query:iter_captures(tree:root(), bufnr, nil, nil) do
-                -- local name = query.captures[id] -- name of the capture in the query
-                -- local function_name = vim.treesitter.get_node_text(node, bufnr)
-                -- vim.notify(vim.inspect({ filename = filename, name = name, function_name = function_name }))
-
-                -- if name == "main.function" then
-                --   local start_line, _, _, _ = node:range()
-                --   local main_line = vim.api.nvim_buf_get_lines(bufnr, start_line, start_line + 1, false)[1]
-                --   local main_match = main_line:match("^%s*func%s+main\\(\\)%s+{$")
-                --   -- if not main_match then
-                --   if main_match then
-                --     goto continue
-                --   end
-                -- end
+              for _, _, _, _ in query:iter_captures(tree:root(), bufnr, nil, nil) do
                 ts_query_match = ts_query_match + 1
-                -- ::continue::
               end
 
               if ts_query_match == 3 then
-                table.insert(projects[project_root], { 0, filename })
+                local projectname = getprojectname(filelocation)
+                projects_[project_root][projectname] = { order, filelocation }
+                order = order + 1
               end
             end
           end
@@ -191,12 +183,35 @@ vim.keymap.set("n", "<C-h>", function()
       end
     end
   end
-  local json = vim.json.encode(projects)
-  -- vim.notify(vim.inspect({ json = json }j)
-  vim.notify(vim.inspect({ projects = projects }))
+
+  -- table.insert(projects_[project_root], 'asset_generator')
+
+
+  writebuildsfile(projects_)
+  -- vim.notify(vim.inspect({ projects = projects_ }))
 end, { silent = true, noremap = true })
 
+function getprojectname(location)
+  local filename = location:match("^.*/(.*)%.go$")
+  if filename ~= "main" then
+    return filename
+  end
 
+  local name = location:match("^.*/(.*)/.*$")
+  return name
+end
 
+function writebuildsfile(data)
+  local data = vim.json.encode(data)
+  if projects ~= data then
+    require("bookmarks.util").write_file(save_path, data)
+  end
+end
+
+function readbuildsfile()
+  require("bookmarks.util").read_file(save_path, function(data)
+    projects = vim.json.decode(data)
+  end)
+end
 
 return {}
