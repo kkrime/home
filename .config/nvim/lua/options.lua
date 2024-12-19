@@ -18,3 +18,6 @@ vim.cmd [[ set noswapfile ]]
 
 --Line numbers
 vim.wo.number = true
+
+-- don't comment out new line
+vim.cmd [[ set formatoptions-=cro ]]
