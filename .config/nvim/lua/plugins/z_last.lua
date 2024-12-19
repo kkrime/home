@@ -117,7 +117,6 @@
 -- end, { silent = true, noremap = true })
 
 local projects = {}
-local projects_array = {}
 
 local save_path = vim.fn.expand("$HOME/.go_build.json")
 vim.notify(vim.inspect({ var = var }))
@@ -164,8 +163,8 @@ vim.keymap.set("n", "<C-h>", function()
                     parameters: (parameter_list) @function.parameters
                     !result
                   (#eq? @main.package "main")
-                  (#eq? @function.parameters "()")
                   (#eq? @main.function "main"))
+                  (#eq? @function.parameters "()")
                 ]])
 
               local ts_query_match = 0
@@ -188,56 +187,23 @@ vim.keymap.set("n", "<C-h>", function()
 
   writebuildsfile(projects_)
   projects = projects_
-  select_project(project_root, "asset_generator")
-  -- vim.notify(vim.inspect({ projects = projects_ }))
+  update_project_map(project_root, "asset_generator")
 end, { silent = true, noremap = true })
 
-function select_project(project_root, selection)
+function update_project_map(project_root, selection)
   local selection_idx = projects[project_root][selection][1]
   if selection_idx == 1 then
     return
   end
 
-  vim.notify(vim.inspect({ projects = projects }))
-  if not projects_array[project_root] then
-    projects_array[project_root] = {}
-    for project, proj_details in pairs(projects[project_root]) do
-      local proj_idx = proj_details[1]
-      local proj_dir = proj_details[2]
-      projects_array[project_root][proj_idx] = { project, proj_dir }
+  for project, proj_details in pairs(projects[project_root]) do
+    local proj_idx = proj_details[1]
+
+    if proj_idx < selection_idx then
+      projects[project_root][project][1] = proj_idx + 1
     end
   end
-  vim.notify(vim.inspect({ arr = projects_array[project_root] }))
-
-  if true then
-    -- return
-  end
-
-
-  local projects_selection_backup = projects[project_root][selection]
-  local projects_array_selection_backup = projects_array[project_root][projects_selection_backup[1]]
-  if selection_idx ~= projects_selection_backup[1] then
-    vim.notify(vim.inspect("nope"))
-    assert("nope")
-  end
-
-  -- vim.notify(vim.inspect({ selection_idx = selection_idx }))
-  vim.notify(vim.inspect({ selection_idx = selection_idx }))
-  for i = selection_idx, 2, -1 do
-    projects_array[project_root][i] = projects_array[project_root][(i - 1)]
-  end
-
-
-  projects_array[project_root][1] = projects_array_selection_backup
-  -- vim.notify(vim.inspect({ arr = projects_array[project_root] }))
-  -- projects_array[project_root][1] = nil
-  -- table.insert(projects_array[project_root], 1, projects_array_selection_backup)
-
-  -- vim.notify(vim.inspect({ arr = arr }))
-
-  for k, v in pairs(projects_array[project_root]) do
-    vim.notify(vim.inspect({ k = k, v = v }))
-  end
+  projects[project_root][selection][1] = 1
 end
 
 -- function select_project(project_root, selection)
@@ -247,20 +213,26 @@ end
 --   end
 
 --   vim.notify(vim.inspect({ projects = projects }))
---   local arr = {}
---   if not projects_array[project_root] then
+--   -- local arr = {}
+--   local arr
+--   -- projects_array[project_root] = {}
+--   -- local arr = projects_array[project_root]
+--   -- projects_array[project_root] = nil
+--   -- if not projects_array[project_root] then
+--   if not arr then
+--     arr = {}
 --     for project, proj_details in pairs(projects[project_root]) do
 --       local proj_idx = proj_details[1]
 --       local proj_dir = proj_details[2]
 --       arr[proj_idx] = { project, proj_dir }
 --     end
 --   end
---   vim.notify(vim.inspect({ arr = arr }))
+--   -- vim.notify(vim.inspect({ arr = arr }))
+--   -- print(vim.inspect({ arr = arr }))
 
 --   if true then
 --     -- return
 --   end
-
 
 --   local projects_selection_backup = projects[project_root][selection]
 --   local projects_array_selection_backup = arr[projects_selection_backup[1]]
@@ -277,15 +249,8 @@ end
 
 
 --   arr[1] = projects_array_selection_backup
---   vim.notify(vim.inspect({ arr = arr }))
---   -- projects_array[project_root][1] = nil
---   -- table.insert(projects_array[project_root], 1, projects_array_selection_backup)
-
---   -- vim.notify(vim.inspect({ arr = arr }))
-
---   for k, v in pairs(arr) do
---     -- vim.notify(vim.inspect({ k = k, v = v }))
---   end
+--   vim.notify(vim.inspect({ arrrrrr = arr }))
+--   print(vim.inspect({ arrrrrr = arr }))
 -- end
 
 -- function select_project(project_root, selection)
