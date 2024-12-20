@@ -116,10 +116,39 @@
 --   -- ShowMenu(opts, cb)
 -- end, { silent = true, noremap = true })
 
+local ShowMenu = function(opts, cb, lines)
+  -- vim.notify(vim.inspect({ lines = lines }))
+  -- vim.api.nvim_win_set_cursor(0, { 5, 0 })
+  local popup = require("plenary.popup")
+  local height = 20
+  local width = 30
+  local borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
+  Win_id = popup.create(opts, {
+    title = "Select Go Project",
+    -- highlight = "MyProjectWindow",
+    line = math.floor(((vim.o.lines - height) / 5.0) - 1),
+    col = math.floor((vim.o.columns - width) / 2),
+    minwidth = width,
+    minheight = height,
+    borderchars = borderchars,
+    callback = cb,
+  })
+  local bufnr = vim.api.nvim_win_get_buf(Win_id)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "q", ":q<CR>", { silent = false })
+  -- vim.api.nvim_buf_set_option(bufnr, 'guicursor', 'a:Cursor/off')
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+  -- disable insert mode
+  vim.cmd("set nomodifiable")
+  -- https://github.com/goolord/alpha-nvim/discussions/75
+  local hl = vim.api.nvim_get_hl_by_name('Cursor', true)
+  hl.blend = 0
+  vim.api.nvim_set_hl(0, 'Cursor', hl)
+  vim.opt.guicursor:append('a:Cursor/lCursor')
+end
+
 local projects = {}
 
 local save_path = vim.fn.expand("$HOME/.go_build.json")
-vim.notify(vim.inspect({ var = var }))
 
 vim.keymap.set("n", "<C-h>", function()
   local project_root = require("project_nvim.project").get_project_root()
@@ -144,6 +173,7 @@ vim.keymap.set("n", "<C-h>", function()
                 goto continue
               end
 
+              -- TODO check if filelocation already opened
               -- open file
               vim.api.nvim_command('badd ' .. filelocation)
 
@@ -160,11 +190,11 @@ vim.keymap.set("n", "<C-h>", function()
                     (package_identifier) @main.package)
                   (function_declaration
                     name: (identifier) @main.function
-                    parameters: (parameter_list) @function.parameters
+                    parameters: (parameter_list) @main.function.parameters
                     !result
                   (#eq? @main.package "main")
                   (#eq? @main.function "main"))
-                  (#eq? @function.parameters "()")
+                  (#eq? @main.function.parameters "()")
                 ]])
 
               local ts_query_match = 0
@@ -187,7 +217,15 @@ vim.keymap.set("n", "<C-h>", function()
 
   writebuildsfile(projects_)
   projects = projects_
+  -- vim.notify(vim.inspect({ projects = projects }))
   update_project_map(project_root, "asset_generator")
+
+  opts = {}
+  local cb = function(_, sel)
+    vim.notify(vim.inspect("Wo0p!"))
+  end
+  ShowMenu(opts, cb, projects_[project_root]['menu'])
+  -- ShowMenu(opts, cb)
 end, { silent = true, noremap = true })
 
 function update_project_map(project_root, selection)
@@ -195,15 +233,21 @@ function update_project_map(project_root, selection)
   if selection_idx == 1 then
     return
   end
-
+  -- vim.notify(vim.inspect({ projects = projects }))
+  projects[project_root]['menu'] = nil
+  local lines = {}
   for project, proj_details in pairs(projects[project_root]) do
     local proj_idx = proj_details[1]
-
     if proj_idx < selection_idx then
-      projects[project_root][project][1] = proj_idx + 1
+      proj_idx = proj_idx + 1
+      projects[project_root][project][1] = proj_idx
     end
+    lines[proj_idx] = project
   end
   projects[project_root][selection][1] = 1
+  lines[1] = selection
+
+  projects[project_root]['menu'] = lines
 end
 
 -- function select_project(project_root, selection)
