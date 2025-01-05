@@ -173,7 +173,7 @@ return {
         cmd = { "gopls" },
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
         -- root_dir = util.root_pattern("go.work", "go.mod", ".git", ".gitignore"),
-        root_dir = util.root_pattern("go.work", ".git"),
+        root_dir = util.root_pattern("go.mod", "go.work", ".git"),
         settings = {
           gopls = {
             buildFlags = { "-tags=integration some-other-tags..." },
@@ -344,13 +344,13 @@ return {
   {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
-    opts = {
-      library = {
-        -- See the configuration section for more details
-        -- Load luvit types when the `vim.uv` word is found
-        -- { path = "luvit-meta/library", words = { "vim%.uv" } },
-      },
-    },
+    -- opts = {
+    --   library = {
+    --     -- See the configuration section for more details
+    --     -- Load luvit types when the `vim.uv` word is found
+    --     -- { path = "luvit-meta/library", words = { "vim%.uv" } },
+    --   },
+    -- },
   },
   -- { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
   -- {                                        -- optional cmp completion source for require statements and module annotations

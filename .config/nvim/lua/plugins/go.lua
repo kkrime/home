@@ -10,7 +10,13 @@ return {
     lazy = true,
     config = function()
       local go = require("go")
-      go.setup()
+      go.setup({
+        buildtargets = {
+          get_project_root_func = require("project_nvim.project").get_project_root,
+          select_buildtarget_callback = require('lualine').refresh,
+          close_menu_keys = { '<Esc>', '' }
+        }
+      })
 
       local saveAllProjectGoFiles = function()
         local project_dir = require("project_nvim.project").get_project_root()
@@ -34,7 +40,7 @@ return {
       -- build
       vim.keymap.set({ 'n', 'i' }, "<C-b>", function()
         saveAllProjectGoFiles()
-        vim.api.nvim_command([[:GoBuild %]])
+        vim.api.nvim_command([[:GoBuild]])
       end, { silent = true, noremap = true })
 
       -- -- run

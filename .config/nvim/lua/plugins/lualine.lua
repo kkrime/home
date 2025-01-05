@@ -28,6 +28,8 @@ return {
       custom_gruvbox.visual['y']   = { bg = custom_gruvbox.visual.a.bg, fg = 'black', gui = 'bold' }
       custom_gruvbox.inactive['y'] = { bg = '#3c3836', fg = 'white', gui = 'bold' }
 
+      local go_buildtarget         = require('go.buildtargets').get_current_buildtarget
+
       local lualine_b              = {
         {
           'filename',
@@ -62,6 +64,16 @@ return {
       local lualine_x              = {
         {
           'filetype',
+          fmt = function(str)
+            if str == 'go' then
+              local buildtarget = go_buildtarget()
+              if buildtarget then
+                return buildtarget
+              end
+            end
+            return str
+          end,
+
           color = { fg = 'white', bg = 'black', gui = 'bold' }
         },
       }
