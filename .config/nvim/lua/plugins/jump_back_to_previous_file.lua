@@ -4,13 +4,13 @@ vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     for _, winid in pairs(vim.api.nvim_list_wins()) do
       vim.api.nvim_win_call(winid, function()
-        vim.cmd("clearjumps")
+        vim.cmd('clearjumps')
       end)
     end
   end
 })
 
-vim.keymap.set("n", "<C-]>",
+vim.keymap.set("n", '<C-]>',
   function()
     local jumplist, idx = unpack(vim.fn.getjumplist(vim.fn.winnr()))
 
