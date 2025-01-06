@@ -20,4 +20,8 @@ vim.cmd [[ set noswapfile ]]
 vim.wo.number = true
 
 -- don't comment out new line
-vim.cmd [[ set formatoptions-=cro ]]
+-- see https://neovim.discourse.group/t/options-formatoptions-not-working-when-put-in-init-lua/3746/4
+vim.api.nvim_create_autocmd("VimEnter", {
+  pattern = "*",
+  command = "set formatoptions=q"
+})
