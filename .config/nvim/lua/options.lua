@@ -21,7 +21,5 @@ vim.wo.number = true
 
 -- don't comment out new line
 -- see https://neovim.discourse.group/t/options-formatoptions-not-working-when-put-in-init-lua/3746/4
-vim.api.nvim_create_autocmd("VimEnter", {
-  pattern = "*",
-  command = "set formatoptions=q"
-})
+-- commented out /opt/homebrew/Cellar/neovim/0.10.2_1/share/nvim/runtime/ftplugin/lua.vim line 20
+vim.cmd [[ set formatoptions=q ]]
