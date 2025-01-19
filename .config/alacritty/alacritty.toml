@@ -1,0 +1,9 @@
+[font]
+  size = 8.5
+[keyboard]
+bindings = [
+  { key = "K",     mods = "Command", chars = "\uE170" },
+  { key = "J",     mods = "Command", chars = "\uE171" },
+  { key = "T",     mods = "Command", chars = "\uE172" },
+  { key = "X",     mods = "Command", chars = "\uE100" },
+]
