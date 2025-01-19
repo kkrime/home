@@ -11,3 +11,4 @@ bindings = [
 ]
 [window]
   decorations = "buttonless"
+  startup_mode = "Maximized"
