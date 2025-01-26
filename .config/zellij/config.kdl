@@ -9,6 +9,10 @@ keybinds {
     }
     // shared_except "locked" {
     shared {
+          // bind "" { Run "zellij" "action" "new-tab" "--cwd" "$(pwd)" "--layout" "default"; } 
+          // bind "" { Run "pwd"; } 
+          // bind "" { Run "zellij" "action" "new-tab"; } 
+          // bind "" { NewTab { cwd "$(cat /tmp/zellij)"; }; } 
           bind "" { NewTab; } 
           bind "" { GoToNextTab; }
           bind "" { GoToPreviousTab; }
