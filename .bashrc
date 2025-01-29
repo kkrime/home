@@ -72,6 +72,11 @@ xterm*|rxvt*)
     ;;
 esac
 
+
+# NOTES
+# TO generate self-signing certificate:
+# openssl req -newkey rsa:2048 -x509 -nodes -out server.pem -keyout server.pem -days 365
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
