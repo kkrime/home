@@ -72,6 +72,12 @@ xterm*|rxvt*)
     ;;
 esac
 
+
+# NOTES
+# TO generate self-signing certificate:
+# https://www.openldap.org/pub/ksoper/OpenLDAP_TLS_obsolete.html#4.1
+# openssl req -newkey rsa:2048 -x509 -nodes -out server.pem -keyout server.pem -days 364
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
