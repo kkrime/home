@@ -10,6 +10,13 @@ return {
   },
   {
     'hrsh7th/nvim-cmp',
+    dependencies = {
+      {
+        "MattiasMTS/cmp-dbee",
+        ft = "sql", -- optional but good to have
+        opts = {},  -- needed
+      },
+    },
     config = function(_)
       local cmp = require("cmp")
       local ls = require("luasnip")
@@ -71,6 +78,7 @@ return {
           { name = 'nvim_lua' },
           { name = 'luasnip' }, -- For luasnip users.
           { name = 'lazydev' },
+          { name = "cmp-dbee" },
         }, {
           { name = 'buffer' },
         })
