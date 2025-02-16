@@ -15,7 +15,7 @@ local find_or_create_project_bookmark_group = function()
 
   local project_name = string.gsub(project_root, "^" .. os.getenv("HOME") .. "/", "")
   local Repo = require("bookmarks.domain.repo")
-  local bookmark_list = nil
+  bookmark_list = nil
 
   for _, bl in ipairs(Repo.find_lists()) do
     if bl.name == project_name then

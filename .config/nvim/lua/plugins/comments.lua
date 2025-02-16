@@ -28,15 +28,13 @@ return {
 
         -- copy line
         vim.fn.setreg('a', lines)
+        vim.notify(vim.inspect({ "lines", lines }))
 
         -- comment out line
         vim.api.nvim_feedkeys("gcl", 'x', true)
 
-        -- move to next line
-        vim.api.nvim_feedkeys("o", 'x', true)
-
         -- paste lins
-        vim.api.nvim_paste(vim.fn.getreg('a'), true, -1)
+        vim.api.nvim_feedkeys("\"ap", 'x', true)
 
         -- set cursor position
         vim.api.nvim_win_set_cursor(0, { row + 1, col })
@@ -50,12 +48,8 @@ return {
         vim.api.nvim_feedkeys("V" .. lines .. "j", 'x', true)
         vim.api.nvim_feedkeys("gcl", 'x', true)
 
-        -- move to first line after selected lines
-        vim.api.nvim_win_set_cursor(0, { end_line, 0 })
-        vim.api.nvim_feedkeys("o", 'x', true)
-
         -- paste lins
-        vim.api.nvim_paste(vim.fn.getreg('a'), true, -1)
+        vim.api.nvim_feedkeys("\"ap", 'x', true)
         vim.api.nvim_win_set_cursor(0, { end_line + 1, 0 })
 
         -- set cursor location
