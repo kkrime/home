@@ -46,7 +46,7 @@
     nv = --name-verify
     ps = push
     pl = pull
-    r = reset
+    r = restore --staged
     rh = r --hard
     rhh = rh head
     s = status
