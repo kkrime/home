@@ -201,7 +201,7 @@ alias cd='z'
 alias cpr='~/.tools/github/github_create_PR.sh'
 alias pcpr='~/.tools/github/github_push_and_create_PR.sh'
 alias cmpcpr='~/.tools/github/github_commit_push_and_create_PR.sh'
-alias cmp='~/.tools/commit_push.sh'
+alias cmp='~/.tools/github/commit_push.sh'
 
 # git 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
@@ -236,6 +236,8 @@ alias sk='cd ~/go/src/sky'
 alias config='cd ~/.config/nvim/lua/plugins/'
 alias plugins='cd ~/.local/share/nvim/lazy/'
 
+# Dbee
+alias db='v -c "Dbee toggle"'
 
 # svelte
 export PNPM_HOME="/Users/iraq/Library/pnpm"
