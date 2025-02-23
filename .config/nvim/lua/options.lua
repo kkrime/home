@@ -22,4 +22,5 @@ vim.wo.number = true
 -- don't comment out new line
 -- see https://neovim.discourse.group/t/options-formatoptions-not-working-when-put-in-init-lua/3746/4
 -- commented out /opt/homebrew/Cellar/neovim/0.10.2_1/share/nvim/runtime/ftplugin/lua.vim line 20
-vim.cmd [[ set formatoptions=q ]]
+-- vim.cmd [[ set formatoptions=q ]]
+vim.cmd [[ set formatoptions-=or ]]
