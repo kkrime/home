@@ -96,7 +96,7 @@ return {
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
-          { name = 'path' }
+          { name = 'path' },
         }, {
           { name = 'cmdline' }
         }),
@@ -162,10 +162,16 @@ return {
         },
       }
 
+      -- lspconfig.protols.setup {
+      --   capabilities = capabilities,
+      --   -- cmd = { "clangd" },
+      --   filetypes = { "proto" },
+      -- }
+
       lspconfig.clangd.setup {
         capabilities = capabilities,
         cmd = { "clangd" },
-        filetypes = { "c", "h", "cpp", "proto" },
+        filetypes = { "c", "h", "cpp" },
         root_dir = util.root_pattern(
           '.clangd',
           '.clang-tidy',
