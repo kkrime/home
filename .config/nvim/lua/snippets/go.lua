@@ -20,7 +20,7 @@ local file_pattern = "*.go"
 
 -- fmmt
 local print_var = s("ff", {
-  t("fmt.Printf(\""),
+  t("fmt.Printf(\"@@ >>>>>>>>>>>>>>>>>>>>>>>>>>>> "),
   rep(1),
   t(" = %+v\\n\", "),
   i(1, "var"),
@@ -29,7 +29,7 @@ local print_var = s("ff", {
 table.insert(snippets, print_var)
 
 local print_ln = s("fl", {
-  t("fmt.Println(\""),
+  t("fmt.Println(\"@@ >>>>>>>>>>>>>>>>>>>>>>>>>>>> "),
   i(1, ""),
   t("\")"),
 })
