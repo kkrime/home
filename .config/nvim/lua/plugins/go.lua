@@ -10,7 +10,14 @@ return {
     lazy = true,
     config = function()
       local go = require("go")
-      go.setup()
+      go.setup({
+        null_ls = {},
+        buildtargets = {
+          get_project_root_func = require("project_nvim.project").get_project_root,
+          select_buildtarget_callback = require('lualine').refresh,
+          close_menu_keys = { '<Esc>', '' }
+        }
+      })
 
       local saveAllProjectGoFiles = function()
         local project_dir = require("project_nvim.project").get_project_root()
@@ -55,13 +62,14 @@ return {
       end, { silent = true, noremap = true })
 
       local format_sync_grp = vim.api.nvim_create_augroup("goimports", {})
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        pattern = "*.go",
-        callback = function()
-          require('go.format').goimports()
-        end,
-        group = format_sync_grp,
-      })
+      -- vim.api.nvim_create_autocmd("BufWritePre", {
+      --   pattern = "*.go",
+      --   callback = function(args)
+      --     vim.notify(vim.inspect({ "args", args }))
+      --     require('go.format').goimports()
+      --   end,
+      --   group = format_sync_grp,
+      -- })
     end,
     event = { "CmdlineEnter" },
     ft = { "go", 'gomod' },
