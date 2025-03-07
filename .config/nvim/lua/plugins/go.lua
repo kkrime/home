@@ -11,6 +11,7 @@ return {
     config = function()
       local go = require("go")
       go.setup({
+        null_ls = {},
         buildtargets = {
           get_project_root_func = require("project_nvim.project").get_project_root,
           select_buildtarget_callback = require('lualine').refresh,
