@@ -8,11 +8,15 @@ return {
       require("dbee").install()
     end,
     config = function()
-      require("dbee").setup {
+      require("dbee").setup({
+        default_connection = 'zitadel1',
+        result = {
+          focus_result = false,
+        },
         sources = {
           require("dbee.sources").FileSource:new(vim.fn.expand("$HOME") .. "/.persistence.json"),
         },
-      }
+      })
     end,
   },
 }
