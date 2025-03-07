@@ -199,7 +199,7 @@ return {
               unusedparams = true,
             },
             -- ["build.experimentalWorkspaceModule"] = true,
-            -- ["formatting.gofumpt"] = true,
+            ["formatting.gofumpt"] = true,
             ["staticcheck"] = true,
             ["ui.verboseOutput"] = true,
           },
@@ -244,7 +244,17 @@ return {
       -- })
 
       -- auto format on save
-      vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*",
+        callback = function(args)
+          local extension = string.sub(args.file, (#args.file - 2), #args.file)
+          if extension == ".go"  then
+            require('go.format').goimports()
+          else
+            vim.lsp.buf.format()
+          end
+        end,
+      })
 
       local opts = { buffer = buffer }
       vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
