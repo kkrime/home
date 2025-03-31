@@ -3,6 +3,10 @@
   normal = { family = "JetBrainsMono Nerd Font", style="Regular" }
 [keyboard]
 bindings = [
+  { key = "+", mods = "Control|Shift", action = "IncreaseFontSize" },
+  { key = "-", mods = "Control", action = "DecreaseFontSize" },
+  { key = "=", mods = "Control", action = "ResetFontSize" },
+
   { key = "K",     mods = "Command", chars = "\uE170" },
   { key = "J",     mods = "Command", chars = "\uE171" },
   { key = "T",     mods = "Command", chars = "\uE172" },

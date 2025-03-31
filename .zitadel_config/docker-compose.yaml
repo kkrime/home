@@ -43,10 +43,10 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - 'zitadel_db:/var/lib/postgresql/data'
+      - 'zitadel_dbb:/var/lib/postgresql/data'
 
 volumes:
-  zitadel_db:
+  zitadel_dbb:
     driver: local
 
 networks:
