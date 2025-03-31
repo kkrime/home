@@ -23,7 +23,6 @@ return {
           comments = { italic = true, bold = true },
         },
         sidebars = { "qf", "vista_kind", "terminal", "packer" },
-        -- Change the "hint" color to the "orange" color, and make the "error" color bright red
         on_colors = function(colors)
           colors.hint    = colors.orange
           colors.error   = "#ff0000"
@@ -31,6 +30,11 @@ return {
         end,
         on_highlights = function(highlights, colors)
           highlights.MatchParen = { bg = "#ff0000", fg = "#FFFFFF", bold = true }
+
+          highlights.DiffText = {
+            bg = colors.warning,
+            fg = "#000000",
+          }
         end,
       })
       vim.cmd [[colorscheme tokyonight]]

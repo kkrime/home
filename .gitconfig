@@ -1,55 +1,59 @@
 [user]
 	name = Iraq Jaber
-	email = IraqJaber@gmail.com
+	email = iraq+github@zitadel.com
 
 [core]
-    pager = delta
-	autocrlf = false
-	editor = vim
+  pager = delta
+  autocrlf = false
+  editor = nvim
 
 [interactive]
-    diffFilter = delta
+  diffFilter = delta
 
 [delta]
-    features = my-dark-theme zebra-dark
-    navigate = true  # use n and N to move between diff sections
-    line-numbers = true
-    show-syntax-themes = true
+  features = my-dark-theme zebra-dark
+  navigate = true  # use n and N to move between diff sections
+  line-numbers = true
+  show-syntax-themes = true
 
 [merge]
-	tool = vimdiff
+  prompt = false
+	tool = nvimdiff
 
+[difftool]
+  prompt = false
 [diff]
-    colorMoved = default
+	tool = nvimdiff
+  colorMoved = default
 
 [alias]
-    a = add
-    br = branch
-    co = checkout
-    cob = co -b
-    cobf = cob --force
-    cof = checkout --force
-    cm = commit
-    cmane = cm --amend --no-edit
-    cmm = cm -m
-    cmf = cm --fixup 
-    cmfh = cmf head
-    cmfhnv = cmfh --no-verify
-    cp = cherry-pick
-    d = diff
-    dc = d --cached
-    dt =  difftool
-    l = log
-    m = merge
-    mt = mergetool
-    no = --name-only
-    nv = --name-verify
-    ps = push
-    pl = pull
-    r = restore --staged
-    rh = r --hard
-    rhh = rh head
-    s = status
-    now = cmane --date=now
+  a = add
+  br = branch
+  co = checkout
+  cob = co -b
+  cobf = cob --force
+  cof = checkout --force
+  cm = commit
+  cmane = cm --amend --no-edit
+  cmm = cm -m
+  cmf = cm --fixup 
+  cmfh = cmf head
+  cmfhnv = cmfh --no-verify
+  cp = cherry-pick
+  d = diff
+  dc = d --cached
+  dt =  difftool
+  l = log
+  m = merge
+  mt = mergetool
+  no = --name-only
+  nv = --name-verify
+  ps = push
+  pl = pull
+  r = restore --staged
+  rh = r --hard
+  rhh = rh head
+  s = status
+  now = cmane --date=now
 [url "git@github.com:"]
 	insteadOf = https://github.com/

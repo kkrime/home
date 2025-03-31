@@ -51,6 +51,7 @@ return {
     require("bookmarks").setup(opts) -- you must call setup to init sqlite db
 
     vim.keymap.set("n", "md", "<cmd>BookmarksMark<CR><CR>", { silent = true, noremap = true })
+
     vim.keymap.set("n", "mm", function()
       vim.cmd('BookmarksMark')
       vim.schedule(function()
