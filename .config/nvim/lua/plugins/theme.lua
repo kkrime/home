@@ -29,13 +29,54 @@ return {
           colors.comment = "#B38B6D"
         end,
         on_highlights = function(highlights, colors)
-          highlights.MatchParen = { bg = "#ff0000", fg = "#FFFFFF", bold = true }
+          -- matching parentheses
+          highlights.MatchParen = {
+            bg = "#ff0000",
+            fg = "#FFFFFF",
+            bold = true,
+          }
+
+          highlights.CurSearch = {
+            bg = "#ffffff",
+            fg = colors.bg_dark,
+            bold = true, -- Bold style
+          }
+          highlights.Search = {
+            bg = colors.warning,
+            fg = colors.bg_dark,
+            bold = true, -- Bold style
+          }
+
+          highlights.TelescopePreviewTitle = {
+            fg = colors.red, -- Red matching text
+            bold = true,     -- Optional: Add bold styling
+          }
+
+          highlights.TelescopePreviewMatch = {
+            fg = colors.red, -- Red matching text
+            bold = true,     -- Optional: Add bold styling
+          }
+
+          highlights.TelescopePreviewLine = {
+            -- bg = "#55555e",
+            bg = "#55558e",
+          }
+
+          -- vim.cmd('highlight link TelescopePreviewLine NONE')
+
+          highlights.TelescopeMatching = {
+            fg = colors.red, -- Red matching text
+            bold = true,
+          }
 
           highlights.DiffText = {
             bg = colors.warning,
             fg = "#000000",
           }
         end,
+        plugins = {
+          telescope = true, -- Ensure Telescope integration is enabled
+        },
       })
       vim.cmd [[colorscheme tokyonight]]
     end
