@@ -15,6 +15,7 @@
   navigate = true  # use n and N to move between diff sections
   line-numbers = true
   show-syntax-themes = true
+  side-by-side = true
 
 [merge]
   prompt = false

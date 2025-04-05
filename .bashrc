@@ -144,6 +144,8 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/go/bin
 export GOTRACEBACK=single 
 
+# rust
+export PATH=~/.cargo/bin:$PATH
 # Brew
 export PATH=/opt/homebrew/bin:$PATH
 
