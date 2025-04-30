@@ -248,7 +248,7 @@ return {
         pattern = "*",
         callback = function(args)
           local extension = string.sub(args.file, (#args.file - 2), #args.file)
-          if extension == ".go"  then
+          if extension == ".go" then
             require('go.format').goimports()
           else
             vim.lsp.buf.format()
@@ -365,6 +365,8 @@ return {
         local keys = vim.api.nvim_replace_termcodes('A', true, false, true)
         vim.api.nvim_feedkeys(keys, 'm', false)
       end, { silent = true })
+
+      vim.lsp.set_log_level("INFO")
     end
   },
   {
