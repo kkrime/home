@@ -1,6 +1,7 @@
 [user]
 	name = Iraq Jaber
 	email = iraq+github@zitadel.com
+	signingkey = /Users/work/.ssh/zitadel
 
 [core]
   pager = delta
@@ -58,3 +59,7 @@
   now = cmane --date=now
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
