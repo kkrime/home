@@ -29,7 +29,6 @@ end, { silent = true, noremap = true })
 
 
 vim.keymap.set("n", "(", function()
-  local match = vim.fn.getmatches()
   local word = vim.fn.expand("<cword>")
   vim.cmd("match Search /\\<" .. word .. "\\>/")
 end, { noremap = true, silent = true })
