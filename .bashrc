@@ -196,7 +196,7 @@ alias g="git"
 __git_complete g __git_main
 
 # awk
-alias ch=choose
+alias ch='choose --one-indexed'
 
 # vim
 alias v='vim -O'
@@ -247,4 +247,6 @@ eval "$(atuin init bash --disable-up-arrow)"
 # brew install ytop bandwhich
 # . "$HOME/.cargo/env"
 
-
+# zitadel
+source ~/.zitadel_config/setup.sh
+# cd ~/go/src/zitadel
