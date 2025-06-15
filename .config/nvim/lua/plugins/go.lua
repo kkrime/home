@@ -30,9 +30,13 @@ return {
           if file_in_project then
             fileType = vim.fn.getbufvar(buf_hndl, "&filetype")
             if fileType == "go" then
-              vim.api.nvim_buf_call(buf_hndl, function()
-                vim.cmd('w')
-              end)
+              if string.sub(file, #file - 5, #file) ~= ".pb.go" then
+                vim.api.nvim_buf_call(buf_hndl, function()
+                  vim.cmd('w')
+                end)
+              else
+                vim.notify(vim.inspect({ "string.sub(file, #file - 5, #file)", string.sub(file, #file - 5, #file) }))
+              end
             end
           end
         end
