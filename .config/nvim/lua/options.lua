@@ -24,3 +24,6 @@ vim.wo.number = true
 -- commented out /opt/homebrew/Cellar/neovim/0.10.2_1/share/nvim/runtime/ftplugin/lua.vim line 20
 -- vim.cmd [[ set formatoptions=q ]]
 vim.cmd [[ set formatoptions-=or ]]
+
+vim.opt.signcolumn = "auto:3"
+vim.o.readonly = false

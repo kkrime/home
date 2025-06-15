@@ -355,7 +355,14 @@ return {
 
       -- Key bindings
       vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", { silent = true, noremap = true })
-      vim.keymap.set("n", "gr", "<cmd>Lspsaga finder<CR>", { silent = true })
+      -- vim.keymap.set("n", "gh", "<cmd>Lspsaga finder<CR>", { silent = true })
+      -- vim.keymap.del("n", "gri")
+      -- vim.keymap.del("n", "grr")
+      -- vim.keymap.del("n", "gra")
+      -- vim.keymap.del("n", "grn")
+
+      vim.keymap.set('n', 'gr', function() require('telescope.builtin').lsp_references() end,
+        { noremap = true, silent = true })
       vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<cr>', { silent = true })
       vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
       -- vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true })
