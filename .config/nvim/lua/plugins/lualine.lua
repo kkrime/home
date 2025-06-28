@@ -59,7 +59,7 @@ return {
         },
       }
 
-      local go_get_current_buildtarget = require('go.buildtargets').get_current_buildtarget
+      local go_get_current_buildtarget = require('buildtargets').get_current_buildtarget
       local lualine_x                  = {
         {
           'filetype',
