@@ -1,7 +1,5 @@
 vim.keymap.set("n", "<C-h>", function()
-  -- require("go.buildtargets").select_buildtarget()
-  -- vim.cmd('Lazy reload go.nvim')
-  require("go.buildtargets").select_buildtarget()
+  require("buildtargets").select_buildtarget()
 end)
 
 -- local target = nil
