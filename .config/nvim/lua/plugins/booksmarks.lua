@@ -33,12 +33,6 @@ local find_or_create_project_bookmark_group = function()
   bookmark_list_map[project_root] = bookmark_list
 end
 
-vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter" }, {
-  group = vim.api.nvim_create_augroup("BookmarksGroup", {}),
-  pattern = { "*" },
-  callback = find_or_create_project_bookmark_group,
-})
-
 return {
   "LintaoAmons/bookmarks.nvim",
   dependencies = {
@@ -47,6 +41,12 @@ return {
     { "stevearc/dressing.nvim" } -- optional: better UI
   },
   config = function()
+    vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter" }, {
+      group = vim.api.nvim_create_augroup("BookmarksGroup", {}),
+      pattern = { "*" },
+      callback = find_or_create_project_bookmark_group,
+    })
+
     local opts = {}                  -- go to the following link to see all the options in the deafult config file
     require("bookmarks").setup(opts) -- you must call setup to init sqlite db
 

@@ -43,9 +43,33 @@ return {
       end
 
       -- build
+      local buildtargets = require("buildtargets")
       vim.keymap.set({ 'n', 'i' }, "<C-b>", function()
         saveAllProjectGoFiles()
-        vim.api.nvim_command([[:GoBuild %]])
+
+        local target_location = buildtargets.get_current_buildtarget_location()
+        if target_location then
+          vim.api.nvim_command([[:GoBuild ]] .. target_location)
+        else
+          coroutine.wrap(function()
+            local co = coroutine.running()
+            local err = buildtargets.select_buildtarget(co)
+            if err then
+              vim.notify("error in select_buildgarget()" .. " failed", vim.log.levels.ERROR)
+              return
+            end
+            -- wait for user to select target
+            target_location, err = coroutine.yield()
+            if err then
+              vim.notify("error getting build target" .. " failed", vim.log.levels.ERROR)
+              return
+            elseif not target_location then
+              -- user closed menu without making a selection
+              return
+            end
+            vim.api.nvim_command([[:GoBuild ]] .. target_location)
+          end)()
+        end
       end, { silent = true, noremap = true })
 
       -- -- run
@@ -80,3 +104,4 @@ return {
     build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   }
 }
+

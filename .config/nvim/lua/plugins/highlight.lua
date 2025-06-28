@@ -3,13 +3,20 @@ local function search(direction)
   -- vim.notify(vim.inspect({ "match", match }))
   if next(match) == nil then
     local search_pattern = vim.fn.getreg('/')
+    vim.notify(vim.inspect({ "search_pattern", search_pattern }))
+    if search_pattern == 'v:null' then
+      return
+    end
     if search_pattern == '@@' then
-      -- return
+      return
     end
     vim.cmd('normal! ' .. direction)
   else
-    vim.notify("branch")
     local word = match[1].pattern
+    vim.notify(vim.inspect({ "word", word }))
+    if word == nil then
+      return
+    end
     vim.fn.setreg('/', word)
     vim.cmd('normal! ' .. direction)
   end
