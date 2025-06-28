@@ -1,6 +1,5 @@
 return {
-  dir = '/Users/work/nvim/build.nvim',
-  name = 'build.nvim',
+  "kkrime/build.nvim",
   lazy = false,
   config = function()
     local buildtargets = require("buildtargets")
