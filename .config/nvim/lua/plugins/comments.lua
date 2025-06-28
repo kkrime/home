@@ -56,7 +56,6 @@ return {
         local line = vim.api.nvim_get_current_line()
         local char = line:sub(1, 1)
         if char == " " then
-          vim.notify("here")
           vim.api.nvim_feedkeys("I", 'x', true)
           vim.api.nvim_feedkeys("l", 'x', true)
         end

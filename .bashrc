@@ -152,7 +152,7 @@ export PATH=~/.cargo/bin:$PATH
 export PATH=/usr/local/homebrew/bin:$PATH
 export PATH=/opt/homebrew/bin:$PATH
 alias ibrew='arch -x86_64 /usr/local/homebrew/bin/brew'
-# brew install starship nvim bat exa tmux fd git-delta rg rm-improved zellij atuin
+# brew install starship nvim bat exa tmux fd git-delta rg rm-improved zellij atuin zoxide
 
 # /usr/local/bin
 export PATH=$PATH:/usr/local/bin
@@ -193,6 +193,9 @@ alias .bash='nvim ~/.bashrc'
 
 # replace rip with rip
 alias rm='rip'
+
+# cd --> zoxide
+alias cd='z'
 
 # github
 alias cpr='~/.tools/github/github_create_PR.sh'
@@ -246,6 +249,8 @@ esac
 export PATH=$PATH:/opt/homebrew/Cellar/pnpm\@8/8.15.8_1/bin
 
 
+# zoxide
+eval "$(zoxide init bash)"
 # starship
 eval "$(starship init bash)"
 # zellij
