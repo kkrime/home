@@ -182,6 +182,9 @@ alias .bash='vim ~/.bashrc'
 # replace rip with rip
 alias rm='rip'
 
+# cd --> zoxide
+alias cd='z'
+
 # github
 alias cpr='~/.tools/github/github_create_PR.sh'
 alias pcpr='~/.tools/github/github_push_and_create_PR.sh'
@@ -233,6 +236,8 @@ esac
 export PATH=$PATH:/opt/homebrew/Cellar/pnpm\@8/8.15.8_1/bin
 
 
+# zoxide
+eval "$(zoxide init bash)"
 # starship
 eval "$(starship init bash)"
 # zellij
