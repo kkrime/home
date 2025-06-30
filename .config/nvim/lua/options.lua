@@ -27,3 +27,13 @@ vim.cmd [[ set formatoptions-=or ]]
 
 vim.opt.signcolumn = "auto:3"
 vim.o.readonly = false
+
+
+-- Enable spell checking
+vim.opt.spell = true
+vim.api.nvim_create_autocmd("Syntax", {
+  pattern = "*",
+  callback = function()
+    vim.cmd("syntax spell toplevel") -- Only apply spell to top-level @Spell items (usually comments)
+  end,
+})
