@@ -57,6 +57,8 @@ return {
       -- highlight GitSignsAdd guifg=Blue
       )
       vim.api.nvim_set_keymap("n", "<leader>gb", ":Gitsigns blame<CR>", { noremap = true })
+      vim.api.nvim_set_keymap("n", "]c", ":Gitsigns next_hunk<CR>", { noremap = true })
+      vim.api.nvim_set_keymap("n", "[c", ":Gitsigns prev_hunk<CR>", { noremap = true })
     end
   },
   {
