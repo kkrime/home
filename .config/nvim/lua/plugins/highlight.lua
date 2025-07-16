@@ -1,25 +1,21 @@
 local function search(direction)
-  local match = vim.fn.getmatches()
-  -- vim.notify(vim.inspect({ "match", match }))
-  if next(match) == nil then
+  local matches = vim.fn.getmatches()
+  vim.notify(vim.inspect({ "match", matches }))
+  local word
+  for _, match in pairs(matches) do
+    if match.group == "Search" then
+      word = match.pattern
+    end
+  end
+
+  if word ~= nil then
+    vim.notify(vim.inspect({ "word", word }))
+    vim.fn.setreg('/', word)
+  else
     local search_pattern = vim.fn.getreg('/')
     vim.notify(vim.inspect({ "search_pattern", search_pattern }))
-    if search_pattern == 'v:null' then
-      return
-    end
-    if search_pattern == '@@' then
-      return
-    end
-    vim.cmd('normal! ' .. direction)
-  else
-    local word = match[1].pattern
-    vim.notify(vim.inspect({ "word", word }))
-    if word == nil then
-      return
-    end
-    vim.fn.setreg('/', word)
-    vim.cmd('normal! ' .. direction)
   end
+  vim.cmd('silent! normal! ' .. direction)
 end
 
 vim.keymap.set("n", "n", function()
