@@ -12,6 +12,10 @@ bindings = [
   { key = "T",     mods = "Command", chars = "\uE172" },
   { key = "X",     mods = "Command", chars = "\uE100" },
   { key = "/",     mods = "Control", chars = "\u001F" },
+
+
+  # full screen
+  { key = "F11", mods = "Control", action = "ToggleFullscreen" }
 ]
 [window]
   decorations = "buttonless"
