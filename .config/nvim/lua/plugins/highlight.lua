@@ -40,7 +40,15 @@ vim.keymap.set("n", "(", function()
   -- vim.cmd("match none")
   local word = vim.fn.expand("<cword>")
   vim.cmd("match Search /\\<" .. word .. "\\>/")
-  -- vim.cmd("match MyHighlight /\\<" .. word .. "\\>/")
+
+  -- vim.cmd("match Search /\\<" .. word .. "\\>/")
+  -- NOTE: can get rid of for loop on; https://github.com/neovim/neovim/issues/34999
+  for _, winid in pairs(vim.api.nvim_list_wins()) do
+    vim.api.nvim_win_call(winid, function()
+      vim.notify(vim.inspect({ "winid", winid }))
+      vim.cmd("match Search /\\<" .. word .. "\\>/")
+    end)
+  end
 end, { noremap = true, silent = true })
 
 vim.keymap.set("n", ")", function()
