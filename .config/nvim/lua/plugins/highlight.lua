@@ -93,5 +93,31 @@ vim.keymap.set("n", "#", function()
   vim.cmd('normal! #')
 end, { noremap = true, silent = true })
 
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+  pattern = { "/", "?" },
+  callback = function()
+    local search_term = vim.fn.getcmdline()
+
+    if search_term ~= "" then
+      vim.notify(vim.inspect({ "search_termmmmmm", search_term }))
+
+      -- NOTE: can get rid of for loop on; https://github.com/neovim/neovim/issues/34999
+      for _, winid in pairs(vim.api.nvim_list_wins()) do
+        vim.api.nvim_win_call(winid, function()
+          vim.cmd("match none")
+        end)
+      end
+    end
+  end,
+})
+
+local unset_match = function()
+  -- NOTE: can get rid of for loop on; https://github.com/neovim/neovim/issues/34999
+  for _, winid in pairs(vim.api.nvim_list_wins()) do
+    vim.api.nvim_win_call(winid, function()
+      vim.cmd("match none")
+    end)
+  end
+end
 
 return {}
