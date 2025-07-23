@@ -35,6 +35,15 @@ end, { silent = true, noremap = true })
 --   underline = false,
 -- })
 
+local unset_match = function()
+  -- NOTE: can get rid of for loop on; https://github.com/neovim/neovim/issues/34999
+  for _, winid in pairs(vim.api.nvim_list_wins()) do
+    vim.api.nvim_win_call(winid, function()
+      vim.cmd("match none")
+    end)
+  end
+end
+
 vim.keymap.set("n", "(", function()
   vim.cmd("nohlsearch")
   -- vim.cmd("match none")
@@ -56,11 +65,7 @@ vim.keymap.set("n", ")", function()
   -- vim.cmd("match none")
   --
   -- NOTE: can get rid of for loop on; https://github.com/neovim/neovim/issues/34999
-  for _, winid in pairs(vim.api.nvim_list_wins()) do
-    vim.api.nvim_win_call(winid, function()
-      vim.cmd("match none")
-    end)
-  end
+  unset_match()
 end, { noremap = true, silent = true })
 
 vim.keymap.set("n", "*", function()
@@ -68,11 +73,7 @@ vim.keymap.set("n", "*", function()
   -- vim.cmd("match none")
   --
   -- NOTE: can get rid of for loop on; https://github.com/neovim/neovim/issues/34999
-  for _, winid in pairs(vim.api.nvim_list_wins()) do
-    vim.api.nvim_win_call(winid, function()
-      vim.cmd("match none")
-    end)
-  end
+  unset_match()
 
   -- command
   vim.cmd('normal! *')
@@ -83,11 +84,7 @@ vim.keymap.set("n", "#", function()
   -- vim.cmd("match none")
   --
   -- NOTE: can get rid of for loop on; https://github.com/neovim/neovim/issues/34999
-  for _, winid in pairs(vim.api.nvim_list_wins()) do
-    vim.api.nvim_win_call(winid, function()
-      vim.cmd("match none")
-    end)
-  end
+  unset_match()
 
   -- command
   vim.cmd('normal! #')
@@ -102,22 +99,9 @@ vim.api.nvim_create_autocmd("CmdlineLeave", {
       vim.notify(vim.inspect({ "search_termmmmmm", search_term }))
 
       -- NOTE: can get rid of for loop on; https://github.com/neovim/neovim/issues/34999
-      for _, winid in pairs(vim.api.nvim_list_wins()) do
-        vim.api.nvim_win_call(winid, function()
-          vim.cmd("match none")
-        end)
-      end
+      unset_match()
     end
   end,
 })
-
-local unset_match = function()
-  -- NOTE: can get rid of for loop on; https://github.com/neovim/neovim/issues/34999
-  for _, winid in pairs(vim.api.nvim_list_wins()) do
-    vim.api.nvim_win_call(winid, function()
-      vim.cmd("match none")
-    end)
-  end
-end
 
 return {}
