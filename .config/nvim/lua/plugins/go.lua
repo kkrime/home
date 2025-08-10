@@ -28,7 +28,7 @@ return {
           local file_in_project = vim.startswith(file, project_dir)
 
           if file_in_project then
-            fileType = vim.fn.getbufvar(buf_hndl, "&filetype")
+            local fileType = vim.fn.getbufvar(buf_hndl, "&filetype")
             if fileType == "go" then
               if string.sub(file, #file - 5, #file) ~= ".pb.go" then
                 vim.api.nvim_buf_call(buf_hndl, function()

@@ -4,6 +4,7 @@ return {
     dependencies = {
       {
         "nvim-lua/plenary.nvim",
+        "smartpde/telescope-recent-files",
       },
       {
         'ahmedkhalf/project.nvim',
@@ -28,6 +29,7 @@ return {
       local ts = require('telescope')
       local previewers = require("telescope.previewers")
       local lga_actions = require("telescope-live-grep-args.actions")
+      require("telescope").load_extension("recent_files")
       ts.setup({
         extensions = {
           live_grep_args = {
@@ -51,8 +53,13 @@ return {
       -- vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
       vim.keymap.set('n', '<leader>fr', builtin.resume, {})
 
+      vim.api.nvim_set_keymap("n", "<Leader>fd",
+        [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]],
+        { noremap = true, silent = true })
+
       ts.load_extension("projects")
       ts.load_extension("live_grep_args")
+      ts.load_extension("recent_files")
     end
   },
 }

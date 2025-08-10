@@ -1,1 +1,1 @@
-nvim /tmp/t.go -c "Debug `echo $(pidof zitadel) | sd ' ' ''`"
+nvim ~/go/src/zitadel/main.go -c "Debug `echo $(pidof zitadel) | sd ' ' ''`" 
