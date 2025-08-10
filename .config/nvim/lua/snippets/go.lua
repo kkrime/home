@@ -18,9 +18,16 @@ local snippets, autosnippets = {}, {} --}}}
 local group = vim.api.nvim_create_augroup("Lua Snippets", { clear = true })
 local file_pattern = "*.go"
 
+
+local function endfile_fileline()
+  local current_line_nr = vim.api.nvim_win_get_cursor(0)[1]
+  local line = vim.fn.expand("%:t") .. ":" .. current_line_nr
+  return " [" .. line .. "] "
+end
+
 -- fmmt
 local print_var = s("ff", {
-  t("fmt.Printf(\"@@ >>>>>>>>>>>>>>>>>>>>>>>>>>>> "),
+  t("fmt.Printf(\"@@ >>>>>>>>>>>>>>>>>>>>>>>>>>>>" .. endfile_fileline()),
   rep(1),
   t(" = %+v\\n\", "),
   i(1, "var"),
@@ -29,7 +36,7 @@ local print_var = s("ff", {
 table.insert(snippets, print_var)
 
 local print_ln = s("fl", {
-  t("fmt.Println(\"@@ >>>>>>>>>>>>>>>>>>>>>>>>>>>> "),
+  t("fmt.Println(\"@@ >>>>>>>>>>>>>>>>>>>>>>>>>>>>" .. endfile_fileline()),
   i(1, ""),
   t("\")"),
 })
