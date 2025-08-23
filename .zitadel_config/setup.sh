@@ -10,7 +10,7 @@ function zsetup() {
 }
 
 function ztest() {
-  docker stop $(docker ps -a -q) && kill  `pidof zitadel` ; make core_integration_db_up core_integration_server_start && echo "zitadel" > /tmp/zitadel_db
+  docker stop $(docker ps -a -q) && kill `pidof zitadel` ; make core_integration_db_up && echo "zitadel" > /tmp/zitadel_db && make core_integration_server_start
 }
 
 # alias za='cd ~/go/src/z1'
