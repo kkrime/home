@@ -27,7 +27,8 @@ end
 
 -- fmmt
 local print_var = s("ff", {
-  t("fmt.Printf(\"@@ >>>>>>>>>>>>>>>>>>>>>>>>>>>>" .. endfile_fileline()),
+  -- t("fmt.Printf(\"[DEBUGPRINT]" .. endfile_fileline() .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>> "),
+  t("fmt.Printf(\"[DEBUGPRINT]" .. endfile_fileline()),
   rep(1),
   t(" = %+v\\n\", "),
   i(1, "var"),
@@ -36,7 +37,8 @@ local print_var = s("ff", {
 table.insert(snippets, print_var)
 
 local print_ln = s("fl", {
-  t("fmt.Println(\"@@ >>>>>>>>>>>>>>>>>>>>>>>>>>>>" .. endfile_fileline()),
+  -- t("fmt.Println(\"[DEBUGPRINT]" .. endfile_fileline() .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>> "),
+  t("fmt.Println(\"[DEBUGPRINT]" .. endfile_fileline()),
   i(1, ""),
   t("\")"),
 })
