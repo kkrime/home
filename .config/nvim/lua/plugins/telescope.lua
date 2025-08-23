@@ -29,7 +29,9 @@ return {
       local ts = require('telescope')
       local previewers = require("telescope.previewers")
       local lga_actions = require("telescope-live-grep-args.actions")
-      require("telescope").load_extension("recent_files")
+      ts.load_extension("recent_files")
+      ts.load_extension("notify")
+
       ts.setup({
         extensions = {
           live_grep_args = {
