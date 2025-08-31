@@ -23,14 +23,15 @@ local function function_jump(direction)
       local row, col
       if direction == 'k' then
         row = start_row + 1
-        col = start_col + 1
+        col = start_col
       elseif direction == 'j' then
         row = end_row + 1
-        col = end_col
+        col = end_col - 1
+        vim.notify(vim.inspect({ "end_col", end_col }))
       end
-      if col == 1 then
+      if col == 0 then
         vim.cmd("normal! m'")
-        vim.api.nvim_win_set_cursor(0, { row, col })
+        vim.api.nvim_win_set_cursor(0, { row, 0 })
         break
       end
     end
