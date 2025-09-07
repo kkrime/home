@@ -1,46 +1,149 @@
 local function function_jump(direction)
   local node = vim.treesitter.get_node()
-
-  local source_file = 95
-  if node == nil or node:symbol() == source_file then
+  if node == nil then
     return
   end
 
+  local up, down = false, false
+  if direction == 'k' then
+    up = true
+  elseif direction == 'j' then
+    down = true
+  end
+
+  local source_file = 95
   local function_declaration = 107
   local method_declaration = 108
-  local parent
 
-  while (true) do
-    parent = node:parent()
+  local current_line = vim.api.nvim_win_get_cursor(0)[1]
 
-    local function_node
+  local function_node
+  while (function_node == nil) do
+    if node:symbol() == source_file then
+      local new_node
+      local next
+      if up then
+        local prev = node
+        for child, _ in node:iter_children() do
+          next = child
+          local _, _, end_row, _ = next:range()
+          end_row = end_row + 1
+          if end_row > current_line then
+            new_node = prev
+            break
+          end
+          if next:symbol() == function_declaration or next:symbol() == method_declaration then
+            prev = next
+          end
+        end
+      elseif down then
+        for child, _ in node:iter_children() do
+          next = child
+          local start_row, _, _, _ = next:range()
+          start_row = start_row + 1
+          if start_row > current_line then
+            if next:symbol() == function_declaration or next:symbol() == method_declaration then
+              new_node = next
+              break
+            end
+          end
+        end
+      end
 
-    if node:symbol() == function_declaration or node:symbol() == method_declaration then
+      if new_node == nil then
+        return
+      end
+
+      node = new_node
       function_node = node
-    elseif parent:symbol() == function_declaration or parent:symbol() == method_declaration then
-      function_node = parent
-    end
-    if function_node ~= nil then
-      local start_row, start_col, end_row, end_col = function_node:range()
-      local row, col
-      if direction == 'k' then
-        row = start_row + 1
-        col = start_col
-      elseif direction == 'j' then
-        row = end_row + 1
-        col = end_col - 1
-      end
-      if col == 0 then
-        vim.cmd("normal! m'")
-        vim.api.nvim_win_set_cursor(0, { row, col })
-        break
-      end
-    end
+      down = not down
+      up = not up
+    else
+      local parent = node:parent()
 
-    node = parent
-    if node == nil or node:symbol() == source_file then
-      break
+      if node:symbol() == function_declaration or node:symbol() == method_declaration then
+        function_node = node
+      elseif parent ~= nil then
+        if parent:symbol() == function_declaration or parent:symbol() == method_declaration then
+          function_node = parent
+        end
+      end
+
+      if function_node == nil then
+        node = parent
+        if node == nil then
+          return
+        end
+      end
     end
+  end
+
+  local start_row, start_col, end_row, end_col = function_node:range()
+  start_row = start_row + 1
+  end_row = end_row + 1
+
+  local start, end_ = false, false
+  if start_row == current_line then
+    start = true
+  elseif end_row == current_line then
+    end_ = true
+  end
+
+  local row, col
+  if start == false and end_ == false then
+    if up then
+      row = start_row
+      col = start_col
+    elseif down then
+      row = end_row
+      col = end_col - 1
+    end
+  else
+    if up and start then
+      while (node ~= nil) do
+        node = node:prev_sibling()
+        if node == nil then
+          return
+        end
+        if node:symbol() == function_declaration or node:symbol() == method_declaration then
+          break
+        end
+      end
+      if node == nil then
+        return
+      end
+      _, _, row, col = node:range()
+      row = row + 1
+      col = col - 1
+    elseif up then
+      row = start_row
+      col = start_col
+    elseif down and end_ then
+      node = node:parent()
+      while (node ~= nil) do
+        node = node:next_sibling()
+        if node == nil then
+          return
+        end
+        if node:symbol() == function_declaration or node:symbol() == method_declaration then
+          break
+        end
+      end
+      if node == nil then
+        return
+      end
+      row, col, _, _ = node:range()
+      row = row + 1
+      col = col
+    elseif down then
+      row = end_row
+      col = end_col - 1
+    end
+  end
+
+  if col == 0 then
+    vim.cmd("normal! m'")
+    vim.api.nvim_win_set_cursor(0, { row, col })
   end
 end
 
