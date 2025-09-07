@@ -2,15 +2,17 @@ local function function_jump(direction)
   local node = vim.treesitter.get_node()
 
   local source_file = 95
+  if node == nil or node:symbol() == source_file then
+    return
+  end
+
   local function_declaration = 107
   local method_declaration = 108
   local parent
-  while (true) do
-    if node == nil or node:symbol() == source_file then
-      break
-    end
 
+  while (true) do
     parent = node:parent()
+
     local function_node
 
     if node:symbol() == function_declaration or node:symbol() == method_declaration then
@@ -27,15 +29,18 @@ local function function_jump(direction)
       elseif direction == 'j' then
         row = end_row + 1
         col = end_col - 1
-        vim.notify(vim.inspect({ "end_col", end_col }))
       end
       if col == 0 then
         vim.cmd("normal! m'")
-        vim.api.nvim_win_set_cursor(0, { row, 0 })
+        vim.api.nvim_win_set_cursor(0, { row, col })
         break
       end
     end
+
     node = parent
+    if node == nil or node:symbol() == source_file then
+      break
+    end
   end
 end
 

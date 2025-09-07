@@ -235,7 +235,7 @@ alias sk='cd ~/go/src/sky'
 
 # nvim dev
 alias config='cd ~/.config/nvim/lua/plugins/'
-alias plugins='cd ~/.local/share/nvim/lazy/'
+alias plugin='cd ~/.local/share/nvim/lazy/'
 
 # Dbee
 alias db='v -c "Dbee toggle"'
