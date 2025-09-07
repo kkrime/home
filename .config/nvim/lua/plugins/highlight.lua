@@ -96,8 +96,6 @@ vim.api.nvim_create_autocmd("CmdlineLeave", {
     local search_term = vim.fn.getcmdline()
 
     if search_term ~= "" then
-      vim.notify(vim.inspect({ "search_termmmmmm", search_term }))
-
       -- NOTE: can get rid of for loop on; https://github.com/neovim/neovim/issues/34999
       unset_match()
     end
