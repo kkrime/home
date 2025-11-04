@@ -22,13 +22,29 @@ local file_pattern = "*.go"
 local function endfile_fileline()
   local current_line_nr = vim.api.nvim_win_get_cursor(0)[1]
   local line = vim.fn.expand("%:t") .. ":" .. current_line_nr
-  return " [" .. line .. "] "
+  return "[" .. line .. "]"
 end
+
+local Reset = "\\033[0m"
+local Red = "\\033[31m"
+local Green = "\\033[32m"
+local Yellow = "\\033[33;1m"
+local Blue = "\\033[34m"
+local Magenta = "\\033[35m"
+local Cyan = "\\033[36m"
+local Gray = "\\033[37m"
+local White = "\\033[97m"
+
+local background = "\\033[43m"
 
 -- fmmt
 local print_var = s("ff", {
-  -- t("fmt.Printf(\"[DEBUGPRINT]" .. endfile_fileline() .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>> "),
-  t("fmt.Printf(\"[DEBUGPRINT]" .. endfile_fileline()),
+  -- t("fmt.Printf(\"[DEBUGPRINT]" .. endfile_fileline() .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "),
+  t("fmt.Printf(\"" ..
+    -- background .. "[DBUGPRINT]" .. endfile_fileline() .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" .. Reset .. " "),
+    background ..
+    "[DEBUGPRINT]" ..
+    Reset .. endfile_fileline() .. background .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" .. Reset .. " "),
   rep(1),
   t(" = %+v\\n\", "),
   i(1, "var"),
@@ -36,9 +52,15 @@ local print_var = s("ff", {
 })
 table.insert(snippets, print_var)
 
+local background = "\\033[45m"
+
 local print_ln = s("fl", {
   -- t("fmt.Println(\"[DEBUGPRINT]" .. endfile_fileline() .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>> "),
-  t("fmt.Println(\"[DEBUGPRINT]" .. endfile_fileline()),
+  -- t("fmt.Println(\"[\\u1b[31mttDEBUGPRINT]" .. endfile_fileline() .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\\u1b[0m"),
+  t("fmt.Println(\"" ..
+    background ..
+    "[DEBUGPRINT]" ..
+    Reset .. endfile_fileline() .. background .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" .. Reset .. " "),
   i(1, ""),
   t("\")"),
 })

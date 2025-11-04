@@ -43,7 +43,8 @@ local zitadel_connect = function()
         id = db,
         name = db,
         type = "postgres",
-        url = "postgres://zitadel:zitadel@localhost:5432/" ..
+        -- url = "postgres://zitadel:zitadel@localhost:5432/" ..
+        url = "postgres://postgres:postgres@localhost:5433/" ..
             db .. "?sslmode=disable"
       })
   end

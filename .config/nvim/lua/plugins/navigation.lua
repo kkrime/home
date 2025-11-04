@@ -54,8 +54,9 @@ local function function_jump(direction)
         return
       end
 
-      node = new_node
-      function_node = node
+      -- node = new_node
+      -- function_node = node
+      function_node = new_node
       down = not down
       up = not up
     else
@@ -77,8 +78,9 @@ local function function_jump(direction)
       end
     end
   end
+  node = function_node
 
-  local start_row, start_col, end_row, end_col = function_node:range()
+  local start_row, start_col, end_row, end_col = node:range()
   start_row = start_row + 1
   end_row = end_row + 1
 
@@ -119,7 +121,6 @@ local function function_jump(direction)
       row = start_row
       col = start_col
     elseif down and end_ then
-      node = node:parent()
       while (node ~= nil) do
         node = node:next_sibling()
         if node == nil then
@@ -142,7 +143,8 @@ local function function_jump(direction)
   end
 
   if col == 0 then
-    vim.cmd("normal! m'")
+    vim.notify(vim.inspect({ "jump", jump }))
+    vim.cmd("normal! m`")
     vim.api.nvim_win_set_cursor(0, { row, col })
   end
 end

@@ -162,6 +162,16 @@ alias ls='exa --color=always'
 alias lt='ll -snew -r'
 alias b='bat'
 
+function batf() {
+  local filename="$1"
+  if [[ ! -f "$filename" ]]; then
+    echo "Error: File '$filename' does not exist."
+    return 1
+  fi
+  local extension="${filename##*.}"
+  tail -f "$filename" | bat -l "$extension" --paging=never
+}
+
 # python
 # below is needed for 'arch -x86_64 pyenv install 3.8.13'
 # export LDFLAGS="-L/opt/homebrew/lib"; export CPPFLAGS="-I/opt/homebrew/include"
