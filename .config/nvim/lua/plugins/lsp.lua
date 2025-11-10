@@ -105,161 +105,158 @@ return {
     end
   },
   {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      {
-        "williamboman/mason-lspconfig.nvim",
-        dependencies =
-        {
-          "williamboman/mason.nvim",
-          config = function(_)
-            require("mason").setup()
-          end
-        },
-        config = function(_)
-          require("mason-lspconfig").setup()
-        end
-      },
+    "mason-org/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = { "lua_ls", "gopls", "clangd", "ts_ls" },
     },
-    config = function(_)
-      local on_attach = require("cmp_nvim_lsp").on_attach
-      local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-      local util = require "lspconfig/util"
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+      {
+        "neovim/nvim-lspconfig",
+      config = function(_)
+        local on_attach = require("cmp_nvim_lsp").on_attach
+        local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+        local util = require "lspconfig/util"
 
-      local lspconfig = require("lspconfig")
+        local lspconfig = require("lspconfig")
 
-      lspconfig.lua_ls.setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-        -- root_dir = util.root_pattern(".git", ".gitignore", "README.md"),
-        root_dir = util.root_pattern('README.md', ".git", ".gitignore"),
-        settings = {
-          Lua = {
-            runtime = {
-              --   --   -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-              -- version = 'Lua 5.4',
-              version = 'LuaJIT',
-              --   --   -- Setup your lua path
-              path = vim.split(package.path, ';'),
-            },
-            diagnostics = {
-              globals = { "vim" },
-            },
-            workspace = {
-              library = { vim.api.nvim_get_runtime_file("lua", true),
-                '~/.config/nvim/lua' },
-              -- library = {
-              --   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-              --   [vim.fn.stdpath('config') .. '/lua'] = true,
-              --   [vim.fn.expand('~/.config/nvim/lua')] = true,
-              -- },
-              -- checkThirdParty = false,
-            },
-            telemetry = {
-              enable = false,
-              -- enable = true,
+
+        lspconfig.lua_ls.setup {
+          on_attach = on_attach,
+          capabilities = capabilities,
+          -- root_dir = util.root_pattern(".git", ".gitignore", "README.md"),
+          root_dir = util.root_pattern('README.md', ".git", ".gitignore"),
+          settings = {
+            Lua = {
+              runtime = {
+                --   --   -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                -- version = 'Lua 5.4',
+                version = 'LuaJIT',
+                --   --   -- Setup your lua path
+                path = vim.split(package.path, ';'),
+              },
+              diagnostics = {
+                globals = { "vim" },
+              },
+              workspace = {
+                library = { vim.api.nvim_get_runtime_file("lua", true),
+                  '~/.config/nvim/lua' },
+                -- library = {
+                --   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                --   [vim.fn.stdpath('config') .. '/lua'] = true,
+                --   [vim.fn.expand('~/.config/nvim/lua')] = true,
+                -- },
+                -- checkThirdParty = false,
+              },
+              telemetry = {
+                enable = false,
+                -- enable = true,
+              },
             },
           },
-        },
-      }
+        }
 
-      -- lspconfig.protols.setup {
-      --   capabilities = capabilities,
-      --   -- cmd = { "clangd" },
-      --   filetypes = { "proto" },
-      -- }
+        -- lspconfig.protols.setup {
+        --   capabilities = capabilities,
+        --   -- cmd = { "clangd" },
+        --   filetypes = { "proto" },
+        -- }
 
-      lspconfig.clangd.setup {
-        capabilities = capabilities,
-        cmd = { "clangd" },
-        filetypes = { "c", "h", "cpp" },
-        root_dir = util.root_pattern(
-          '.clangd',
-          '.clang-tidy',
-          '.clang-format',
-          'compile_commands.json',
-          'compile_flags.txt',
-          'configure.ac',
-          '.git'
-        ),
-      }
+        lspconfig.clangd.setup {
+          capabilities = capabilities,
+          cmd = { "clangd" },
+          filetypes = { "c", "h", "cpp" },
+          root_dir = util.root_pattern(
+            '.clangd',
+            '.clang-tidy',
+            '.clang-format',
+            'compile_commands.json',
+            'compile_flags.txt',
+            'configure.ac',
+            '.git'
+          ),
+        }
 
-      lspconfig.gopls.setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-        cmd = { "gopls" },
-        filetypes = { "go", "gomod", "gowork", "gotmpl" },
-        -- root_dir = util.root_pattern("go.work", "go.mod", ".git", ".gitignore"),
-        root_dir = util.root_pattern("go.mod", "go.work", ".git"),
-        settings = {
-          gopls = {
-            buildFlags = { "-tags=integration some-other-tags..." },
-            completeUnimported = true,
-            usePlaceholders = false,
-            analyses = {
-              unusedparams = true,
+        lspconfig.gopls.setup {
+          on_attach = on_attach,
+          capabilities = capabilities,
+          cmd = { "gopls" },
+          filetypes = { "go", "gomod", "gowork", "gotmpl" },
+          -- root_dir = util.root_pattern("go.work", "go.mod", ".git", ".gitignore"),
+          root_dir = util.root_pattern("go.mod", "go.work", ".git"),
+          settings = {
+            gopls = {
+              buildFlags = { "-tags=integration some-other-tags..." },
+              completeUnimported = true,
+              usePlaceholders = false,
+              analyses = {
+                unusedparams = true,
+              },
+              -- ["build.experimentalWorkspaceModule"] = true,
+              ["formatting.gofumpt"] = true,
+              ["staticcheck"] = true,
+              ["ui.verboseOutput"] = true,
             },
-            -- ["build.experimentalWorkspaceModule"] = true,
-            ["formatting.gofumpt"] = true,
-            ["staticcheck"] = true,
-            ["ui.verboseOutput"] = true,
           },
-        },
-      }
+        }
 
-      lspconfig.html.setup({
-        capabilities = capabilities,
-        init_options = {
-          configurationSection = { "html", "css", "javascript" },
-          embeddedLanguages = {
-            css = true,
-            javascript = true,
-          },
-          provideFormatter = true,
-        },
-      })
+        lspconfig.ts_ls.setup({})
 
-      -- lspconfig.rust_analyzer.setup({
-      --   on_attach = on_attach,
-      --   settings = {
-      --     ["rust-analyzer"] = {
-      --       imports = {
-      --         granularity = {
-      --           group = "module",
-      --         },
-      --         prefix = "self",
-      --       },
-      --       cargo = {
-      --         buildScripts = {
-      --           enable = true,
-      --         },
-      --       },
-      --       procMacro = {
-      --         enable = true
-      --       },
-      --       rustfmt = {
-      --         extraArgs = { "--config", "tab_spaces=2" }
-      --       },
-      --     },
-      --   },
-      -- })
+        -- lspconfig.html.setup({
+        --   capabilities = capabilities,
+        --   init_options = {
+        --     configurationSection = { "html", "css", "javascript" },
+        --     embeddedLanguages = {
+        --       css = true,
+        --       javascript = true,
+        --     },
+        --     provideFormatter = true,
+        --   },
+        -- })
 
-      -- auto format on save
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        pattern = "*",
-        callback = function(args)
-          local extension = string.sub(args.file, (#args.file - 2), #args.file)
-          if extension == ".go" then
-            require('go.format').goimports()
-          else
-            vim.lsp.buf.format()
-          end
-        end,
-      })
+        -- lspconfig.rust_analyzer.setup({
+        --   on_attach = on_attach,
+        --   settings = {
+        --     ["rust-analyzer"] = {
+        --       imports = {
+        --         granularity = {
+        --           group = "module",
+        --         },
+        --         prefix = "self",
+        --       },
+        --       cargo = {
+        --         buildScripts = {
+        --           enable = true,
+        --         },
+        --       },
+        --       procMacro = {
+        --         enable = true
+        --       },
+        --       rustfmt = {
+        --         extraArgs = { "--config", "tab_spaces=2" }
+        --       },
+        --     },
+        --   },
+        -- })
 
-      local opts = { buffer = buffer }
-      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    end
+        -- auto format on save
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          pattern = "*",
+          callback = function(args)
+            local extension = string.sub(args.file, (#args.file - 2), #args.file)
+            if extension == ".go" then
+              require('go.format').goimports()
+            else
+              vim.lsp.buf.format()
+            end
+          end,
+        })
+
+        local opts = { buffer = buffer }
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+      end,
+  },
+  },
   },
   {
     "mrcjkb/rustaceanvim",
