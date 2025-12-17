@@ -1,6 +1,11 @@
 return {
   {
     "nvim-lualine/lualine.nvim",
+    dependencies = {
+      {
+        "kkrime/build.nvim",
+      },
+    },
 
     config = function()
       local custom_gruvbox             = require('lualine.themes.gruvbox')

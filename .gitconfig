@@ -1,7 +1,7 @@
 [user]
 	name = Iraq Jaber
 	email = iraq+github@zitadel.com
-	signingkey = /Users/work/.ssh/zitadel
+	; signingkey = /Users/work/.ssh/zitadel
 
 [core]
   pager = delta
@@ -62,4 +62,4 @@
 [gpg]
 	format = ssh
 [commit]
-	gpgsign = true
+	gpgsign = false

@@ -39,12 +39,10 @@ local background = "\\033[43m"
 
 -- fmmt
 local print_var = s("ff", {
-  -- t("fmt.Printf(\"[DEBUGPRINT]" .. endfile_fileline() .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "),
   t("fmt.Printf(\"" ..
-    -- background .. "[DBUGPRINT]" .. endfile_fileline() .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" .. Reset .. " "),
     background ..
     "[DEBUGPRINT]" ..
-    Reset .. endfile_fileline() .. background .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" .. Reset .. " "),
+    Reset .. endfile_fileline() .. background .. ">>>>>>>>" .. Reset .. " "),
   rep(1),
   t(" = %+v\\n\", "),
   i(1, "var"),
@@ -55,12 +53,11 @@ table.insert(snippets, print_var)
 local background = "\\033[45m"
 
 local print_ln = s("fl", {
-  -- t("fmt.Println(\"[DEBUGPRINT]" .. endfile_fileline() .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>> "),
-  -- t("fmt.Println(\"[\\u1b[31mttDEBUGPRINT]" .. endfile_fileline() .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\\u1b[0m"),
   t("fmt.Println(\"" ..
     background ..
     "[DEBUGPRINT]" ..
-    Reset .. endfile_fileline() .. background .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" .. Reset .. " "),
+    -- Reset .. endfile_fileline() .. background .. ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" .. Reset .. " "),
+    Reset .. endfile_fileline() .. background .. ">>>>>>>>" .. Reset .. " "),
   i(1, ""),
   t("\")"),
 })
@@ -97,6 +94,13 @@ table.insert(snippets, return_error_)
 
 local format_error = s("fe", {
   t("fmt.Errorf(\""),
+  i(1, ""),
+  t("\")"),
+})
+table.insert(snippets, format_error)
+
+local format_error = s("e", {
+  t("errors.New(\""),
   i(1, ""),
   t("\")"),
 })

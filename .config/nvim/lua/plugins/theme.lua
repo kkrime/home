@@ -41,6 +41,7 @@ return {
             fg = colors.bg_dark,
             bold = true, -- Bold style
           }
+
           highlights.Search = {
             bg = colors.warning,
             fg = colors.bg_dark,
@@ -62,8 +63,6 @@ return {
             bg = "#55558e",
           }
 
-          -- vim.cmd('highlight link TelescopePreviewLine NONE')
-
           highlights.TelescopeMatching = {
             fg = colors.red, -- Red matching text
             bold = true,
@@ -72,6 +71,10 @@ return {
           highlights.DiffText = {
             bg = colors.warning,
             fg = "#000000",
+          }
+
+          highlights.DiagnosticUnnecessary = {
+            bg = "#414868",
           }
         end,
         plugins = {

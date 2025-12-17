@@ -7,11 +7,20 @@ bindings = [
   { key = "-", mods = "Control", action = "DecreaseFontSize" },
   { key = "=", mods = "Control", action = "ResetFontSize" },
 
+  # https://github.com/zellij-org/zellij/issues/735#issuecomment-1973177193
   { key = "K",     mods = "Command", chars = "\uE170" },
   { key = "J",     mods = "Command", chars = "\uE171" },
   { key = "T",     mods = "Command", chars = "\uE172" },
   { key = "X",     mods = "Command", chars = "\uE100" },
   { key = "/",     mods = "Control", chars = "\u001F" },
+
+  { key = "Up",     mods = "Control", chars = "\u001b[1;5A" },
+  { key = "Down",     mods = "Control", chars = "\u001b[1;5B" },
+
+  { key= "Right",    mods= "Control", chars = "\u001b[1;5C" },
+  { key ="Left",     mods= "Control", chars = "\u001b[1;5D" },
+
+  # { key ="Left",     mods= "Control", chars = "\u001F" },
 
 
   # full screen

@@ -137,8 +137,8 @@ export CPATH="/opt/homebrew/include"
 
 # go
 # export PATH=$PATH:/usr/local/go/bin
-export GOROOT=/usr/local/go/
-export GOROOT=/opt/homebrew/Cellar/go/1.24.1/libexec/
+# export GOROOT=/usr/local/go/
+export GOROOT=/opt/homebrew/Cellar/go/1.25.5/libexec/
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/go/bin

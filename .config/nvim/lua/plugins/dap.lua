@@ -57,28 +57,63 @@ return {
       vim.fn.sign_define('DapStopped', { text = '', texthl = 'DapStopped', linehl = 'DapStopped', numhl = 'DapStopped' })
 
       -- Debugger
-      vim.api.nvim_set_keymap("n", "<leader>dt", ":DapUiToggle<CR>", { noremap = true })
-      vim.api.nvim_set_keymap("n", "<S-UP>", ":DapTerminate<CR>", { noremap = true })
+      -- vim.api.nvim_set_keymap("n", "<leader>dt", ":DapUiToggle<CR>", { noremap = true })
+      vim.api.nvim_set_keymap("n", "<C-UP>", ":DapTerminate<CR>", { noremap = true })
       vim.api.nvim_set_keymap("n", "<UP>", ":DapStepOut<CR>", { noremap = true })
+
+      local buildtargets = require("buildtargets")
+      local current_buildtargets = {}
+
+      local dap = require('dap')
+      local dapui = require("dapui")
+      vim.keymap.set("n", "<leader>dx", function()
+        dap.terminate()
+        dapui.close()
+      end, { noremap = true })
+      -- vim.keymap.set("n", "<leader>dc", function()
+      --   dap.terminate()
+      -- end, { noremap = true })
       vim.keymap.set("n", "<leader>dd", function()
-        local dapui = require("dapui")
         dapui.open()
         vim.cmd('GoEnv .env')
 
-        local dap = require('dap')
-        if target == nil then
-          local bufnr = vim.api.nvim_get_current_buf()
-          local configs = dap.providers.configs
-          for _, config in pairs(configs) do
-            for _, c in pairs(config(bufnr)) do
-              if c.name == "zitadel" then
-                vim.notify(vim.inspect({ "c", c }))
-                target = c
-                break
-              end
-            end
-          end
+        local project_root = require("project_nvim.project").get_project_root()
+        target = current_buildtargets[project_root]
+        if not target then
+          local err = buildtargets.run_action(function(name, location)
+            vim.notify(vim.inspect({ "name", name }))
+            vim.notify(vim.inspect({ "location", location }))
+            local config = {
+              -- Must be "go" or it will be ignored by the plugin
+              type = "go",
+              name = name,
+              request = "launch",
+              program = location,
+              showLog = true,
+              -- args = { 'start-from-init', '--masterkey', 'MasterkeyNeedsToHave32Characters', '--tlsMode', 'disabled' },
+              outputMode = "remote",
+            }
+
+            target = config
+            current_buildtargets[project_root] = target
+            table.insert(dap.configurations.go, config)
+          end)
         end
+
+
+        -- if target == nil then
+        --   local bufnr = vim.api.nvim_get_current_buf()
+        --   local configs = dap.providers.configs
+        --   for _, config in pairs(configs) do
+        --     for _, c in pairs(config(bufnr)) do
+        --       -- if c.name == "zitadel" then
+        --       vim.notify(vim.inspect({ "c", c }))
+        --       target = c
+        --       -- break
+        --     end
+        --     -- end
+        --   end
+        -- end
         if target ~= nil then
           dap.run(target, nil)
         else
@@ -88,7 +123,7 @@ return {
       vim.api.nvim_set_keymap("n", "<LEFT>", ":DapToggleBreakpoint<CR>", { noremap = true })
       vim.api.nvim_set_keymap("n", "<RIGHT>", ":DapContinue<CR>", { noremap = true })
       vim.api.nvim_set_keymap("n", "<DOWN>", ":DapStepOver<CR>", { noremap = true })
-      vim.api.nvim_set_keymap("n", "<S-DOWN>", ":DapStepInto<CR>", { noremap = true })
+      vim.api.nvim_set_keymap("n", "<C-DOWN>", ":DapStepInto<CR>", { noremap = true })
     end
   },
   {

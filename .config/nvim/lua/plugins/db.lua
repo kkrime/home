@@ -1,12 +1,12 @@
 local source = ".persistence.json"
-local zitadel_db = "/tmp/zitadel_db"
-local zitadel_connect = function()
+local db_tmp_file = "/tmp/db"
+local db_connect = function()
   local handler = require("dbee.api.core")
 
   -- 1. read zitadel_db
-  local ok, db = pcall(vim.fn.readfile, zitadel_db)
+  local ok, db = pcall(vim.fn.readfile, db_tmp_file)
   if not ok then
-    vim.notify("can't read " .. zitadel_db, vim.log.levels.ERROR)
+    vim.notify("can't read " .. db_tmp_file, vim.log.levels.ERROR)
     return
   end
   db = db[1]
@@ -43,8 +43,7 @@ local zitadel_connect = function()
         id = db,
         name = db,
         type = "postgres",
-        -- url = "postgres://zitadel:zitadel@localhost:5432/" ..
-        url = "postgres://postgres:postgres@localhost:5433/" ..
+        url = "postgres://shrubi:shrubi@localhost:5433/" ..
             db .. "?sslmode=disable"
       })
   end
@@ -82,7 +81,7 @@ return {
               key = "<CR>",
               mode = "n",
               action = function()
-                zitadel_connect()
+                db_connect()
                 ui.editor_do_action("run_under_cursor")
               end,
             },
@@ -90,7 +89,7 @@ return {
               key = "BB",
               mode = "v",
               action = function()
-                zitadel_connect()
+                db_connect()
                 ui.editor_do_action("run_selection")
               end,
             },
@@ -98,7 +97,7 @@ return {
               key = "BB",
               mode = "n",
               action = function()
-                zitadel_connect()
+                db_connect()
                 ui.editor_do_action("run_file")
               end,
             },
