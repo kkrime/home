@@ -17,11 +17,9 @@ bindings = [
   { key = "Up",     mods = "Control", chars = "\u001b[1;5A" },
   { key = "Down",     mods = "Control", chars = "\u001b[1;5B" },
 
-  { key= "Right",    mods= "Control", chars = "\u001b[1;5C" },
-  { key ="Left",     mods= "Control", chars = "\u001b[1;5D" },
-
-  # { key ="Left",     mods= "Control", chars = "\u001F" },
-
+  # NOT working
+  # { key= "Right",    mods= "Control", chars = "\u001b[1;5C" },
+  # { key ="Left",     mods= "Control", chars = "\u001b[1;5D" },
 
   # full screen
   { key = "F11", mods = "Control", action = "ToggleFullscreen" }
