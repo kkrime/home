@@ -76,7 +76,12 @@ return {
           highlights.DiagnosticUnnecessary = {
             bg = "#414868",
           }
+
+          highlights.LspInlayHint = {
+            fg = "#aa6e00",
+          }
         end,
+
         plugins = {
           telescope = true, -- Ensure Telescope integration is enabled
         },
