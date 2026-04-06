@@ -250,13 +250,8 @@ alias plugin='cd ~/.local/share/nvim/lazy/'
 # Dbee
 alias db='v -c "Dbee toggle"'
 
-# svelte
-export PNPM_HOME="/Users/iraq/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-export PATH=$PATH:/opt/homebrew/Cellar/pnpm\@8/8.15.8_1/bin
+# flutter
+export PATH="$HOME/develop/flutter/bin:$PATH"
 
 
 # zoxide
@@ -268,6 +263,9 @@ eval "$(zellij setup --generate-auto-start bash )"
 # autin
 source ~/.bash-preexec.sh
 eval "$(atuin init bash --disable-up-arrow)"
+
+# mobile dev
+source ~/.mobile_dev.sh
 
 # install Utils
 # brew tap cjbassi/ytop

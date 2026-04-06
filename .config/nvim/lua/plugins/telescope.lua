@@ -28,9 +28,9 @@ return {
     config = function()
       local ts = require('telescope')
       local previewers = require("telescope.previewers")
-      local lga_actions = require("telescope-live-grep-args.actions")
+      -- local lga_actions = require("telescope-live-grep-args.actions")
       ts.load_extension("recent_files")
-      ts.load_extension("notify")
+      -- ts.load_extension("notify")
 
       ts.setup({
         extensions = {
@@ -38,8 +38,8 @@ return {
             auto_quoting = true, -- enable/disable auto-quoting
             mappings = {
               i = {
-                ["<C-k>"] = lga_actions.quote_prompt(),
-                ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob *." }),
+                -- ["<C-k>"] = lga_actions.quote_prompt(),
+                -- ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob *." }),
                 -- freeze the current list and start a fuzzy search in the frozen list
                 ["<C-space>"] = require('telescope.actions').to_fuzzy_refine,
               },
@@ -55,13 +55,13 @@ return {
       -- vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
       vim.keymap.set('n', '<leader>fr', builtin.resume, {})
 
-      vim.api.nvim_set_keymap("n", "<Leader>fd",
-        [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]],
-        { noremap = true, silent = true })
+      -- vim.api.nvim_set_keymap("n", "<Leader>fd",
+      --   [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]],
+      --   { noremap = true, silent = true })
 
       ts.load_extension("projects")
       ts.load_extension("live_grep_args")
-      ts.load_extension("recent_files")
+      -- ts.load_extension("recent_files")
     end
   },
 }

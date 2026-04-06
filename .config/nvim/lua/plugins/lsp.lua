@@ -4,13 +4,137 @@ return {
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     "hrsh7th/cmp-nvim-lua",
-    "hrsh7th/cmp-nvim-lsp",
     'hrsh7th/cmp-cmdline',
     "saadparwaiz1/cmp_luasnip",
   },
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
+      {
+        "L3MON4D3/LuaSnip",
+        config = function(_)
+          require("luasnip").config.setup({ store_selection_keys = "<A-p>" })
+          local ls = require("luasnip") --{{{
+
+          -- require("luasnip.loaders.from_vscode").lazy_load()
+          require("luasnip.loaders.from_lua").load({
+            fs_event_providers = { libuv = true, autocmd = true },
+            paths =
+            "~/.config/nvim/lua/snippets/"
+          })
+
+          vim.cmd([[command! LuaSnipEdit :lua require("luasnip.loaders.from_lua").edit_snippet_files()]]) --}}}
+
+          -- Virtual Text{{{
+          local types = require("luasnip.util.types")
+          ls.config.set_config({
+
+            -- history = true,                             --keep around last snippet local to jump back
+            -- Below line is commented out due to; https://github.com/hrsh7th/nvim-cmp/issues/1743
+            -- update_events = "TextChanged,TextChangedI", --update changes as you type
+            enable_autosnippets = true,
+            -- region_check_events = "CursorMoved,CursorHold,InsertEnter",
+            region_check_events = "InsertEnter",
+            -- delete_check_events = "TextChanged,InsertEnter",
+            ext_opts = {
+              [types.choiceNode] = {
+                active = {
+                  virt_text = { { "●", "GruvboxOrange" } },
+                },
+              },
+              -- [types.insertNode] = { active = {
+              -- 		virt_text = { { "●", "GruvboxBlue" } },
+              -- 	},
+              -- },
+            },
+          }) --}}}
+
+          -- Key Mapping --{{{
+
+          vim.keymap.set({ "i", "s" }, "<c-s>", "<Esc>:w<cr>")
+          vim.keymap.set({ "i", "s" }, "<c-u>", '<cmd>lua require("luasnip.extras.select_choice")()<cr><C-c><C-c>')
+
+          vim.keymap.set({ "i", "s" }, "<C- >", function()
+            if ls.expand_or_jumpable() then
+              ls.expand()
+            end
+          end, { silent = true })
+
+
+          -- vim.keymap.set({ "i", "s" }, "<C-k>", function()
+          -- 	if ls.expand_or_jumpable() then
+          -- 		ls.expand_or_jump()
+          -- 	end
+          -- end, { silent = true })
+          -- vim.keymap.set({ "i", "s" }, "<C-j>", function()
+          -- 	if ls.jumpable() then
+          -- 		ls.jump(-1)
+          -- 	end
+          -- end, { silent = true })
+
+          vim.keymap.set({ "i", "s" }, "<a-k>", function()
+            if ls.jumpable(1) then
+              ls.jump(1)
+            end
+          end, { silent = true })
+
+          vim.keymap.set({ "i", "s" }, "<a-j>", function()
+            if ls.jumpable(-1) then
+              ls.jump(-1)
+            end
+          end, { silent = true })
+
+          vim.keymap.set({ "i", "s" }, "<a-n>", function()
+            if ls.choice_active() then
+              ls.change_choice(1)
+            else
+              -- print current time
+              local t = os.date("*t")
+              local time = string.format("%02d:%02d:%02d", t.hour, t.min, t.sec)
+              print(time)
+            end
+          end)
+          vim.keymap.set({ "i", "s" }, "<a-p>", function()
+            if ls.choice_active() then
+              ls.change_choice(-1)
+            end
+          end) --}}}
+
+          -- More Settings --
+
+          vim.keymap.set("n", "<Leader><CR>", "<cmd>LuaSnipEdit<cr>", { silent = true, noremap = true })
+          -- vim.cmd([[autocmd BufEnter */snippets/*.lua nnoremap <silent> <buffer> <CR> /-- End Refactoring --<CR>O<Esc>O]])
+
+
+
+          vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+            vim.lsp.handlers.hover,
+            { border = 'rounded' }
+          )
+
+          vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+            vim.lsp.handlers.signature_help,
+            { border = 'rounded' }
+          )
+
+          -- TODO look into this
+          -- break out of snippet mode
+          --ggocal cmp = require("cmp")
+          -- vim.keymap.set({ "i", "s" }, "<CR>", function()
+          --   vim.print(cmp.visible())
+          --   if cmp.visible() then
+          --     return "<CR>"
+          --   elseif ls.in_snippet() then
+          --     -- if ls.in_snippet() then
+          --     vim.print("inside")
+          --     return "<Esc>o"
+          --   else
+          --     vim.print("outside")
+          --     return "<CR>"
+          --   end
+          -- end, { silent = true, buffer = true, expr = true })
+        end
+      },
       {
         "MattiasMTS/cmp-dbee",
         ft = "sql", -- optional but good to have
@@ -113,150 +237,150 @@ return {
       { "mason-org/mason.nvim", opts = {} },
       {
         "neovim/nvim-lspconfig",
-      config = function(_)
-        local on_attach = require("cmp_nvim_lsp").on_attach
-        local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-        local util = require "lspconfig/util"
+        config = function(_)
+          local on_attach = require("cmp_nvim_lsp").on_attach
+          local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+          local util = require "lspconfig/util"
 
-        local lspconfig = require("lspconfig")
+          local lspconfig = require("lspconfig")
 
 
-        lspconfig.lua_ls.setup {
-          on_attach = on_attach,
-          capabilities = capabilities,
-          -- root_dir = util.root_pattern(".git", ".gitignore", "README.md"),
-          root_dir = util.root_pattern('README.md', ".git", ".gitignore"),
-          settings = {
-            Lua = {
-              runtime = {
-                --   --   -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                -- version = 'Lua 5.4',
-                version = 'LuaJIT',
-                --   --   -- Setup your lua path
-                path = vim.split(package.path, ';'),
-              },
-              diagnostics = {
-                globals = { "vim" },
-              },
-              workspace = {
-                library = { vim.api.nvim_get_runtime_file("lua", true),
-                  '~/.config/nvim/lua' },
-                -- library = {
-                --   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                --   [vim.fn.stdpath('config') .. '/lua'] = true,
-                --   [vim.fn.expand('~/.config/nvim/lua')] = true,
-                -- },
-                -- checkThirdParty = false,
-              },
-              telemetry = {
-                enable = false,
-                -- enable = true,
+          lspconfig.lua_ls.setup {
+            on_attach = on_attach,
+            capabilities = capabilities,
+            -- root_dir = util.root_pattern(".git", ".gitignore", "README.md"),
+            root_dir = util.root_pattern('README.md', ".git", ".gitignore"),
+            settings = {
+              Lua = {
+                runtime = {
+                  --   --   -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                  -- version = 'Lua 5.4',
+                  version = 'LuaJIT',
+                  --   --   -- Setup your lua path
+                  path = vim.split(package.path, ';'),
+                },
+                diagnostics = {
+                  globals = { "vim" },
+                },
+                workspace = {
+                  library = { vim.api.nvim_get_runtime_file("lua", true),
+                    '~/.config/nvim/lua' },
+                  -- library = {
+                  --   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                  --   [vim.fn.stdpath('config') .. '/lua'] = true,
+                  --   [vim.fn.expand('~/.config/nvim/lua')] = true,
+                  -- },
+                  -- checkThirdParty = false,
+                },
+                telemetry = {
+                  enable = false,
+                  -- enable = true,
+                },
               },
             },
-          },
-        }
+          }
 
-        -- lspconfig.protols.setup {
-        --   capabilities = capabilities,
-        --   -- cmd = { "clangd" },
-        --   filetypes = { "proto" },
-        -- }
+          -- lspconfig.protols.setup {
+          --   capabilities = capabilities,
+          --   -- cmd = { "clangd" },
+          --   filetypes = { "proto" },
+          -- }
 
-        lspconfig.clangd.setup {
-          capabilities = capabilities,
-          cmd = { "clangd" },
-          filetypes = { "c", "h", "cpp" },
-          root_dir = util.root_pattern(
-            '.clangd',
-            '.clang-tidy',
-            '.clang-format',
-            'compile_commands.json',
-            'compile_flags.txt',
-            'configure.ac',
-            '.git'
-          ),
-        }
+          lspconfig.clangd.setup {
+            capabilities = capabilities,
+            cmd = { "clangd" },
+            filetypes = { "c", "h", "cpp" },
+            root_dir = util.root_pattern(
+              '.clangd',
+              '.clang-tidy',
+              '.clang-format',
+              'compile_commands.json',
+              'compile_flags.txt',
+              'configure.ac',
+              '.git'
+            ),
+          }
 
-        lspconfig.gopls.setup {
-          on_attach = on_attach,
-          capabilities = capabilities,
-          cmd = { "gopls" },
-          filetypes = { "go", "gomod", "gowork", "gotmpl" },
-          -- root_dir = util.root_pattern("go.work", "go.mod", ".git", ".gitignore"),
-          root_dir = util.root_pattern("go.mod", "go.work", ".git"),
-          settings = {
-            gopls = {
-              buildFlags = { "-tags=integration some-other-tags..." },
-              completeUnimported = true,
-              usePlaceholders = false,
-              analyses = {
-                unusedparams = true,
+          lspconfig.gopls.setup {
+            on_attach = on_attach,
+            capabilities = capabilities,
+            cmd = { "gopls" },
+            filetypes = { "go", "gomod", "gowork", "gotmpl" },
+            -- root_dir = util.root_pattern("go.work", "go.mod", ".git", ".gitignore"),
+            root_dir = util.root_pattern("go.mod", "go.work", ".git"),
+            settings = {
+              gopls = {
+                buildFlags = { "-tags=integration some-other-tags..." },
+                completeUnimported = true,
+                usePlaceholders = false,
+                analyses = {
+                  unusedparams = true,
+                },
+                -- ["build.experimentalWorkspaceModule"] = true,
+                ["formatting.gofumpt"] = true,
+                ["staticcheck"] = true,
+                ["ui.verboseOutput"] = true,
               },
-              -- ["build.experimentalWorkspaceModule"] = true,
-              ["formatting.gofumpt"] = true,
-              ["staticcheck"] = true,
-              ["ui.verboseOutput"] = true,
             },
-          },
-        }
+          }
 
-        lspconfig.ts_ls.setup({})
+          lspconfig.ts_ls.setup({})
 
-        -- lspconfig.html.setup({
-        --   capabilities = capabilities,
-        --   init_options = {
-        --     configurationSection = { "html", "css", "javascript" },
-        --     embeddedLanguages = {
-        --       css = true,
-        --       javascript = true,
-        --     },
-        --     provideFormatter = true,
-        --   },
-        -- })
+          -- lspconfig.html.setup({
+          --   capabilities = capabilities,
+          --   init_options = {
+          --     configurationSection = { "html", "css", "javascript" },
+          --     embeddedLanguages = {
+          --       css = true,
+          --       javascript = true,
+          --     },
+          --     provideFormatter = true,
+          --   },
+          -- })
 
-        -- lspconfig.rust_analyzer.setup({
-        --   on_attach = on_attach,
-        --   settings = {
-        --     ["rust-analyzer"] = {
-        --       imports = {
-        --         granularity = {
-        --           group = "module",
-        --         },
-        --         prefix = "self",
-        --       },
-        --       cargo = {
-        --         buildScripts = {
-        --           enable = true,
-        --         },
-        --       },
-        --       procMacro = {
-        --         enable = true
-        --       },
-        --       rustfmt = {
-        --         extraArgs = { "--config", "tab_spaces=2" }
-        --       },
-        --     },
-        --   },
-        -- })
+          -- lspconfig.rust_analyzer.setup({
+          --   on_attach = on_attach,
+          --   settings = {
+          --     ["rust-analyzer"] = {
+          --       imports = {
+          --         granularity = {
+          --           group = "module",
+          --         },
+          --         prefix = "self",
+          --       },
+          --       cargo = {
+          --         buildScripts = {
+          --           enable = true,
+          --         },
+          --       },
+          --       procMacro = {
+          --         enable = true
+          --       },
+          --       rustfmt = {
+          --         extraArgs = { "--config", "tab_spaces=2" }
+          --       },
+          --     },
+          --   },
+          -- })
 
-        -- auto format on save
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          pattern = "*",
-          callback = function(args)
-            local extension = string.sub(args.file, (#args.file - 2), #args.file)
-            if extension == ".go" then
-              require('go.format').goimports()
-            else
-              vim.lsp.buf.format()
-            end
-          end,
-        })
+          -- auto format on save
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            pattern = "*",
+            callback = function(args)
+              local extension = string.sub(args.file, (#args.file - 2), #args.file)
+              if extension == ".go" then
+                require('go.format').goimports()
+              else
+                vim.lsp.buf.format()
+              end
+            end,
+          })
 
-        local opts = { buffer = buffer }
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-      end,
-  },
-  },
+          local opts = { buffer = buffer }
+          vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+        end,
+      },
+    },
   },
   {
     "mrcjkb/rustaceanvim",
