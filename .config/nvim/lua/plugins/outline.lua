@@ -227,7 +227,14 @@ return {
           --   filter = { 'Package', 'Module', 'Function' }
           -- See more examples below.
           -- filter = nil,
-          filter = { 'Function', 'Method' },
+
+          filter = {
+            ["go"] = { 'Function', 'Method' },
+            -- ["dart"] = { 'Class', 'Function', 'Method' },
+            ["dart"] = { exclude = true },
+          },
+
+          -- filter = { 'Function', 'Method' },
 
           -- You can use a custom function that returns the icon for each symbol kind.
           -- This function takes a kind (string) as parameter and should return an
