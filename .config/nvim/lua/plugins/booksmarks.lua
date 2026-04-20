@@ -47,7 +47,20 @@ return {
       callback = find_or_create_project_bookmark_group,
     })
 
-    local opts = {}                  -- go to the following link to see all the options in the deafult config file
+    local opts = {
+      signs = {
+        -- Sign mark icon and color in the gutter
+        mark = {
+          icon = "",
+          color = "#572626",
+          line_bg = "#572626",
+        },
+        desc_format = function(bookmark)
+          ---@cast bookmark Bookmarks.Node
+          return bookmark.order .. ": " .. bookmark.name
+        end,
+      },
+    }                                -- go to the following link to see all the options in the deafult config file
     require("bookmarks").setup(opts) -- you must call setup to init sqlite db
 
     vim.keymap.set("n", "md", "<cmd>BookmarksMark<CR><CR>", { silent = true, noremap = true })
