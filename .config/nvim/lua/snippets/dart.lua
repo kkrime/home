@@ -63,6 +63,7 @@ local stateless_class = s("sl", {
               }
             }
           ),
+          t(";"),
         },
         "$PARENT_INDENT\t"),
       t({ "", "}" }),
