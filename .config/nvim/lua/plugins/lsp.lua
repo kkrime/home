@@ -31,7 +31,7 @@ return {
 
             -- history = true,                             --keep around last snippet local to jump back
             -- Below line is commented out due to; https://github.com/hrsh7th/nvim-cmp/issues/1743
-            -- update_events = "TextChanged,TextChangedI", --update changes as you type
+            update_events = "TextChanged,TextChangedI", --update changes as you type
             enable_autosnippets = true,
             -- region_check_events = "CursorMoved,CursorHold,InsertEnter",
             region_check_events = "InsertEnter",
@@ -55,16 +55,19 @@ return {
           vim.keymap.set({ "i", "s" }, "<c-u>", '<cmd>lua require("luasnip.extras.select_choice")()<cr><C-c><C-c>')
 
           vim.keymap.set({ "i", "s" }, "<C- >", function()
-            if ls.expand_or_jumpable() then
+            -- if ls.expand_or_jumpable() then
+            if ls.expandable() then
               ls.expand()
+            elseif ls.jumpable() then
+              ls.jump(1)
             end
           end, { silent = true })
 
 
-          -- vim.keymap.set({ "i", "s" }, "<C-k>", function()
-          -- 	if ls.expand_or_jumpable() then
-          -- 		ls.expand_or_jump()
-          -- 	end
+          -- vim.keymap.set({ "i", "s" }, "<TAB>", function()
+          --   if ls.expand_or_jumpable() then
+          --     ls.expand_or_jump()
+          --   end
           -- end, { silent = true })
           -- vim.keymap.set({ "i", "s" }, "<C-j>", function()
           -- 	if ls.jumpable() then
@@ -116,22 +119,22 @@ return {
             vim.lsp.handlers.signature_help,
             { border = 'rounded' }
           )
-
           -- TODO look into this
           -- break out of snippet mode
-          --ggocal cmp = require("cmp")
+          -- cmp = require("cmp")
           -- vim.keymap.set({ "i", "s" }, "<CR>", function()
-          --   vim.print(cmp.visible())
-          --   if cmp.visible() then
-          --     return "<CR>"
-          --   elseif ls.in_snippet() then
-          --     -- if ls.in_snippet() then
-          --     vim.print("inside")
-          --     return "<Esc>o"
-          --   else
-          --     vim.print("outside")
-          --     return "<CR>"
-          --   end
+          --   vim.notify("cmd")
+          --   -- vim.print(cmp.visible())
+          --   -- if cmp.visible() then
+          --   --   return "<CR>"
+          --   -- elseif ls.in_snippet() then
+          --   --   -- if ls.in_snippet() then
+          --   --   vim.print("inside")
+          --   --   return "<Esc>o"
+          --   -- else
+          --   --   vim.print("outside")
+          --   --   return "<CR>"
+          --   -- end
           -- end, { silent = true, buffer = true, expr = true })
         end
       },
@@ -157,13 +160,31 @@ return {
           -- completion = cmp.config.window.bordered(),
           -- documentation = cmp.config.window.bordered(),
         },
-
         mapping = cmp.mapping.preset.insert({
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           -- ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          -- ['<CR>'] = {
+          --   i = function()
+          --     vim.notify("new")
+          --     if cmp.visible() then
+          --       -- vim.notify("1")
+          --       cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true })
+          --       return
+          --     elseif ls.in_snippet() then
+          --       vim.notify(vim.inspect({ "ls.jumpable(1)", ls.jumpable(1) }))
+          --       vim.notify("2")
+          --       if ls.jumpable(1) then
+          --         ls.jump(1)
+          --       end
+          --     else
+          --       vim.notify("3")
+          --       vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), "n")
+          --     end
+          --   end,
+          -- },
           ['<C-n>'] = {
             i = function()
               if cmp.visible() then
