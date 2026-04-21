@@ -34,8 +34,9 @@ local stateless_class = s("sl", {
   -- class
   t("class "),
   i(1, "", { key = "class_name" }),
+  t({ " extends StatefulWidget {" }),
   isn(2, {
-      t({ " extends StatefulWidget {", "" }),
+      t({ "", "" }),
       t({ "@override", "_" }),
       rep(k("class_name")),
     },
@@ -44,9 +45,10 @@ local stateless_class = s("sl", {
   rep(1), t("();"),
   t({ "", "}", "", "" }),
   -- state
-  t("class _"), rep(1), t(" extends State<"), rep(1),
+  t("class _"), rep(1), t(" extends State<"), rep(1), t({ "> {" }),
+
   isn(3, {
-      t({ "> {", "" }),
+      t({ "", "" }),
       t({ "@override", "" }),
       t({ "Widget build(BuildContext context) {" }),
       isn(1, {
@@ -70,5 +72,41 @@ local stateless_class = s("sl", {
   t({ "", "}", "" }),
 })
 table.insert(snippets, stateless_class)
+
+local shrink = s("sh", {
+  t("SizedBox.shrink()"),
+})
+table.insert(snippets, shrink)
+
+local _if = s("i", {
+  isn(1, {
+      t("if ("),
+      i(1, ""),
+      t(") {"),
+      isn(2, {
+          t({ "", "" }),
+          i(1, ""),
+        },
+        "$PARENT_INDENT\t"),
+      t({ "", "}" }),
+    },
+    "$PARENT_INDENT"),
+})
+table.insert(snippets, _if)
+
+local _if = s("if", {
+  isn(1, {
+      t("if ("),
+      i(1, ""),
+      t(")"),
+      isn(2, {
+          t({ "", "" }),
+          i(1, ""),
+        },
+        "$PARENT_INDENT\t"),
+    },
+    "$PARENT_INDENT"),
+})
+table.insert(snippets, _if)
 
 return snippets, autosnippets
