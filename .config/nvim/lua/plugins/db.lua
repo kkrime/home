@@ -70,39 +70,39 @@ return {
         sources = {
           require("dbee.sources").FileSource:new(vim.fn.expand("$HOME") .. "/.persistence.json"),
         },
-        editor = {
-          -- see drawer comment.
-          window_options = {},
-          buffer_options = {},
+        -- editor = {
+        --   -- see drawer comment.
+        --   window_options = {},
+        --   buffer_options = {},
 
-          -- mappings for the buffer
-          mappings = {
-            {
-              key = "<CR>",
-              mode = "n",
-              action = function()
-                db_connect()
-                ui.editor_do_action("run_under_cursor")
-              end,
-            },
-            {
-              key = "BB",
-              mode = "v",
-              action = function()
-                db_connect()
-                ui.editor_do_action("run_selection")
-              end,
-            },
-            {
-              key = "BB",
-              mode = "n",
-              action = function()
-                db_connect()
-                ui.editor_do_action("run_file")
-              end,
-            },
-          },
-        },
+        --   -- mappings for the buffer
+        --   mappings = {
+        --     {
+        --       key = "<CR>",
+        --       mode = "n",
+        --       action = function()
+        --         db_connect()
+        --         ui.editor_do_action("run_under_cursor")
+        --       end,
+        --     },
+        --     {
+        --       key = "BB",
+        --       mode = "v",
+        --       action = function()
+        --         db_connect()
+        --         ui.editor_do_action("run_selection")
+        --       end,
+        --     },
+        --     {
+        --       key = "BB",
+        --       mode = "n",
+        --       action = function()
+        --         db_connect()
+        --         ui.editor_do_action("run_file")
+        --       end,
+        --     },
+        --   },
+        -- },
       })
     end,
   },

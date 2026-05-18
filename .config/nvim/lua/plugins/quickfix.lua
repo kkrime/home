@@ -4,6 +4,7 @@ function ToggleQuickFix()
   else
     vim.api.nvim_command([[:cclose]])
   end
+  vim.api.nvim_command([[:lclose]])
 end
 
 return {

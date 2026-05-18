@@ -5,6 +5,7 @@ return {
       {
         "nvim-lua/plenary.nvim",
         "smartpde/telescope-recent-files",
+        'nvim-telescope/telescope-ui-select.nvim',
       },
       {
         'ahmedkhalf/project.nvim',
@@ -44,6 +45,11 @@ return {
                 ["<C-space>"] = require('telescope.actions').to_fuzzy_refine,
               },
             },
+          },
+          ["ui-select"] = {
+            require("telescope.themes").get_dropdown {
+              -- even more opts
+            }
           }
         }
       })
@@ -61,6 +67,7 @@ return {
 
       ts.load_extension("projects")
       ts.load_extension("live_grep_args")
+      ts.load_extension("ui-select")
       -- ts.load_extension("recent_files")
     end
   },

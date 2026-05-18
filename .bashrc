@@ -137,12 +137,12 @@ export CPATH="/opt/homebrew/include"
 
 # go
 # export PATH=$PATH:/usr/local/go/bin
-# export GOROOT=/usr/local/go/
-export GOROOT=/opt/homebrew/Cellar/go/1.25.5/libexec/
+export GOROOT=/opt/homebrew/Cellar/go/1.26.3/libexec/
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/go/bin
 export GOTRACEBACK=single 
+export GOMODCACHE=$GOPATH/pkg/mod/
 
 # rust
 export PATH=~/.cargo/bin:$PATH
@@ -153,6 +153,10 @@ export PATH=/usr/local/homebrew/bin:$PATH
 export PATH=/opt/homebrew/bin:$PATH
 alias ibrew='arch -x86_64 /usr/local/homebrew/bin/brew'
 # brew install starship nvim bat exa tmux fd git-delta rg rm-improved zellij atuin zoxide
+
+
+# flutter last_call
+export PATH=$HOME/.pub-cache/bin:$PATH
 
 # /usr/local/bin
 export PATH=$PATH:/usr/local/bin

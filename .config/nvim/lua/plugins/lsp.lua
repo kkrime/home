@@ -1,3 +1,44 @@
+-- auto add import for golang
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function(args)
+    require('go.format').goimports()
+  end,
+})
+-- auto format + auto display error diagnostic info on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    -- require('go.format').goimports()
+    -- else
+
+    local extension = string.sub(args.file, (#args.file - 2), #args.file)
+
+    if extension ~= ".go" then
+      vim.notify("FORMAT")
+      vim.lsp.buf.format()
+      local is_location_list_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
+      if is_location_list_open then
+        vim.api.nvim_command([[:lclose]])
+      end
+
+      vim.diagnostic.setloclist({ severity = 1, open = true })
+
+      is_location_list_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
+      vim.notify(vim.inspect({ "is_location_list_open", is_location_list_open }))
+
+      if is_location_list_open then
+        vim.schedule(function()
+          vim.api.nvim_command([[:lopen]])
+          local keys = vim.api.nvim_replace_termcodes('<CR>', true, false, true)
+          vim.api.nvim_feedkeys(keys, 'm', false)
+        end)
+      else
+      end
+    end
+  end,
+})
+
 return {
   {
     'hrsh7th/cmp-nvim-lsp',
@@ -252,7 +293,7 @@ return {
   {
     "mason-org/mason-lspconfig.nvim",
     opts = {
-      ensure_installed = { "lua_ls", "gopls", "clangd", "ts_ls" },
+      ensure_installed = { "lua_ls", "gopls", "clangd" },
     },
     dependencies = {
       { "mason-org/mason.nvim", opts = {} },
@@ -327,11 +368,15 @@ return {
             capabilities = capabilities,
             cmd = { "gopls" },
             filetypes = { "go", "gomod", "gowork", "gotmpl" },
-            -- root_dir = util.root_pattern("go.work", "go.mod", ".git", ".gitignore"),
-            root_dir = util.root_pattern("go.mod", "go.work", ".git"),
+            -- root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+            -- root_dir = util.root_pattern("doc.go", "go.mod", "go.work", ".git"),
+            root_dir = util.root_pattern("go.mod", "go.work", "doc.go", ".git"),
+            -- root_dir = util.root_pattern("go.mod", "go.work", ".git"),
             settings = {
               gopls = {
-                buildFlags = { "-tags=integration some-other-tags..." },
+                -- buildFlags = { "-tags=integration some-other-tags..." },
+                -- experimentalWorkspaceModule = true,
+                -- expandWorkspaceToModule = true,
                 completeUnimported = true,
                 usePlaceholders = false,
                 analyses = {
@@ -345,7 +390,7 @@ return {
             },
           }
 
-          lspconfig.ts_ls.setup({})
+          -- lspconfig.ts_ls.setup({})
 
           -- lspconfig.html.setup({
           --   capabilities = capabilities,
@@ -384,18 +429,6 @@ return {
           --   },
           -- })
 
-          -- auto format on save
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            pattern = "*",
-            callback = function(args)
-              local extension = string.sub(args.file, (#args.file - 2), #args.file)
-              if extension == ".go" then
-                require('go.format').goimports()
-              else
-                vim.lsp.buf.format()
-              end
-            end,
-          })
 
           local opts = { buffer = buffer }
           vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
@@ -431,7 +464,8 @@ return {
                 vim.cmd.RustLsp('codeAction') -- supports rust-analyzer's grouping
                 -- or vim.lsp.buf.codeAction() if you don't want grouping.
               end,
-              { silent = true, buffer = bufnr }
+              -- { silent = true, buffer = bufnr }
+              {}
             )
             require("lsp-inlayhints").on_attach(client, bufnr)
           end,
@@ -507,7 +541,8 @@ return {
       vim.keymap.set('n', 'gr', function() require('telescope.builtin').lsp_references() end,
         { noremap = true, silent = true })
       vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<cr>', { silent = true })
-      vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
+      -- vim.keymap.set({ "n", "v" }, "<leader>a", "<cmd>Lspsaga code_action<CR>", { silent = true })
+      vim.keymap.set({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, { silent = true })
       -- vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true })
       vim.keymap.set("n", "<leader>rn", function()
         vim.api.nvim_command([[:Lspsaga rename]])
