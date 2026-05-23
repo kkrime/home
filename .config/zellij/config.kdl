@@ -16,6 +16,7 @@ keybinds {
           bind "" { MoveTab "left"; }
           bind "" { MoveTab "right"; }
       }
+
     // resize {
     //     bind "Ctrl n" { SwitchToMode "Normal"; }
     //     bind "h" "Left" { Resize "Increase Left"; }

@@ -15,7 +15,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     local extension = string.sub(args.file, (#args.file - 2), #args.file)
 
     if extension ~= ".go" then
-      vim.notify("FORMAT")
       vim.lsp.buf.format()
       local is_location_list_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
       if is_location_list_open then
@@ -25,7 +24,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
       vim.diagnostic.setloclist({ severity = 1, open = true })
 
       is_location_list_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
-      vim.notify(vim.inspect({ "is_location_list_open", is_location_list_open }))
 
       if is_location_list_open then
         vim.schedule(function()
