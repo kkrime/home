@@ -3,6 +3,10 @@
   # normal = { family = "JetBrainsMono Nerd Font", style="Regular" }
 [keyboard]
 bindings = [
+
+
+  # ON OSX Press Option + PUS code to input
+  # e.g: Option + 2 0 A C = €
   { key = "+", mods = "Control|Shift", action = "IncreaseFontSize" },
   { key = "-", mods = "Control", action = "DecreaseFontSize" },
   { key = "=", mods = "Control", action = "ResetFontSize" },
@@ -16,6 +20,10 @@ bindings = [
 
   { key = "Up",     mods = "Control", chars = "\u001b[1;5A" },
   { key = "Down",     mods = "Control", chars = "\u001b[1;5B" },
+
+  # { key = "j", mods = "Control|Shift", chars = "\uE173" },
+  { key = "j", mods = "Command|Shift", chars = "\uE173" },
+  { key = "k", mods = "Command|Shift", chars = "\uE174" },
 
   # NOT working
   # { key= "Right",    mods= "Control", chars = "\u001b[1;5C" },

@@ -13,6 +13,8 @@ keybinds {
           bind "" { GoToNextTab; }
           bind "" { GoToPreviousTab; }
           bind "" { CloseTab; }
+          bind "" { MoveTab "left"; }
+          bind "" { MoveTab "right"; }
       }
     // resize {
     //     bind "Ctrl n" { SwitchToMode "Normal"; }

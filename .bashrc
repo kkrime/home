@@ -155,7 +155,7 @@ alias ibrew='arch -x86_64 /usr/local/homebrew/bin/brew'
 # brew install starship nvim bat exa tmux fd git-delta rg rm-improved zellij atuin zoxide
 
 
-# flutter last_call
+# flutter 
 export PATH=$HOME/.pub-cache/bin:$PATH
 
 # /usr/local/bin
