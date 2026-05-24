@@ -1,11 +1,3 @@
--- auto add import for golang
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.go",
-  callback = function(args)
-    require('go.format').goimports()
-  end,
-})
-
 -- auto format + auto display error diagnostic info on save
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
@@ -355,40 +347,38 @@ return {
           --     },
           --   },
           -- })
-          vim.lsp.enable('lua_ls')
+          -- vim.lsp.enable('lua_ls')
           -- vim.notify("afte lua_ls")
 
           -- lspconfig = require("lspconfig")
 
-          vim.lsp.enable('buf_ls')
 
-          lspconfig('gopls', {
-            on_attach = on_attach,
-            capabilities = capabilities,
-            cmd = { "gopls" },
-            filetypes = { "go", "gomod", "gowork", "gotmpl" },
-            -- root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-            -- root_dir = util.root_pattern("doc.go", "go.mod", "go.work", ".git"),
-            root_dir = util.root_pattern("go.mod", "go.work", "doc.go", ".git"),
-            -- root_dir = util.root_pattern("go.mod", "go.work", ".git"),
-            settings = {
-              gopls = {
-                -- buildFlags = { "-tags=integration some-other-tags..." },
-                -- experimentalWorkspaceModule = true,
-                -- expandWorkspaceToModule = true,
-                completeUnimported = true,
-                usePlaceholders = false,
-                analyses = {
-                  unusedparams = true,
-                },
-                -- ["build.experimentalWorkspaceModule"] = true,
-                ["formatting.gofumpt"] = true,
-                ["staticcheck"] = true,
-                ["ui.verboseOutput"] = true,
-              },
-            },
-          })
-          vim.lsp.enable('gopls')
+          -- lspconfig('gopls', {
+          --   on_attach = on_attach,
+          --   capabilities = capabilities,
+          --   cmd = { "gopls" },
+          --   filetypes = { "go", "gomod", "gowork", "gotmpl" },
+          --   -- root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+          --   -- root_dir = util.root_pattern("doc.go", "go.mod", "go.work", ".git"),
+          --   root_dir = util.root_pattern("go.mod", "go.work", "doc.go", ".git"),
+          --   -- root_dir = util.root_pattern("go.mod", "go.work", ".git"),
+          --   settings = {
+          --     gopls = {
+          --       -- buildFlags = { "-tags=integration some-other-tags..." },
+          --       -- experimentalWorkspaceModule = true,
+          --       -- expandWorkspaceToModule = true,
+          --       completeUnimported = true,
+          --       usePlaceholders = false,
+          --       analyses = {
+          --         unusedparams = true,
+          --       },
+          --       -- ["build.experimentalWorkspaceModule"] = true,
+          --       ["formatting.gofumpt"] = true,
+          --       ["staticcheck"] = true,
+          --       ["ui.verboseOutput"] = true,
+          --     },
+          --   },
+          -- })
 
           local opts = { buffer = buffer }
           vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)

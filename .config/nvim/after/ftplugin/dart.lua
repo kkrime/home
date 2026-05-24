@@ -1,3 +1,4 @@
+vim.notify("AFTER DART")
 local function addKeyMappings(original_tab)
   -- create break in log
   vim.api.nvim_feedkeys(vim.keycode("r"), "m", false)
@@ -41,7 +42,7 @@ local log_tab
 local log_tabnr
 local original_tab
 
-local function build_function() 
+local function build_function()
   if log_tab == vim.api.nvim_get_current_tabpage() then
     vim.notify("current tab")
     return

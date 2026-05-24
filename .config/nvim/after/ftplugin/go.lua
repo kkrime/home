@@ -30,6 +30,8 @@
 --     vim.api.nvim_command([[:GoBuild ]] .. target_location)
 --   end)
 -- end, { silent = true, noremap = true })
+--
+
 local saveAllProjectGoFiles = function()
   local project_dir = require("project_nvim.project").get_project_root()
 
@@ -64,3 +66,15 @@ local function build_function()
 end
 
 require('plugins.build')[vim.bo.filetype] = build_function
+
+-- auto add import for golang
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function(args)
+    require('go.format').goimports()
+    -- vim.lsp.buf.format({ async = false })
+  end,
+})
+
+-- load lsp
+vim.lsp.enable('gopls')

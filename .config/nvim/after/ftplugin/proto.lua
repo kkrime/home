@@ -14,3 +14,6 @@ local function build_function()
 end
 
 require('plugins.build')[vim.bo.filetype] = build_function
+
+-- load lsp
+vim.lsp.enable('buf_ls')
