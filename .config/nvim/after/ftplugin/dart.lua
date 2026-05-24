@@ -36,10 +36,12 @@ local function addKeyMappings(original_tab)
     vim.notify(vim.inspect({ "result", result }))
   end, { buffer = vim.api.nvim_get_current_buf() })
 end
+
 local log_tab
 local log_tabnr
 local original_tab
-vim.keymap.set("n", "<C-b>", function()
+
+local function build_function() 
   if log_tab == vim.api.nvim_get_current_tabpage() then
     vim.notify("current tab")
     return
@@ -80,9 +82,6 @@ vim.keymap.set("n", "<C-b>", function()
       -- vim.notify(vim.inspect({ "result", result }))
     end
   end)
-end)
+end
 
-
--- end)
-
-return {}
+require('plugins.build')[vim.bo.filetype] = build_function

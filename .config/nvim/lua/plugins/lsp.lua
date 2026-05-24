@@ -5,6 +5,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     require('go.format').goimports()
   end,
 })
+
 -- auto format + auto display error diagnostic info on save
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
@@ -36,7 +37,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end
   end,
 })
-
 return {
   {
     'hrsh7th/cmp-nvim-lsp',
@@ -153,6 +153,7 @@ return {
             vim.lsp.handlers.hover,
             { border = 'rounded' }
           )
+
 
           vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
             vim.lsp.handlers.signature_help,
@@ -302,66 +303,66 @@ return {
           local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
           local util = require "lspconfig/util"
 
-          local lspconfig = require("lspconfig")
+          -- local lspconfig = require("lspconfig")
+          local lspconfig = vim.lsp.config
 
 
-          lspconfig.lua_ls.setup {
-            on_attach = on_attach,
-            capabilities = capabilities,
-            -- root_dir = util.root_pattern(".git", ".gitignore", "README.md"),
-            root_dir = util.root_pattern('README.md', ".git", ".gitignore"),
-            settings = {
-              Lua = {
-                runtime = {
-                  --   --   -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                  -- version = 'Lua 5.4',
-                  version = 'LuaJIT',
-                  --   --   -- Setup your lua path
-                  path = vim.split(package.path, ';'),
-                },
-                diagnostics = {
-                  globals = { "vim" },
-                },
-                workspace = {
-                  library = { vim.api.nvim_get_runtime_file("lua", true),
-                    '~/.config/nvim/lua' },
-                  -- library = {
-                  --   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                  --   [vim.fn.stdpath('config') .. '/lua'] = true,
-                  --   [vim.fn.expand('~/.config/nvim/lua')] = true,
-                  -- },
-                  -- checkThirdParty = false,
-                },
-                telemetry = {
-                  enable = false,
-                  -- enable = true,
-                },
-              },
-            },
-          }
+          -- lspconfig('lua_ls', {
+          --   -- on_attach = on_attach,
+          --   -- capabilities = capabilities,
+          --   root_dir = util.root_pattern(".git", ".gitignore", "README.md"),
+          --   root_dir = util.root_pattern('README.md', ".git", ".gitignore"),
+          --   settings = {
+          --     Lua = {
+          --       runtime = {
+          --         --   --   -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+          --         -- version = 'Lua 5.4',
+          --         version = 'LuaJIT',
+          --         --   --   -- Setup your lua path
+          --         path = vim.split(package.path, ';'),
+          --       },
+          --       diagnostics = {
+          --         globals = { "vim" },
+          --       },
+          --       workspace = {
+          --         -- library = { vim.api.nvim_get_runtime_file("lua", true),
+          --         --   '~/.config/nvim/lua' },
+          --         -- library = {
+          --         --   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+          --         --   [vim.fn.stdpath('config') .. '/lua'] = true,
+          --         --   [vim.fn.expand('~/.config/nvim/lua')] = true,
+          --         -- },
+          --         -- checkThirdParty = false,
+          --       },
+          --       telemetry = {
+          --         enable = false,
+          --         -- enable = true,
+          --       },
+          --     },
+          --   },
+          -- })
+          -- lspconfig('lua_ls', {
+          --   cmd = { 'lua-language-server' },
+          --   settings = {
+          --     Lua = {
+          --       diagnostics = {
+          --         globals = { 'vim' }, -- Fix 'undefined global vim' warnings
+          --       },
+          --       workspace = {
+          --         library = vim.api.nvim_get_runtime_file("", true),
+          --         checkThirdParty = false,
+          --       },
+          --     },
+          --   },
+          -- })
+          vim.lsp.enable('lua_ls')
+          -- vim.notify("afte lua_ls")
 
-          -- lspconfig.protols.setup {
-          --   capabilities = capabilities,
-          --   -- cmd = { "clangd" },
-          --   filetypes = { "proto" },
-          -- }
+          -- lspconfig = require("lspconfig")
 
-          lspconfig.clangd.setup {
-            capabilities = capabilities,
-            cmd = { "clangd" },
-            filetypes = { "c", "h", "cpp" },
-            root_dir = util.root_pattern(
-              '.clangd',
-              '.clang-tidy',
-              '.clang-format',
-              'compile_commands.json',
-              'compile_flags.txt',
-              'configure.ac',
-              '.git'
-            ),
-          }
+          vim.lsp.enable('buf_ls')
 
-          lspconfig.gopls.setup {
+          lspconfig('gopls', {
             on_attach = on_attach,
             capabilities = capabilities,
             cmd = { "gopls" },
@@ -386,47 +387,8 @@ return {
                 ["ui.verboseOutput"] = true,
               },
             },
-          }
-
-          -- lspconfig.ts_ls.setup({})
-
-          -- lspconfig.html.setup({
-          --   capabilities = capabilities,
-          --   init_options = {
-          --     configurationSection = { "html", "css", "javascript" },
-          --     embeddedLanguages = {
-          --       css = true,
-          --       javascript = true,
-          --     },
-          --     provideFormatter = true,
-          --   },
-          -- })
-
-          -- lspconfig.rust_analyzer.setup({
-          --   on_attach = on_attach,
-          --   settings = {
-          --     ["rust-analyzer"] = {
-          --       imports = {
-          --         granularity = {
-          --           group = "module",
-          --         },
-          --         prefix = "self",
-          --       },
-          --       cargo = {
-          --         buildScripts = {
-          --           enable = true,
-          --         },
-          --       },
-          --       procMacro = {
-          --         enable = true
-          --       },
-          --       rustfmt = {
-          --         extraArgs = { "--config", "tab_spaces=2" }
-          --       },
-          --     },
-          --   },
-          -- })
-
+          })
+          vim.lsp.enable('gopls')
 
           local opts = { buffer = buffer }
           vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)

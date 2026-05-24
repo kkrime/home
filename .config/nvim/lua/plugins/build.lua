@@ -1,12 +1,14 @@
-return {
-  "kkrime/build.nvim",
-  lazy = false,
-  config = function()
-    local buildtargets = require("buildtargets")
-    buildtargets.setup({
-      get_project_root_func = require("project_nvim.project").get_project_root,
-      select_buildtarget_callback = require('lualine').refresh,
-      close_menu_keys = { '<Esc>', '' }
-    })
+callbacks = {}
+
+vim.keymap.set({ 'n', 'i' }, "<C-b>", function()
+
+  local cb = callbacks[vim.bo.filetype]
+  if not cb then
+    return
   end
-}
+
+  cb()
+end)
+
+
+return callbacks

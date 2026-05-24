@@ -26,7 +26,6 @@ local print_var = s("ni", {
   t("))"),
 })
 table.insert(snippets, print_var)
-vim.notify(vim.inspect({ "here", here }))
 
 local inspect_var = s("n", {
   t("vim.notify(\""),

@@ -55,6 +55,8 @@ return {
         -- flutter_lookup_cmd = nil,                   -- example "dirname $(which flutter)" or "asdf where flutter"
         root_patterns = { "pubspec.yaml" }, -- patterns to find the root of your flutter project
         lsp = {
+          -- on_attach = require("cmp_nvim_lsp").on_attach,
+          -- capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
           init_options = {
             onlyAnalyzeProjectsWithOpenFiles = false,
           },
