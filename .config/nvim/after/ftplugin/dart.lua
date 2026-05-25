@@ -7,15 +7,6 @@ fileTypeSettings.loaded[vim.bo.filetype] = true
 
 vim.notify("AFTER DART")
 local function addKeyMappings(original_tab)
-  -- create break in log
-  vim.api.nvim_feedkeys(vim.keycode("r"), "m", false)
-  vim.keymap.set("n", "<CR>", function()
-    local result = vim.fn.system(
-      "echo '\n\n###########################################################################################################################################################################################################################################################################################################################################\n\n\n\n\n\n\n' > /tmp/flutter.out ")
-  end, { buffer = vim.api.nvim_get_current_buf() })
-  -- perform break in log
-  vim.api.nvim_feedkeys(vim.keycode("<CR>"), "m", false)
-
   -- hot reload
   vim.keymap.set("n", "r", function()
     local result = vim.fn.system(
@@ -25,9 +16,17 @@ local function addKeyMappings(original_tab)
       'aerospace focus --window-id $(aerospace list-windows --all | rg "Android Emulator" | choose 0)')
     vim.notify(vim.inspect({ "result", result }))
   end, { buffer = vim.api.nvim_get_current_buf() })
-
   -- perform hot reload
   vim.api.nvim_feedkeys(vim.keycode("r"), "m", false)
+
+  -- create break in log
+  vim.api.nvim_feedkeys(vim.keycode("r"), "m", false)
+  vim.keymap.set("n", "<CR>", function()
+    local result = vim.fn.system(
+      "echo '\n\n###########################################################################################################################################################################################################################################################################################################################################\n\n\n\n\n\n\n' > /tmp/flutter.out ")
+  end, { buffer = vim.api.nvim_get_current_buf() })
+  -- perform break in log
+  vim.api.nvim_feedkeys(vim.keycode("<CR>"), "m", false)
 
   -- ESC to go back to previous tab
   vim.keymap.set("n", "<ESC>", function()
@@ -65,15 +64,11 @@ local function build_function()
     if not is_location_list_open then
       original_tab = vim.api.nvim_get_current_tabpage()
 
-      vim.notify(vim.inspect({ "#vim.fn.win_findbuf(tab_bufnr)", #vim.fn.win_findbuf(tab_bufnr) }))
       if tab_bufnr and #vim.fn.win_findbuf(tab_bufnr) > 0 and vim.api.nvim_buf_is_valid(tab_bufnr) then
-        vim.notify(vim.inspect({ "#vim.fn.win_findbuf(tab_bufnr)", #vim.fn.win_findbuf(tab_bufnr) }))
-        vim.notify(vim.inspect({ "log_tab", log_tab }))
-
         vim.api.nvim_set_current_tabpage(log_tab)
 
-        addKeyMappings(original_tab)
-        -- vim.api.nvim_feedkeys(vim.keycode("r"), "m", false)
+        vim.api.nvim_feedkeys(vim.keycode("r"), "m", false)
+        vim.api.nvim_feedkeys(vim.keycode("<CR>"), "m", false)
         return
       end
 
