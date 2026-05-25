@@ -49,7 +49,7 @@
 return {
   cmd = { "lua-language-server" },
   filetypes = { "lua" },
-  root_markers = { ".luarc.json", ".luarc.jsonc", ".git", "README.md" },
+  root_markers = { ".luarc.json", ".luarc.jsonc", "README.md", ".git" },
   settings = {
     Lua = {
       runtime = {

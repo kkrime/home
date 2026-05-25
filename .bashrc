@@ -228,8 +228,8 @@ __git_complete g __git_main
 alias ch='choose --one-indexed'
 
 # vim
-alias v='nvim -O'
-# alias v='~/.nvim/nvim-macos-arm64/bin/nvim -O'
+# alias v='nvim -O'
+alias v='~/.nvim/nvim-macos-arm64/bin/nvim -O'
 
 # cat
 alias c='cat'
