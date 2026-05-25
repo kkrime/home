@@ -12,10 +12,10 @@ end)
 -------------------------------------------------------------------------------------------------------------------------------------
 vim.keymap.del("n", "<C-h>")
 vim.keymap.set("n", "<C-h>", function()
-local maps = vim.api.nvim_get_keymap('n') -- 'n' for normal mode
-for _, map in pairs(maps) do
-    print(map.script) -- Prints the script/file where it was defined
-end
+  local maps = vim.api.nvim_get_keymap('n') -- 'n' for normal mode
+  for _, map in pairs(maps) do
+    print(map.script)                       -- Prints the script/file where it was defined
+  end
 end)
 
 return {}

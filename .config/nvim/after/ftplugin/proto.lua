@@ -1,3 +1,5 @@
+-- load lsp
+vim.lsp.enable('buf_ls')
 vim.notify(vim.inspect({ "", vim.bo.filetype }))
 
 local function build_function()
@@ -13,7 +15,4 @@ local function build_function()
   end)
 end
 
-require('plugins.build')[vim.bo.filetype] = build_function
-
--- load lsp
-vim.lsp.enable('buf_ls')
+require('fileTypeSettings').callbacks[vim.bo.filetype] = build_function

@@ -1,3 +1,10 @@
+local fileTypeSettings = require('fileTypeSettings')
+if fileTypeSettings.loaded[vim.bo.filetype] then
+  return
+end
+fileTypeSettings.loaded[vim.bo.filetype] = true
+
+
 vim.notify("AFTER DART")
 local function addKeyMappings(original_tab)
   -- create break in log
@@ -85,4 +92,4 @@ local function build_function()
   end)
 end
 
-require('plugins.build')[vim.bo.filetype] = build_function
+fileTypeSettings.callbacks[vim.bo.filetype] = build_function
