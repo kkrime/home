@@ -4,11 +4,25 @@ vim.notify(vim.inspect({ "", vim.bo.filetype }))
 
 local function build_function()
   local project_dir = require("project_nvim.project").get_project_root()
+
   vim.system({ 'buf', 'generate', '--error-format', 'json' }, { text = true }, function(obj)
     -- This runs in the background and calls back when finished
     if obj.code == 0 then
       vim.notify("proto generated successfully")
       -- nil
+      vim.schedule(
+        function()
+          vim.system({ 'buf', 'generate', '--template', 'buf.gen.tags.yaml', '--error-format', 'json' }, { text = true },
+            function(obj)
+              -- This runs in the background and calls back when finished
+              if obj.code == 0 then
+                vim.notify("go tags generated successfully")
+                -- nil
+              else
+                print("Error: " .. obj.stderr)
+              end
+            end)
+        end)
     else
       print("Error: " .. obj.stderr)
     end
