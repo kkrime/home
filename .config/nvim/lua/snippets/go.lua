@@ -36,9 +36,8 @@ local Gray = "\\033[37m"
 local White = "\\033[97m"
 
 local background = "\\033[43m"
-
 -- fmmt
-local print_var = s("ff", {
+local print_var = s("p", {
   t("fmt.Printf(\"" ..
     background ..
     "[DEBUGPRINT]" ..
@@ -50,9 +49,24 @@ local print_var = s("ff", {
 })
 table.insert(snippets, print_var)
 
+local background = "\\033[48;5;88m"
+
+local print_err = s("e", {
+  t("fmt.Printf(\"" ..
+    background ..
+    "[DEBUGPRINT]" ..
+    Reset .. endfile_fileline() .. background .. ">>>>>>>>" .. Reset .. " "),
+  t("err"),
+  t(" = %+v\\n\", "),
+  -- i(1, "var"),
+  t("err"),
+  t(")"),
+})
+table.insert(snippets, print_err)
+
 local background = "\\033[45m"
 
-local print_ln = s("fl", {
+local print_ln = s("l", {
   t("fmt.Println(\"" ..
     background ..
     "[DEBUGPRINT]" ..
