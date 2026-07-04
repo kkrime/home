@@ -11,7 +11,9 @@ local print_var = s("p", {
   t("console.log(`"),
   rep(1),
   t(" = ${"),
+  t("JSON.stringify("),
   i(1, "var"),
+  t(", null, 2)"),
   t("}`);"),
 })
 table.insert(snippets, print_var)

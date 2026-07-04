@@ -175,6 +175,11 @@ return {
         ft = "sql", -- optional but good to have
         opts = {},  -- needed
       },
+      opts = {
+        sources = {
+          { "cmp-dbee" },
+        },
+      },
     },
     config = function(_)
       local cmp = require("cmp")

@@ -1,7 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
+    -- build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup {
         -- A list of parser names, or "all"
@@ -13,7 +13,7 @@ return {
         highlight = {
           enable = true,
         },
-        indent = { enable = true },
+        -- indent = { enable = true },
 
         playground = {
           enable = true,
@@ -33,6 +33,7 @@ return {
           },
         }
       }
+      vim.notify("auto idnet")
     end
   },
   {
