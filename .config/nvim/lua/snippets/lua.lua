@@ -17,7 +17,7 @@ local snippets, autosnippets = {}, {} --}}}
 
 local group = vim.api.nvim_create_augroup("Lua Snippets", { clear = true })
 
-local print_var = s("ni", {
+local print_var = s("p", {
   t("vim.notify(vim.inspect({ \""),
   rep(1),
   t("\", "),
@@ -27,7 +27,7 @@ local print_var = s("ni", {
 })
 table.insert(snippets, print_var)
 
-local inspect_var = s("n", {
+local inspect_var = s("l", {
   t("vim.notify(\""),
   i(1, ""),
   t("\""),
@@ -36,22 +36,22 @@ local inspect_var = s("n", {
 
 table.insert(snippets, inspect_var)
 
-print_var = s("pv", {
-  t("print(\""),
-  rep(1),
-  t("\", "),
-  i(1, "var"),
-  t(")"),
-})
-table.insert(snippets, print_var)
+-- print_var = s("pv", {
+--   t("print(\""),
+--   rep(1),
+--   t("\", "),
+--   i(1, "var"),
+--   t(")"),
+-- })
+-- table.insert(snippets, print_var)
 
-print_var = s("p", {
-  t("print(\""),
-  -- rep(1),
-  -- t(" \" .. "),
-  i(1),
-  t("\")"),
-})
-table.insert(snippets, print_var)
+-- print_var = s("p", {
+--   t("print(\""),
+--   -- rep(1),
+--   -- t(" \" .. "),
+--   i(1),
+--   t("\")"),
+-- })
+-- table.insert(snippets, print_var)
 
 return snippets, autosnippets
