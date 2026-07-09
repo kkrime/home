@@ -64,7 +64,9 @@ local function build_function()
     if not is_location_list_open then
       original_tab = vim.api.nvim_get_current_tabpage()
 
-      if tab_bufnr and #vim.fn.win_findbuf(tab_bufnr) > 0 and vim.api.nvim_buf_is_valid(tab_bufnr) then
+      local is_buffer_open_in_a_window = #vim.fn.win_findbuf(tab_bufnr) > 0
+
+      if tab_bufnr and is_buffer_open_in_a_window and vim.api.nvim_buf_is_valid(tab_bufnr) then
         vim.api.nvim_set_current_tabpage(log_tab)
 
         vim.api.nvim_feedkeys(vim.keycode("r"), "m", false)
