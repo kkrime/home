@@ -22,14 +22,17 @@ bindings = [
   { key = "Down",     mods = "Control", chars = "\u001b[1;5B" },
 
   # # { key = "j", mods = "Control|Shift", chars = "\uE173" },
-  # { key = "j", mods = "Command|Shift", chars = "\uE173" },
-  # { key = "k", mods = "Command|Shift", chars = "\uE174" },
+  { key = "j", mods = "Command|Shift", chars = "\uE173" },
+  { key = "k", mods = "Command|Shift", chars = "\uE174" },
 
-  # # tmux
+  # tmux
   { key = "t", mods = "Command", chars = "\uE175" },
-  { key = "k", mods = "Command", chars = "\u0001n" },
-  { key = "j", mods = "Command", chars = "\u0001p" },
-  { key = "x", mods = "Command", chars = "\uE178" },
+  # move to next tab
+  { key = "k", mods = "Command", chars = "\u0011n" },
+  # move to previous tab
+  { key = "j", mods = "Command", chars = "\u0011p" },
+  { key = "x", mods = "Command", chars = "\uE118" },
+
 
   # # NOT working
   # # { key= "Right",    mods= "Control", chars = "\u001b[1;5C" },
