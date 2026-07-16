@@ -152,7 +152,7 @@ export PATH=~/.cargo/bin:$PATH
 export PATH=/usr/local/homebrew/bin:$PATH
 export PATH=/opt/homebrew/bin:$PATH
 alias ibrew='arch -x86_64 /usr/local/homebrew/bin/brew'
-# brew install starship nvim bat exa tmux fd git-delta rg rm-improved zellij atuin zoxide
+# brew install starship nvim bat exa tmux fd git-delta rg rm-improved  atuin zoxide
 
 
 # flutter 
@@ -229,7 +229,8 @@ alias ch='choose --one-indexed'
 
 # vim
 # alias v='nvim -O'
-alias v='~/.nvim/nvim-macos-arm64/bin/nvim -O'
+# alias v='~/.nvim/nvim-macos-arm64/bin/nvim -O'
+alias v='/opt/homebrew/bin/nvim'
 
 # cat
 alias c='cat'
@@ -262,8 +263,8 @@ export PATH="$HOME/develop/flutter/bin:$PATH"
 eval "$(zoxide init bash)"
 # starship
 eval "$(starship init bash)"
-# zellij
-# eval "$(zellij setup --generate-auto-start bash )"
+# tmux
+tmux
 # autin
 source ~/.bash-preexec.sh
 eval "$(atuin init bash --disable-up-arrow)"
