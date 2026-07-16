@@ -29,6 +29,17 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end
   end,
 })
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.workspace = {
+  didChangeWatchedFiles = {
+    dynamicRegistration = true,
+  },
+}
+vim.lsp.config('*', {
+  capabilities = capabilities,
+})
+
 return {
   {
     'hrsh7th/cmp-nvim-lsp',
@@ -174,11 +185,6 @@ return {
         "MattiasMTS/cmp-dbee",
         ft = "sql", -- optional but good to have
         opts = {},  -- needed
-      },
-      opts = {
-        sources = {
-          { "cmp-dbee" },
-        },
       },
     },
     config = function(_)

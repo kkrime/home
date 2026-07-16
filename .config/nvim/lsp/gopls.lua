@@ -2,6 +2,13 @@ return {
   cmd = { "gopls" },
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
   root_markers = { "go.mod", "go.work", "doc.go", ".git" },
+  -- capabilities = {
+  --   workspace = {
+  --     didChangeWatchedFiles = {
+  --       dynamicRegistration = true,
+  --     },
+  --   },
+  -- },
   settings = {
     gopls = {
       -- buildFlags = { "-tags=integration some-other-tags..." },

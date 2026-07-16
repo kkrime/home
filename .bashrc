@@ -263,7 +263,7 @@ eval "$(zoxide init bash)"
 # starship
 eval "$(starship init bash)"
 # zellij
-eval "$(zellij setup --generate-auto-start bash )"
+# eval "$(zellij setup --generate-auto-start bash )"
 # autin
 source ~/.bash-preexec.sh
 eval "$(atuin init bash --disable-up-arrow)"

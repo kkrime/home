@@ -45,4 +45,9 @@ local join = s("j", {
 })
 table.insert(snippets, join)
 
+-- local where = s("w", {
+--   t("WHERE "),
+-- })
+-- table.insert(snippets, where)
+
 return snippets, autosnippets
