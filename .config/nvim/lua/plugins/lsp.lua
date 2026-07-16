@@ -512,7 +512,7 @@ return {
         vim.api.nvim_feedkeys(keys, 'm', false)
       end, { silent = true })
 
-      vim.lsp.set_log_level("INFO")
+      -- vim.lsp.set_log_level("INFO")
     end
   },
   {

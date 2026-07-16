@@ -230,7 +230,7 @@ alias ch='choose --one-indexed'
 # vim
 # alias v='nvim -O'
 # alias v='~/.nvim/nvim-macos-arm64/bin/nvim -O'
-alias v='/opt/homebrew/bin/nvim'
+alias v='/opt/homebrew/bin/nvim -O'
 
 # cat
 alias c='cat'
@@ -263,11 +263,12 @@ export PATH="$HOME/develop/flutter/bin:$PATH"
 eval "$(zoxide init bash)"
 # starship
 eval "$(starship init bash)"
-# tmux
-tmux
 # autin
 source ~/.bash-preexec.sh
 eval "$(atuin init bash --disable-up-arrow)"
+export ATUIN_TMUX_POPUP=true
+# eval "$(atuin pty-proxy init bash)"
+# tmux
 
 # mobile dev
 source ~/.mobile_dev.sh
@@ -277,6 +278,4 @@ source ~/.mobile_dev.sh
 # brew install ytop bandwhich
 # . "$HOME/.cargo/env"
 
-# zitadel
-source ~/.zitadel_config/setup.sh
-# cd ~/go/src/zitadel
+tmux
