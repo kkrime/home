@@ -227,6 +227,9 @@ __git_complete g __git_main
 # awk
 alias ch='choose --one-indexed'
 
+# top
+alias top='btm --process_memory_as_value'
+
 # vim
 # alias v='nvim -O'
 # alias v='~/.nvim/nvim-macos-arm64/bin/nvim -O'
@@ -278,4 +281,7 @@ source ~/.mobile_dev.sh
 # brew install ytop bandwhich
 # . "$HOME/.cargo/env"
 
-tmux
+if [[ "$TERM" == "alacritty" ]]; then 
+  tmux
+fi
+
