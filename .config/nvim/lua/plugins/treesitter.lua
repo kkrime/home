@@ -33,7 +33,6 @@ return {
           },
         }
       }
-      vim.notify("auto idnet")
     end
   },
   {

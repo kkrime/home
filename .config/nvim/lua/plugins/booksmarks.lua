@@ -40,6 +40,7 @@ return {
     { "nvim-telescope/telescope.nvim" },
     { "stevearc/dressing.nvim" } -- optional: better UI
   },
+  lazy = true,
   config = function()
     vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter" }, {
       group = vim.api.nvim_create_augroup("BookmarksGroup", {}),

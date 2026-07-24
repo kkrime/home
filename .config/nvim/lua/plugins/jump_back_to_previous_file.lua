@@ -1,12 +1,14 @@
 -- clear jumplist
+-- MOVED TO ~/.config/nvim/lua/plugins/auto-session.lua
 vim.api.nvim_create_autocmd("VimEnter", {
   pattern = "*",
   callback = function()
-    for _, winid in pairs(vim.api.nvim_list_wins()) do
-      vim.api.nvim_win_call(winid, function()
-        vim.cmd('clearjumps')
-      end)
-    end
+    -- for _, winid in pairs(vim.api.nvim_list_wins()) do
+    --   vim.api.nvim_win_call(winid, function()
+    --     vim.cmd('clearjumps')
+    --   end)
+    -- end
+    -- vim.cmd('windo clearjumps')
   end
 })
 

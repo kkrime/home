@@ -72,12 +72,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-
-# NOTES
-# TO generate self-signing certificate:
-# https://www.openldap.org/pub/ksoper/OpenLDAP_TLS_obsolete.html#4.1
-# openssl req -newkey rsa:2048 -x509 -nodes -out server.pem -keyout server.pem -days 364
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -128,7 +122,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-alias vim=/usr/bin/vim
+alias vim=/usr/bin/nvim
 alias vimdiff=/usr/bin/vimdiff
 
 # misc
@@ -136,52 +130,23 @@ export LIBRARY_PATH="/opt/homebrew/lib"
 export CPATH="/opt/homebrew/include"
 
 # go
-# export PATH=$PATH:/usr/local/go/bin
-export GOROOT=/opt/homebrew/Cellar/go/1.26.3/libexec/
-export GOPATH=$HOME/go
+export PATH=$PATH:/usr/local/go/bin
+export GOROOT=/usr/local/go/
+export GOPATH=$HOME/go/src
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/go/bin
 export GOTRACEBACK=single 
-export GOMODCACHE=$GOPATH/pkg/mod/
-
-# rust
-export PATH=~/.cargo/bin:$PATH
 
 # Brew
-# export PATH=/opt/homebrew/bin:$PATH
-export PATH=/usr/local/homebrew/bin:$PATH
 export PATH=/opt/homebrew/bin:$PATH
-alias ibrew='arch -x86_64 /usr/local/homebrew/bin/brew'
-# brew install starship nvim bat exa tmux fd git-delta rg rm-improved  atuin zoxide
 
-
-# flutter 
-export PATH=$HOME/.pub-cache/bin:$PATH
-
-# /usr/local/bin
-export PATH=$PATH:/usr/local/bin
+# rust
+export RUSTFLAGS=-Awarnings 
 
 # rust utilities
 alias ls='exa --color=always'
 alias lt='ll -snew -r'
 alias b='bat'
-
-function batf() {
-  local filename="$1"
-  if [[ ! -f "$filename" ]]; then
-    echo "Error: File '$filename' does not exist."
-    return 1
-  fi
-  local extension="${filename##*.}"
-  tail -f "$filename" | bat -l "$extension" --paging=never
-}
-
-# python
-# below is needed for 'arch -x86_64 pyenv install 3.8.13'
-# export LDFLAGS="-L/opt/homebrew/lib"; export CPPFLAGS="-I/opt/homebrew/include"
-# below is needed for 'make install_deps'
-# LIBRARY_PATH=$LIBRARY_PATH:/usr/local/homebrew/opt/openssl\@1.1/lib/
-export PATH=/usr/local/bin:~/.pyenv/versions/3.8.13/bin:$PATH
 
  # added by Nix installer
 if [ -e /Users/iraq/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/iraq/.nix-profile/etc/profile.d/nix.sh; fi
@@ -195,7 +160,7 @@ fi
 alias s='sudo'
 
 # rip grep with colour
-alias rgm='rg'
+alias rg='rg --color=always'
 alias rgi='rg --color=always -i'
 # alias rgg='rg --color=always --max-depth 1'
 alias rgg=rg '--color=always --max-depth 1'
@@ -203,19 +168,16 @@ alias rgm='rg --color=never'
 alias rggm='rg --color=never--max-depth 1'
 
 # quick access to ~/.bashrc
-alias .bash='nvim ~/.bashrc'
+alias .bash='vim ~/.bashrc'
 
 # replace rip with rip
 alias rm='rip'
-
-# cd --> zoxide
-alias cd='z'
 
 # github
 alias cpr='~/.tools/github/github_create_PR.sh'
 alias pcpr='~/.tools/github/github_push_and_create_PR.sh'
 alias cmpcpr='~/.tools/github/github_commit_push_and_create_PR.sh'
-alias cmp='~/.tools/github/commit_push.sh'
+alias cmp='~/.tools/commit_push.sh'
 
 # git 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
@@ -225,18 +187,13 @@ alias g="git"
 __git_complete g __git_main
 
 # awk
-alias ch='choose --one-indexed'
-
-# top
-alias top='btm --process_memory_as_value'
+alias ch=choose
 
 # vim
-# alias v='nvim -O'
-alias v='/opt/homebrew/bin/nvim -O'
-# alias v='/Users/iraq/Downloads/nvim-macos-arm64/bin/nvim'
+alias v='vim -O'
 
-# cat
-alias c='cat'
+# top
+alias top=ytop
 
 # curl
 # alias curl=/opt/homebrew/Cellar/curl/7.85.0/bin/curl
@@ -251,42 +208,32 @@ alias pip="$(pyenv which pip)"
 
 alias sk='cd ~/go/src/sky'
 
-# nvim dev
-alias config='cd ~/.config/nvim/lua/plugins/'
-alias plugin='cd ~/.local/share/nvim/lazy/'
-
-# Dbee
-alias db='v -c "Dbee toggle"'
-
-# flutter
-export PATH="$HOME/develop/flutter/bin:$PATH"
 
 
-# zoxide
-eval "$(zoxide init bash)"
+# svelte
+export PNPM_HOME="/Users/iraq/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+export PATH=$PATH:/opt/homebrew/Cellar/pnpm\@8/8.15.8_1/bin
+
+
 # starship
 eval "$(starship init bash)"
+<<<<<<< HEAD
+eval "$(zellij setup --generate-auto-start bash)"
+=======
+# zellij
+eval "$(zellij setup --generate-auto-start bash )"
 # autin
 source ~/.bash-preexec.sh
 eval "$(atuin init bash --disable-up-arrow)"
-export ATUIN_TMUX_POPUP=true
-# eval "$(atuin pty-proxy init bash)"
-
-# mobile dev
-source ~/.mobile_dev.sh
+>>>>>>> f98ec69 (repalced ble.sh with .bash-preexec.sh)
 
 # install Utils
 # brew tap cjbassi/ytop
 # brew install ytop bandwhich
 # . "$HOME/.cargo/env"
 
-# tmux
-export PATH="$HOME/.tmuxifier/bin:$PATH"
-export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux-layouts"
-export TMUXIFIER_NO_COMPLETE=1
-export EDITOR="/opt/homebrew/bin/nvim -O"
-eval "$(tmuxifier init -)"
-if [[ "$TERM" == "alacritty" ]]; then 
-  tmux
-fi
 

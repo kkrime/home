@@ -19,28 +19,10 @@ end
 
 vim.keymap.del("n", "<C-h>")
 vim.keymap.set("n", "<C-h>", function()
+  -- local session_name = require("auto-session.lib").current_session_name()
+  -- vim.notify(vim.inspect({ "session_name", session_name }))
   -- local res = snips.make_return_nodes({ { "err" } })
   -- vim.notify(vim.inspect({ "res", res }))
-  vim.treesitter.query.set(
-    'go',
-    'LuaSnip_Result',
-    [[
-      [
-        (method_declaration result: (_) @id)
-        (function_declaration result: (_) @id)
-        (func_literal result: (_) @id)
-      ]
-  ]]
-  )
-  local cursor_node = vim.treesitter.get_node({ bufnr = 0 })
-  local t = ts_locals.previous_scope(cursor_node)
-  vim.notify(vim.inspect({ "var", var }))
-  vim.notify(vim.inspect({ " cursor_node", cursor_node:type() }))
-  local scope_tree = ts_locals.get_scope_tree(cursor_node, 0)
-  -- local scope_tree = vim.treesitter .get_scope_tree(cursor_node, 0)
-  for _, scope in ipairs(scope_tree) do
-    vim.notify(vim.inspect({ "scope", scope:type() }))
-  end
 end)
 
 

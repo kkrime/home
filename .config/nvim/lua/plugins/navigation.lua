@@ -149,11 +149,11 @@ local function function_jump(direction)
   end
 end
 
-vim.keymap.set({ "n", "v" }, "<C-k>", function()
+vim.keymap.set({ "n", "v" }, "<S-k>", function()
   function_jump('k')
 end, { silent = true, noremap = true })
 
-vim.keymap.set({ "n", "v" }, "<C-j>", function()
+vim.keymap.set({ "n", "v" }, "<S-j>", function()
   function_jump('j')
 end, { silent = true, noremap = true })
 
