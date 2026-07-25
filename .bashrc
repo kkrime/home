@@ -128,7 +128,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-alias vim=/usr/bin/vim
+# alias vim=/usr/bin/vim
 alias vimdiff=/usr/bin/vimdiff
 
 # misc
@@ -287,6 +287,7 @@ export TMUXIFIER_NO_COMPLETE=1
 export EDITOR="/opt/homebrew/bin/nvim -O"
 eval "$(tmuxifier init -)"
 if [[ "$TERM" == "alacritty" ]]; then 
-  tmux
+  # tmux
+  tmuxifier load-session promo
 fi
 

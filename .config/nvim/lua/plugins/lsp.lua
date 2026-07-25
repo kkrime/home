@@ -501,7 +501,7 @@ return {
 
       vim.keymap.set('n', 'gr', function() require('telescope.builtin').lsp_references() end,
         { noremap = true, silent = true })
-      vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<cr>', { silent = true })
+      vim.keymap.set('n', 'D', '<cmd>Lspsaga hover_doc<cr>', { silent = true })
       -- vim.keymap.set({ "n", "v" }, "<leader>a", "<cmd>Lspsaga code_action<CR>", { silent = true })
       vim.keymap.set({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, { silent = true })
       -- vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true })
