@@ -30,8 +30,8 @@ if initialize_session "promo"; then
   new_window "db"
   run_cmd "db"
 
-  # select_window backend
-  select_window avd
+  select_window backend
+  # select_window avd
 fi
 
 finalize_and_go_to_session
