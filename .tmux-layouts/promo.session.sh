@@ -10,8 +10,7 @@ session_root "/Users/iraq/develop/last_calls"
 if initialize_session "promo"; then
 
   new_window "avd"
-  run_cmd "sleep 5"
-  run_cmd "fl"
+  run_cmd 'while :; do adb devices | rg 'emulator.*device'; [[ "$?" -eq 0 ]] && break; done && fl'
   split_h 50
   run_cmd "/Users/iraq/Library/Android/sdk/emulator/emulator -avd Medium_Phone"
 
@@ -32,9 +31,7 @@ if initialize_session "promo"; then
   run_cmd "db"
 
   # select_window backend
-  # select_window flutter
-  select_window e2e
-  # select_window avd
+  select_window avd
 fi
 
 finalize_and_go_to_session
