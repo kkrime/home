@@ -13,6 +13,7 @@ if initialize_session "promo"; then
   run_cmd 'while :; do adb devices | rg 'emulator.*device'; [[ "$?" -eq 0 ]] && break; done && fl'
   split_h 50
   run_cmd "/Users/iraq/Library/Android/sdk/emulator/emulator -avd Medium_Phone"
+  select_pane 1
 
   window_root "/Users/iraq/develop/last_calls"
   new_window "flutter"
