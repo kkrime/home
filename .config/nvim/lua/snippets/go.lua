@@ -13,7 +13,7 @@ local sn = ls.snippet_node
 -- local fmt = require("luasnip.extras.fmt").fmt
 local rep = require("luasnip.extras").rep
 
-local snips = require('go.snips')
+-- local snips = require('go.snips')
 
 local snippets, autosnippets = {}, {} --}}}
 
@@ -94,33 +94,6 @@ local log_info = s("li", {
   t("\")"),
 })
 table.insert(snippets, log_info)
-
--- error
--- local return_error = s("er", {
---   t({ "if err != nil {", "\treturn err", "}" }),
--- })
--- table.insert(snippets, return_error)
-
--- local return_error_ = s("er,", {
---   t({ "if err != nil {", "\treturn " }),
---   i(1, ""),
---   t({ ", err", "}" }),
--- })
--- table.insert(snippets, return_error_)
-local in_fn = {
-  show_condition = snips.in_function,
-  condition = snips.in_function,
-}
-local return_error_ = s(
-  { trig = "er", name = "If error, choose me!", dscr = "If error, return wrapped with dynamic node" },
-  fmt("if {} != nil {{\n\treturn {}\n}}\n{}", {
-    ls.i(1, "err"),
-    ls.d(2, snips.make_return_nodes, { 1 }, { user_args = { { "a1", "a2" } } }),
-    ls.i(0)
-  })
--- in_fn
-)
-table.insert(snippets, return_error_)
 
 local format_error = s("fe", {
   t("fmt.Errorf(\""),

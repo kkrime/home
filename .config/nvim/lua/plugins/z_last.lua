@@ -6,11 +6,11 @@ end, {})
 vim.keymap.del("n", "<C-h>")
 
 vim.keymap.set("n", "<C-h>", function()
-  require("buildtargets").select_buildtarget()
+  -- require("buildtargets").select_buildtarget()
 end)
 
 -------------------------------------------------------------------------------------------------------------------------------------
-local snips = require('go.snips')
+-- local snips = require('go.snips')
 
 local ok, ts_locals = pcall(require, 'nvim-treesitter.locals')
 if not ok then

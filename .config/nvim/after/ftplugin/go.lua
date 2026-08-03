@@ -1,3 +1,4 @@
+vim.notify("GOLANG")
 local fileTypeSettings = require('fileTypeSettings')
 if fileTypeSettings.loaded[vim.bo.filetype] then
   return

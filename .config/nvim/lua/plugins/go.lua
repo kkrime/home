@@ -7,6 +7,7 @@ return {
       },
     },
     lazy = true,
+    ft = { "go", 'gomod' },
     config = function()
       local go = require("go")
       go.setup({
@@ -17,6 +18,7 @@ return {
           close_menu_keys = { '<Esc>', '' }
         }
       })
+      vim.notify("LOADING")
 
       -- -- run
       -- local Terminal = require('toggleterm.terminal').Terminal
@@ -45,8 +47,7 @@ return {
       --   group = format_sync_grp,
       -- })
     end,
-    event = { "CmdlineEnter" },
-    ft = { "go", 'gomod' },
+    -- event = { "CmdlineEnter" },
     -- build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   }
 }
