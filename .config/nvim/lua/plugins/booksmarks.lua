@@ -40,6 +40,13 @@ return {
     { "nvim-telescope/telescope.nvim" },
     { "stevearc/dressing.nvim" } -- optional: better UI
   },
+  keys = {
+    "mm",
+    "mn",
+    "mp",
+    "mN",
+    "ml"
+  },
   lazy = true,
   config = function()
     vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter" }, {

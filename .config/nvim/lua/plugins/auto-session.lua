@@ -10,6 +10,7 @@ vim.api.nvim_create_autocmd("FocusGained", {
     end
   end,
 })
+
 return {
   "rmagatti/auto-session",
   lazy = false,

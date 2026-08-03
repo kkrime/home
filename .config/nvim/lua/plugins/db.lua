@@ -58,6 +58,7 @@ return {
     build = function()
       require("dbee").install()
     end,
+    lazy = true,
     config = function()
       dbee = require("dbee")
       ui = dbee.api.ui

@@ -257,6 +257,7 @@ alias plugin='cd ~/.local/share/nvim/lazy/'
 
 # Dbee
 alias db='v -c "Dbee toggle"'
+# alias db='v -c "set columns=409" -c "Dbee toggle"'
 
 # flutter
 export PATH="$HOME/develop/flutter/bin:$PATH"
@@ -287,7 +288,7 @@ export TMUXIFIER_NO_COMPLETE=1
 export EDITOR="/opt/homebrew/bin/nvim -O"
 eval "$(tmuxifier init -)"
 if [[ "$TERM" == "alacritty" ]]; then 
-  # tmux
-  tmuxifier load-session promo
+  tmux
+  # tmuxifier load-session promo
 fi
 

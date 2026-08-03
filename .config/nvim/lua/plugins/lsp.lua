@@ -1,31 +1,35 @@
 -- auto format + auto display error diagnostic info on save
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
+  pattern = { "*.lua", "*.dart", "*.js" },
   callback = function(args)
-    -- require('go.format').goimports()
-    -- else
-
     local extension = string.sub(args.file, (#args.file - 2), #args.file)
 
-    if extension ~= ".go" then
-      vim.lsp.buf.format()
-      local is_location_list_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
-      if is_location_list_open then
-        vim.api.nvim_command([[:lclose]])
-      end
+    if extension == ".go" then
+      return
+    end
 
-      vim.diagnostic.setloclist({ severity = 1, open = true })
+    vim.lsp.buf.format()
 
-      is_location_list_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
+    if extension ~= ".c" then
+      return
+    end
 
-      if is_location_list_open then
-        vim.schedule(function()
-          vim.api.nvim_command([[:lopen]])
-          local keys = vim.api.nvim_replace_termcodes('<CR>', true, false, true)
-          vim.api.nvim_feedkeys(keys, 'm', false)
-        end)
-      else
-      end
+    local is_location_list_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
+    if is_location_list_open then
+      vim.api.nvim_command([[:lclose]])
+    end
+
+    vim.diagnostic.setloclist({ severity = 1, open = true })
+
+    is_location_list_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
+
+    if is_location_list_open then
+      vim.schedule(function()
+        vim.api.nvim_command([[:lopen]])
+        local keys = vim.api.nvim_replace_termcodes('<CR>', true, false, true)
+        vim.api.nvim_feedkeys(keys, 'm', false)
+      end)
+    else
     end
   end,
 })
@@ -115,6 +119,7 @@ return {
           -- 	if ls.jumpable() then
           -- 		ls.jump(-1)
           -- 	end
+          --
           -- end, { silent = true })
 
           vim.keymap.set({ "i", "s" }, "<a-k>", function()
@@ -501,7 +506,7 @@ return {
 
       vim.keymap.set('n', 'gr', function() require('telescope.builtin').lsp_references() end,
         { noremap = true, silent = true })
-      vim.keymap.set('n', 'D', '<cmd>Lspsaga hover_doc<cr>', { silent = true })
+      -- vim.keymap.set('n', 'k', '<cmd>Lspsaga hover_doc<cr>', { silent = true })
       -- vim.keymap.set({ "n", "v" }, "<leader>a", "<cmd>Lspsaga code_action<CR>", { silent = true })
       vim.keymap.set({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, { silent = true })
       -- vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true })

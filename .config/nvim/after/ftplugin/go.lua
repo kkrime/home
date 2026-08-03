@@ -3,7 +3,6 @@ if fileTypeSettings.loaded[vim.bo.filetype] then
   return
 end
 fileTypeSettings.loaded[vim.bo.filetype] = true
-vim.notify("AFTER GO")
 
 -- load lsp
 vim.lsp.enable('gopls')
