@@ -2,6 +2,8 @@ return {
   {
     'akinsho/toggleterm.nvim',
     lazy = true,
+    -- keys = { "" },
+    keys = { [[]] },
     config = function(_)
       require("toggleterm").setup {
         -- size can be a number or function which is passed the current terminal

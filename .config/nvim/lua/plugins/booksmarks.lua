@@ -76,9 +76,10 @@ return {
     vim.keymap.set("n", "mm", function()
       vim.cmd('BookmarksMark')
       vim.schedule(function()
-        local keys = vim.api.nvim_replace_termcodes('<CR>', true, false, true)
+        vim.notify("inside")
+        local keys = vim.api.nvim_replace_termcodes('<ESC><CR>', true, false, true)
         vim.api.nvim_set_current_line("")
-        vim.api.nvim_feedkeys(keys, 'm', false)
+        vim.api.nvim_feedkeys(keys, 'm', true)
       end)
     end, { silent = true, noremap = true })
 
@@ -90,7 +91,7 @@ return {
 
     vim.keymap.set({ "n", "v" }, "mx",
       function()
-        require("bookmarks.commands").delete_mark_of_current_file()
+        require("bookmarks.commands")["Delete marks of current file"]()
       end, { silent = true })
   end,
 }

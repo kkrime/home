@@ -3,9 +3,9 @@ vim.api.nvim_create_user_command('Z', function()
 end, {})
 
 
-vim.keymap.del("n", "<C-h>")
+-- vim.keymap.del("n", "<C-h>")
 
-vim.keymap.set("n", "<C-h>", function()
+vim.keymap.set("n", "<C-m>", function()
   -- require("buildtargets").select_buildtarget()
 end)
 
@@ -17,12 +17,8 @@ if not ok then
   ts_locals = require('guihua.ts_obsolete.locals')
 end
 
-vim.keymap.del("n", "<C-h>")
-vim.keymap.set("n", "<C-h>", function()
-  -- local session_name = require("auto-session.lib").current_session_name()
-  -- vim.notify(vim.inspect({ "session_name", session_name }))
-  -- local res = snips.make_return_nodes({ { "err" } })
-  -- vim.notify(vim.inspect({ "res", res }))
+vim.keymap.del("n", "<C-m>")
+vim.keymap.set("n", "<C-m>", function()
 end)
 
 

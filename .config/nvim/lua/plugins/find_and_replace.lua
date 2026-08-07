@@ -1,5 +1,5 @@
-vim.keymap.set("c", "<C-h>", "<LEFT>")
-vim.keymap.set("c", "<C-l>", "<RIGHT>")
+-- vim.keymap.set("c", "<C-h>", "<LEFT>")
+-- vim.keymap.set("c", "<C-l>", "<RIGHT>")
 
 -- vim.keymap.set("c", "<C-j>", function()
 --   local line = string.len(vim.fn.getcmdline())
