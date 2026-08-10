@@ -59,6 +59,8 @@ return {
       require("dbee").install()
     end,
     lazy = true,
+    -- cmd = { "DBee toggle" },
+    cmd = { "Dbee" },
     config = function()
       dbee = require("dbee")
       ui = dbee.api.ui
