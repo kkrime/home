@@ -67,6 +67,14 @@ return {
       local go_get_current_buildtarget = require('buildtargets').get_current_buildtarget
       local lualine_x                  = {
         {
+          -- color = { fg = 'white', bg = 'black' },
+          color = { fg = 'green', bg = 'black', gui = 'bold' },
+          function()
+            local project = require('auto-session.lib').current_session_name(true)
+            return project
+          end,
+        },
+        {
           'filetype',
           fmt = function(str)
             if str == 'go' then
@@ -77,7 +85,6 @@ return {
             end
             return str
           end,
-
           color = { fg = 'white', bg = 'black', gui = 'bold' }
         },
       }
@@ -93,6 +100,8 @@ return {
       require('lualine').setup {
         options = {
           icons_enabled = true,
+          -- component_separators = { left = '', right = '' },
+          -- section_separators = { left = '', right = '' },
           theme = custom_gruvbox,
         },
         sections = {
@@ -111,7 +120,6 @@ return {
           lualine_z = lualine_z,
         },
         inactive_sections = {
-          -- lualine_a = {},
           lualine_b = lualine_b,
           lualine_c = lualine_c,
           lualine_x = lualine_x,

@@ -288,7 +288,7 @@ export TMUXIFIER_NO_COMPLETE=1
 export EDITOR="/opt/homebrew/bin/nvim -O"
 eval "$(tmuxifier init -)"
 if [[ "$TERM" == "alacritty" ]]; then 
-  tmux
+  # tmux
   # tmuxifier load-session promo
 fi
 
