@@ -12,27 +12,18 @@ vim.api.nvim_create_autocmd("FocusGained", {
 })
 
 return {
-  "rmagatti/auto-session",
+  -- "rmagatti/auto-session",
+  'cameronr/auto-session',
+  branch = 'shada',
   lazy = false,
-
   ---enables autocomplete for opts
   ---@module "auto-session"
   ---@type AutoSession.Config
   config = function()
+    vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
     require("auto-session").setup({
-      -- auto_restore = false,
-      suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-      no_restore_cmds = {
-        function(_)
-          vim.cmd('windo clearjumps')
-        end
-      },
-      -- post_restore_cmds = {
-      --   function(_)
-      --     vim.notify("POST")
-      --     vim.cmd("wincmd =")
-      --   end
-      -- },
+      save_and_restore_shada = true,
+      single_session_mode = true,
     })
   end
 }
