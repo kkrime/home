@@ -96,6 +96,7 @@ return {
 
       -- Key bindings
       vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", { silent = true, noremap = true })
+      vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", { silent = true })
       -- vim.keymap.set("n", "gh", "<cmd>Lspsaga finder<CR>", { silent = true })
       -- vim.keymap.del("n", "gri")
       -- vim.keymap.del("n", "grr")
@@ -117,6 +118,15 @@ return {
 
       -- vim.lsp.set_log_level("INFO")
     end
+  },
+  {
+    "mason-org/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = { "lua_ls", "gopls", "clangd" },
+    },
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+    },
   },
   {
     'saghen/blink.cmp',

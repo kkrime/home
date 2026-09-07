@@ -262,16 +262,15 @@ alias db='v -c "Dbee toggle"'
 # flutter
 export PATH="$HOME/develop/flutter/bin:$PATH"
 
+# # autin
+# source ~/.bash-preexec.sh
+# eval "$(atuin init bash --disable-up-arrow)"
+# export ATUIN_TMUX_POPUP=true
 
 # zoxide
 eval "$(zoxide init bash)"
 # starship
 eval "$(starship init bash)"
-# autin
-source ~/.bash-preexec.sh
-eval "$(atuin init bash --disable-up-arrow)"
-export ATUIN_TMUX_POPUP=true
-# eval "$(atuin pty-proxy init bash)"
 
 # mobile dev
 source ~/.mobile_dev.sh
@@ -281,6 +280,7 @@ source ~/.mobile_dev.sh
 # brew install ytop bandwhich
 # . "$HOME/.cargo/env"
 
+
 # tmux
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux-layouts"
@@ -288,7 +288,12 @@ export TMUXIFIER_NO_COMPLETE=1
 export EDITOR="/opt/homebrew/bin/nvim -O"
 eval "$(tmuxifier init -)"
 if [[ "$TERM" == "alacritty" ]]; then 
-  # tmux
+  tmux
   # tmuxifier load-session promo
 fi
 
+
+# autin
+[[ $- == *i* ]] && source ~/.bash-preexec.sh
+eval "$(atuin init bash --disable-up-arrow)"
+export ATUIN_TMUX_POPUP=true

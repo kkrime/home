@@ -44,3 +44,7 @@ bindings = [
 [window]
   decorations = "buttonless"
   startup_mode = "Maximized"
+
+[terminal.shell]
+program = "/opt/homebrew/bin/bash"
+args = ["-l"]
