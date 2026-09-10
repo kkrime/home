@@ -145,12 +145,6 @@ return {
       local buildtargets = require("buildtargets")
       local current_buildtargets = {}
 
-      local dap = require('dap')
-
-      dap.listeners.before.attach.dapui_config = function()
-        vim.notify("attach")
-        -- dapui.open()
-      end
 
       local dapui = require("dapui")
       vim.keymap.set("n", "<leader>dx", function()
@@ -211,8 +205,6 @@ return {
   {
     "leoluz/nvim-dap-go",
     config = function()
-      local dap = require('dap')
-
       require('dap-go').setup {
         -- Additional dap configurations can be added.
         -- dap_configurations accepts a list of tables where each entry
@@ -269,7 +261,8 @@ return {
           verbose = false,
         },
       }
-      dap.listeners.before.attach.dapui_config = function()
+      local dap = require('dap')
+      dap.listeners.before.launch.dapui_config = function()
         vim.notify("attach")
         -- dapui.open()
       end
